@@ -25,3 +25,40 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.btn {
+  width: 300px;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 16px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup {
+  background-color: rgb(29, 155, 240);
+  color: white;
+}
+
+.signup:hover {
+  background-color: rgb(26, 140, 216);
+}
+
+.login {
+  color: rgb(29, 155, 240);
+  border: 1px solid rgb(207, 217, 222);
+}
+
+.login:hover {
+  background-color: rgba(29, 155, 240, 0.1);
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  width: 100dvw;
+  height: 100dvh;
+}
