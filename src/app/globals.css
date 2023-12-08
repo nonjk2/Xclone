@@ -8,22 +8,8 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-size: 15px;
 }
 
 .btn {
@@ -55,10 +41,66 @@ body {
   background-color: rgba(29, 155, 240, 0.1);
 }
 
-.container {
+.containers {
   display: flex;
   flex-direction: row;
   background-color: #fff;
   width: 100dvw;
   height: 100dvh;
+  min-height: 45vh;
+}
+
+.logoimg {
+  max-height: 380px;
+  height: 100%;
+  filter: invert(1);
+}
+
+.clone-a-tag {
+  direction: ltr;
+  unicode-bidi: isolate;
+  background-color: rgba(0, 0, 0, 0);
+  list-style: none;
+  text-align: inherit;
+
+  display: inline;
+  font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  white-space: pre-wrap;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  min-width: 0px;
+  word-wrap: break-word;
+  font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 16px;
+  padding-right: 16px;
+  color: rgb(83, 100, 113);
+}
+
+.clone-span-tag {
+  pointer-events: auto;
+  list-style: none;
+  text-align: inherit;
+  cursor: pointer;
+  border: 0 solid black;
+  box-sizing: border-box;
+  display: inline;
+  color: inherit;
+  font: inherit;
+  white-space: inherit;
+  min-width: 0px;
+  word-wrap: break-word;
+  font-family: inherit;
+}
+
+.twitterSpan {
+  font-family: TwitterChirpExtendedHeavy, Verdana, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  color: rgb(15, 20, 25);
 }
