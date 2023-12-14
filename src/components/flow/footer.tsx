@@ -21,7 +21,7 @@ const Footer = () => {
   ];
   return (
     <footer className="flex items-stretch relative">
-      <nav className="w-full flex justify-center items-stretch basis-auto shrink-0 relative p-[12px 16px] flex-row flex-wrap ">
+      <nav className="px-4 py-3 w-full flex justify-center items-stretch basis-auto shrink-0 relative p-[12px 16px] flex-row flex-wrap ">
         {Link.map((e) => (
           <a href="#" key={e} className="clone-a-tag">
             <span className="clone-span-tag">{e}</span>
