@@ -3,13 +3,20 @@
 import style from "./signup.module.css";
 import { useRouter } from "next/navigation";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
-
-export default function SignupModal() {
+import SignHeader from "../auth/signHeader";
+import Signfirst from "../auth/signupFirst";
+interface initailStateProp {
+  state?: number;
+}
+export default function SignupModal({ state = 1 }: initailStateProp) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const [image, setImage] = useState("");
   const [imageFile, setImageFile] = useState<File>();
+  const [SignStep, setSignStep] = useState(state);
+  const nextStep = () => setSignStep(SignStep + 1);
+  const prevStep = () => setSignStep(SignStep - 1);
 
   const router = useRouter();
   const onClickClose = () => {
@@ -53,23 +60,37 @@ export default function SignupModal() {
         console.error(err);
       });
   };
+  const StepSignUp = () => {
+    switch (SignStep) {
+      case 1:
+        return <Signfirst nextStep={nextStep} />;
+      // case 2:
+      //   return (
+      //     <SignSecond
+      //       toggle={toggle}
+      //       setToggle={setToggle}
+      //       nextStep={nextStep}
+      //     />
+      //   );
+      // case 3:
+      //   return <SignThird nextStep={nextStep} />;
+      // case 4:
+      //   return <SignFourth nextStep={nextStep} />;
+      // case 5:
+      //   return <SignFive />;
+      default:
+        return null;
+    }
+    return null;
+  };
 
   return (
     <>
       <div className={style.modalBackground}>
         <div className={style.modal}>
-          <div className={style.modalHeader}>
+          {/* <div className={style.modalHeader}>
             <button className={style.closeButton} onClick={onClickClose}>
-              <svg
-                width={24}
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03"
-              >
-                <g>
-                  <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
-                </g>
-              </svg>
+              <Icon color="#000" height={5} path={close} width={5} />
             </button>
             <div>계정을 생성하세요.</div>
           </div>
@@ -132,7 +153,12 @@ export default function SignupModal() {
                 가입하기
               </button>
             </div>
-          </form>
+          </form> */}
+          <div className="items-stretch overflow-hidden min-w-[600px] h-[650px] max-h-[90vh] max-w-[80vw] min-h-[400px]">
+            {/* 헤더 */}
+            <SignHeader />
+            <StepSignUp />
+          </div>
         </div>
       </div>
     </>

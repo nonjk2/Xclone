@@ -8,10 +8,6 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-body {
-  font-size: 15px;
-}
-
 .btn {
   width: 300px;
   height: 40px;
@@ -102,6 +98,7 @@ body {
   font-weight: 700;
   overflow-wrap: break-word;
   color: rgb(15, 20, 25);
+  text-overflow: unset;
 }
 
 .google-span {
@@ -119,4 +116,20 @@ body {
   text-overflow: ellipsis;
   vertical-align: top;
   flex-grow: 0;
+}
+
+.inherit-span {
+  color: inherit;
+  font: inherit;
+  white-space: inherit;
+  min-width: 0px;
+  word-wrap: break-word;
+  font-family: inherit;
+}
+
+.input-transition {
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s,
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s,
+    font-size 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s,
+    padding-top 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }

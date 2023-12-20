@@ -1,6 +1,6 @@
 "use client";
 
-import style from "@/app/(beforeLogin)/_component/login.module.css";
+import style from "@/components/flow/login.module.css";
 import { useState } from "react";
 
 export default function LoginModal() {

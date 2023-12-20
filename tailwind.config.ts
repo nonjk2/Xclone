@@ -27,6 +27,7 @@ const config: Config = {
       hoverLightBlack: "rgba(15, 20, 25, 0.1)",
       black: "rgb(15, 20, 25)",
       gray: "rgb(207, 217, 222)",
+      inputColor: "rgb(83, 100, 113)",
       // primary: "#2DDAB0",
       // darkMint: "#00C092",
       // lightMint: "#ACECDC",

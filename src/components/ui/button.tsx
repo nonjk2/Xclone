@@ -34,11 +34,17 @@ const colorStyles = {
   black: "text-black",
   gray: "text-gray-500",
 
-  hoverBlue: "hover:text-blue-700",
-  hoverLightBlue: "hover:bg-blue-100",
-  hoverBlack: "hover:text-black",
-  lightBlack: "hover:bg-gray-100",
-  hoverLightBlack: "hover:bg-gray-100",
+  hoverBlue: "hover:text-blue",
+  hoverLightBlue: "hover:bg-blue",
+  hoverBlack: "hover:bg-hoverBlack",
+  lightBlack: "hover:bg-hoverLightBlack",
+  hoverLightBlack: "hover:bg-gray",
+};
+const bgColorStyles = {
+  white: "bg-white",
+  blue: "bg-blue",
+  black: "bg-black",
+  lightBlack: "hover:bg-gray",
 };
 
 const sizeStyles = {
@@ -47,10 +53,10 @@ const sizeStyles = {
   getVerify: "w-120.16 h-36 px-16",
   follow: "w-78 h-32 px-16",
   logout: "w-256 h-44 px-24",
-  login1: "w-300 h-10 px-16",
+  login1: "w-300 h-10",
   login2: "w-300 h-36 px-16",
-  register: "w-440 h-52 px-32",
-  message: "w-200 h-52",
+  register: "w-[440px] h-[52px] px-32",
+  message: "w-200 h-13",
   main: "w-300 h-40",
   editProfile: "w-113.73 h-36 font-semibold",
 };
@@ -70,7 +76,11 @@ const MyButton: React.FC<ButtonProps> = ({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-full border rounded-full outline-none transition duration-200 font-bold ${sizeStyles[size]} border-buttonBorderGray hover:bg-${hoverColor}`}
+      className={`w-full border rounded-full outline-none transition duration-200 ${
+        sizeStyles[size]
+      } border-buttonBorderGray ${color && colorStyles[color]} ${
+        backgroundColor && bgColorStyles[backgroundColor]
+      } ${hoverColor && colorStyles[hoverColor]}`}
     >
       {children}
     </button>
