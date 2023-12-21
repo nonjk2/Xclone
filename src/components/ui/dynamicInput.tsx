@@ -22,6 +22,7 @@ const DynamicInput: React.FC<InputProps> = ({
   return (
     <div className="py-3 w-full flex flex-col relative">
       <label
+        htmlFor={id}
         className={`border rounded ${
           active ? "border-blue" : "border-gray"
         }  transition-all flex-row`}

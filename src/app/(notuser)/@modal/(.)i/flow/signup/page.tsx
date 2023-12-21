@@ -1,9 +1,11 @@
-import SignupModal from "@/components/flow/SignupModal";
+import SignUpMain from "@/components/auth/signup";
+import { setTimeout } from "timers/promises";
 
-export default function Signup() {
+export default async function Signup() {
+  await setTimeout(1000);
   return (
     <>
-      <SignupModal />
+      <SignUpMain />
     </>
   );
 }

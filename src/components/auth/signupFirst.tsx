@@ -1,22 +1,18 @@
 "use client";
 import { useRecoilState } from "recoil";
 import DynamicInput from "../ui/dynamicInput";
-import { textState } from "@/context/store/signState";
+import { stepState, textState } from "@/context/store/signState";
 import Select from "../ui/select";
 import Button from "../ui/button";
 
-interface SignFirstProps {
-  nextStep: () => void;
-}
-
-const Signfirst: React.FC<SignFirstProps> = (props) => {
-  const { nextStep } = props;
+const Signfirst = () => {
+  const [step, setStep] = useRecoilState(stepState);
   const [formdataState, setformData] = useRecoilState(textState);
   const { formData, selectData } = formdataState;
+  const nextStep = () => setStep((step) => step + 1);
+
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { id, value } = event.target;
-    // dispatch(updateSelectData({ ...selectData, [className]: value }));
-    console.log(id, value);
     setformData({
       ...formdataState,
       selectData: { ...selectData, [id]: value },
@@ -25,8 +21,6 @@ const Signfirst: React.FC<SignFirstProps> = (props) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-    // dispatch(updateFormData({ ...formData, [className]: value }));
-    console.log(id);
     setformData({
       ...formdataState,
       formData: { ...formData, [id]: value },

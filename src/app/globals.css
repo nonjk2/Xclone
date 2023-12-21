@@ -122,7 +122,6 @@
   color: inherit;
   font: inherit;
   white-space: inherit;
-  min-width: 0px;
   word-wrap: break-word;
   font-family: inherit;
 }
@@ -132,4 +131,21 @@
     color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s,
     font-size 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s,
     padding-top 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.header-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 17px;
+  border: none;
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+}
+
+.header-btn:hover {
+  background-color: rgba(15, 20, 25, 0.1);
 }

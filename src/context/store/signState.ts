@@ -23,7 +23,7 @@ interface FormState {
   loginData: LoginFormData;
 }
 
-const initialState: FormState = {
+export const initialState: FormState = {
   selectData: {
     month: "",
     day: "",
@@ -43,4 +43,14 @@ const initialState: FormState = {
 export const textState = atom<FormState>({
   key: "loginState",
   default: initialState,
+});
+
+export const stepState = atom<1 | 2 | 3 | 4 | number>({
+  key: "signStepState",
+  default: 1,
+});
+
+export const signAgreementState = atom<boolean>({
+  key: "signAgreementState",
+  default: false,
 });
