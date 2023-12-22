@@ -94,7 +94,7 @@ const Icon: React.FC<IconProps> = (props) => {
     <div className={IconStyle}>
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <g>
-          <path d={path} color={color}></path>
+          <path d={path} color={color} fill={color}></path>
         </g>
       </svg>
     </div>

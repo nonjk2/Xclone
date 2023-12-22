@@ -1,4 +1,6 @@
+import { inputIdState } from "@/context/store/signState";
 import { ChangeEvent, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 interface InputProps {
   value: string;
@@ -6,7 +8,10 @@ interface InputProps {
   placeholder: string;
   disabled?: boolean;
   handleInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  id?: string;
+  id: string;
+  autoFocus?: boolean;
+  onFocus?: (id: string, step: number) => void;
+  step: number;
 }
 
 const DynamicInput: React.FC<InputProps> = ({
@@ -16,11 +21,20 @@ const DynamicInput: React.FC<InputProps> = ({
   disabled = false,
   handleInputChange = () => {},
   id,
+  onFocus,
+  autoFocus = false,
+  step,
 }) => {
   const [active, setActive] = useState(false);
-
+  const setId = useSetRecoilState(inputIdState);
   return (
-    <div className="py-3 w-full flex flex-col relative">
+    <div
+      className="py-3 w-full flex flex-col relative"
+      onMouseUp={() => {
+        onFocus && step === 3 && onFocus(id, step);
+        setId(id);
+      }}
+    >
       <label
         htmlFor={id}
         className={`border rounded ${
@@ -43,6 +57,7 @@ const DynamicInput: React.FC<InputProps> = ({
           <div className="flex items-center w-full text-[17px] leading-6">
             <input
               disabled={disabled}
+              autoFocus={autoFocus}
               type={type}
               name="text"
               dir="auto"
@@ -50,7 +65,7 @@ const DynamicInput: React.FC<InputProps> = ({
               onChange={handleInputChange}
               onFocus={() => setActive(true)}
               onBlur={() => setActive(false)}
-              className={`w-full outline-none border-none appearance-none resize-none bg-transparent ${
+              className={`z-50 cursor-text w-full outline-none border-none appearance-none resize-none bgtransparent ${
                 disabled ? "text-gray-700" : "text-black"
               }`}
               id={id}

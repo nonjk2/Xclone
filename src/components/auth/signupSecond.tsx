@@ -3,6 +3,7 @@ import { signAgreementState, stepState } from "@/context/store/signState";
 import { useRecoilState } from "recoil";
 import { Icon } from "../ui/icon/GoogleIcon";
 import { check } from "@/lib/Icon";
+import Button from "../ui/button";
 
 const SignSecond = () => {
   const [toggle, setToggle] = useRecoilState(signAgreementState);
@@ -11,52 +12,54 @@ const SignSecond = () => {
   const changeToggle = () => setToggle((toggle) => !toggle);
   // const { toggle, nextStep, setToggle } = props;
   return (
-    <div className="grow w-full shrink max-w-[600px] px-20">
-      <div className="my-5">
-        <h1 className="font-bold text-[31px] leading-9 text-black">
-          <span className="inherit-span">트위터 환경을 맞춤 설정하세요</span>
-        </h1>
-      </div>
-      <div className="mt-5 font-bold text-xl leading-6 text-black">
-        <span className="inherit-span">
-          웹에서 트위터 콘텐츠가 표시되는 위치를 추적하세요
-        </span>
-      </div>
-      <label className="flex flex-row justify-between mt-3">
-        <div className="flex relative shrink pr-3 leading-5 text-black">
-          <span>
-            트위터는 이 데이터를 이용해 사용자 경험을 맞춤 설정합니다. 이 웹
-            브라우징 기록은 절대 사용자 이름, 이메일 또는 전화번호와 함께
-            저장되지 않습니다.
+    <div className="grow w-full h-full shrink max-w-[600px] px-20">
+      <div className="flex flex-col h-[438px]">
+        <div className="my-5">
+          <h1 className="font-bold text-[31px] leading-9 text-black">
+            <span className="inherit-span">트위터 환경을 맞춤 설정하세요</span>
+          </h1>
+        </div>
+        <div className="mt-5 font-bold text-xl leading-6 text-black">
+          <span className="inherit-span">
+            웹에서 트위터 콘텐츠가 표시되는 위치를 추적하세요
           </span>
         </div>
-        <div className="flex" onClick={changeToggle}>
-          <label className="cursor-pointer">
-            <div className="flex items-center flex-row grow justify-between gap-2 select-none">
-              <div
-                className={`cursor-pointer select-none items-stretch flex-col rounded-full -m-2 p-2 transition-all duration-200 outline-none ${
-                  toggle
-                    ? "hover:bg-hoverLightBlue"
-                    : "hover:bg-hoverLightBlack"
-                }`}
-              >
+        <label className="flex flex-row justify-between mt-3">
+          <div className="flex relative shrink pr-3 leading-5 text-black">
+            <span>
+              트위터는 이 데이터를 이용해 사용자 경험을 맞춤 설정합니다. 이 웹
+              브라우징 기록은 절대 사용자 이름, 이메일 또는 전화번호와 함께
+              저장되지 않습니다.
+            </span>
+          </div>
+          <div className="flex" onClick={changeToggle}>
+            <label className="cursor-pointer">
+              <div className="flex items-center flex-row grow justify-between gap-2 select-none">
                 <div
-                  className={`cursor-pointer relative z-0 border-[2px] rounded w-5 h-5 items-center ${
+                  className={`cursor-pointer select-none items-stretch flex-col rounded-full -m-2 p-2 transition-all duration-200 outline-none ${
                     toggle
-                      ? "border-blue bg-blue"
-                      : "border-inputColor bg-white"
+                      ? "hover:bg-hoverLightBlue"
+                      : "hover:bg-hoverLightBlack"
                   }`}
                 >
-                  {toggle && (
-                    <Icon path={check} height={4} width={4} color="#fff" />
-                  )}
+                  <div
+                    className={`cursor-pointer relative z-0 border-[2px] rounded w-5 h-5 items-center ${
+                      toggle
+                        ? "border-blue bg-blue"
+                        : "border-inputColor bg-white"
+                    }`}
+                  >
+                    {toggle && (
+                      <Icon path={check} height={4} width={4} color="#fff" />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </label>
-        </div>
-      </label>
-      {/* <InformationDongeDiv dir="ltr">
+            </label>
+          </div>
+        </label>
+
+        {/* <InformationDongeDiv dir="ltr">
         <span>
           <span>가입하면 트위터의 </span>
         </span>
@@ -113,7 +116,9 @@ const SignSecond = () => {
           </span>
         </a>
       </InformationDongeDiv> */}
-      {/* <NextStepSecondButtonDiv>
+      </div>
+
+      <div className="flex mt-[83px]">
         <Button
           backgroundColor="black"
           color="white"
@@ -122,12 +127,12 @@ const SignSecond = () => {
           // onClick={nextStep}
           onClick={nextStep}
           title={
-            <ButtonTitleStyleNextButton>
+            <div className="flex justify-center text-[15px] font-bold leading-5">
               <span>다음</span>
-            </ButtonTitleStyleNextButton>
+            </div>
           }
         />
-      </NextStepSecondButtonDiv> */}
+      </div>
     </div>
   );
 };

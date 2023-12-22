@@ -10,7 +10,8 @@ import {
   textState,
 } from "@/context/store/signState";
 import SignSecond from "./signupSecond";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import SignThird from "./signupThird";
 
 const SignUpMain = () => {
   const [SignStep, setSignStep] = useRecoilState(stepState);
@@ -35,8 +36,8 @@ const SignUpMain = () => {
         return <Signfirst />;
       case 2:
         return <SignSecond />;
-      //   case 3:
-      //     return <SignThird nextStep={nextStep} />;
+      case 3:
+        return <SignThird />;
       //   case 4:
       //     return <SignFourth nextStep={nextStep} />;
       //   case 5:

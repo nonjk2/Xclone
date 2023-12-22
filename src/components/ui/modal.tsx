@@ -20,7 +20,7 @@ const Modal = ({
   type = "default",
   onClick,
 }: ModalProps) => {
-  const ModalWidth = `w-[${width}px]`;
+  const ModalWidth = `w-[600px]`;
   const ModalHeight = `h-[${height}px]`;
   return (
     <>

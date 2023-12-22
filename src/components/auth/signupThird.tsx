@@ -1,44 +1,20 @@
 "use client";
 import { useRecoilState } from "recoil";
 import DynamicInput from "../ui/dynamicInput";
-import { inputIdState, stepState, textState } from "@/context/store/signState";
-import Select from "../ui/select";
-import Button from "../ui/button";
-import { forwardRef, useCallback, useEffect, useState } from "react";
+import { stepState, textState } from "@/context/store/signState";
 
-const Signfirst = () => {
-  const [id, setId] = useRecoilState(inputIdState);
+const SignThird = () => {
   const [step, setStep] = useRecoilState(stepState);
   const [formdataState, setformData] = useRecoilState(textState);
   const { formData, selectData } = formdataState;
   const nextStep = () => setStep((step) => step + 1);
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { id, value } = event.target;
-    setformData({
-      ...formdataState,
-      selectData: { ...selectData, [id]: value },
-    });
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
-    setformData({
-      ...formdataState,
-      formData: { ...formData, [id]: value },
-    });
-  };
-
-  const onFocus = useCallback((id: string, step: number) => {
-    // console.log(id, " id");
-    // setId(id);
-  }, []);
-
-  useEffect(() => {
+  const onFocus = (id: string, step: number) => {
+    if (step === 3) {
+      setStep(1);
+    }
     document.getElementById(id)?.focus();
-  }, [id]);
-
-  const currentYear = new Date().getFullYear();
+  };
 
   return (
     <div className="flex flex-col relative px-20 max-w-[600px] grow">
@@ -50,18 +26,28 @@ const Signfirst = () => {
       <div className="flex flex-col relative">
         <DynamicInput
           value={formData["nickname"]}
-          handleInputChange={handleInputChange}
           placeholder="이름"
           id={"nickname"}
-          // autoFocus
           onFocus={onFocus}
           step={step}
         />
         <DynamicInput
           value={formData["email"]}
-          handleInputChange={handleInputChange}
           placeholder="이메일"
           id={"email"}
+          onFocus={onFocus}
+          step={step}
+        />
+        <DynamicInput
+          value={
+            selectData["year"] +
+            "." +
+            selectData["month"] +
+            "." +
+            selectData["day"]
+          }
+          placeholder="생년월일"
+          id={"month"}
           onFocus={onFocus}
           step={step}
         />
@@ -72,7 +58,7 @@ const Signfirst = () => {
         </div>
       </div>
 
-      <div className="flex flex-col relative mt-5">
+      {/* <div className="flex flex-col relative mt-5">
         <div className="leading-5 font-bold mb-2 text-black">생년월일</div>
         <div className="inline whitespace-pre-wrap break-words leading-4 text-sm text-inputColor">
           <span className="tracking-tight font-normal">
@@ -124,9 +110,9 @@ const Signfirst = () => {
             </div>
           }
         />
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default Signfirst;
+export default SignThird;

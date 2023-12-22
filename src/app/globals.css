@@ -149,3 +149,7 @@
 .header-btn:hover {
   background-color: rgba(15, 20, 25, 0.1);
 }
+
+.bgtransparent {
+  background: transparent;
+}

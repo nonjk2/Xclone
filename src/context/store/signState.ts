@@ -54,3 +54,8 @@ export const signAgreementState = atom<boolean>({
   key: "signAgreementState",
   default: false,
 });
+
+export const inputIdState = atom<"nickname" | "email" | string>({
+  key: "inputIdState",
+  default: "nickname",
+});
