@@ -1,6 +1,8 @@
 import { inputIdState } from "@/context/store/signState";
 import { ChangeEvent, useState } from "react";
 import { useSetRecoilState } from "recoil";
+import { Icon } from "./icon/GoogleIcon";
+import { inputCheck } from "@/lib/Icon";
 
 interface InputProps {
   value: string;
@@ -12,6 +14,7 @@ interface InputProps {
   autoFocus?: boolean;
   onFocus?: (id: string, step: number) => void;
   step: number;
+  hasIcon?: boolean;
 }
 
 const DynamicInput: React.FC<InputProps> = ({
@@ -24,6 +27,7 @@ const DynamicInput: React.FC<InputProps> = ({
   onFocus,
   autoFocus = false,
   step,
+  hasIcon = false,
 }) => {
   const [active, setActive] = useState(false);
   const setId = useSetRecoilState(inputIdState);
@@ -54,7 +58,7 @@ const DynamicInput: React.FC<InputProps> = ({
           </div>
         </div>
         <div className="overflow-hidden pt-3 px-2 pb-2 flex-row flex-grow flex-shrink-0 mt-4">
-          <div className="flex items-center w-full text-[17px] leading-6">
+          <div className="flex flex-row items-center w-full text-[17px] leading-6">
             <input
               disabled={disabled}
               autoFocus={autoFocus}
@@ -65,11 +69,21 @@ const DynamicInput: React.FC<InputProps> = ({
               onChange={handleInputChange}
               onFocus={() => setActive(true)}
               onBlur={() => setActive(false)}
-              className={`z-50 cursor-text w-full outline-none border-none appearance-none resize-none bgtransparent ${
+              className={`grow z-50 cursor-text h-5 w-full outline-none border-none appearance-none resize-none bgtransparent ${
                 disabled ? "text-gray-700" : "text-black"
               }`}
               id={id}
             />
+            {hasIcon && (
+              <Icon
+                width={5}
+                height={5}
+                // width={5}
+                path={inputCheck}
+                color="rgb(0, 186, 124)"
+                iconStyle="max-w-full pl-[2px] h-full inline-block"
+              />
+            )}
           </div>
         </div>
       </label>

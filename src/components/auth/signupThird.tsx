@@ -2,6 +2,7 @@
 import { useRecoilState } from "recoil";
 import DynamicInput from "../ui/dynamicInput";
 import { stepState, textState } from "@/context/store/signState";
+import Button from "../ui/button";
 
 const SignThird = () => {
   const [step, setStep] = useRecoilState(stepState);
@@ -30,6 +31,7 @@ const SignThird = () => {
           id={"nickname"}
           onFocus={onFocus}
           step={step}
+          hasIcon
         />
         <DynamicInput
           value={formData["email"]}
@@ -37,6 +39,7 @@ const SignThird = () => {
           id={"email"}
           onFocus={onFocus}
           step={step}
+          hasIcon
         />
         <DynamicInput
           value={
@@ -50,53 +53,85 @@ const SignThird = () => {
           id={"month"}
           onFocus={onFocus}
           step={step}
+          hasIcon
         />
-        <div className="hover:underline cursor-pointer whitespace-pre-wrap text-right break-words leading-5 text-blue z-50">
-          <span className="inherit-span text-right cursor-pointer">
-            대신 휴대폰 사용하기
-          </span>
-        </div>
       </div>
 
-      {/* <div className="flex flex-col relative mt-5">
-        <div className="leading-5 font-bold mb-2 text-black">생년월일</div>
-        <div className="inline whitespace-pre-wrap break-words leading-4 text-sm text-inputColor">
-          <span className="tracking-tight font-normal">
-            이 정보는 공개적으로 표시되지 않습니다. 비즈니스, 반려동물 등 계정
-            주제에 상관없이 나의 연령을 확인하세요.
+      <div className="information">
+        <span>
+          <span>가입하면 </span>
+        </span>
+        <a
+          href="https://support.twitter.com/articles/20170514"
+          rel="noopener noreferrer nofollow"
+          target="_blank"
+          role="link"
+        >
+          <span>
+            <span>쿠키 사용</span>
           </span>
-        </div>
-        <div className="flex gap-3 basis-auto relative z-0 my-4 flex-row">
-          <Select
-            selectValue={selectData["month"]}
-            onChange={handleSelectChange}
-            label="월"
-            count={12}
-            formatOption={(i) => `${i + 1}월`}
-            flexGrow={2}
-            id={"month"}
-          />
-          <Select
-            onChange={handleSelectChange}
-            selectValue={selectData.day}
-            id={"day"}
-            label="일"
-            count={31}
-            formatOption={(i) => `${i + 1}일`}
-            flexGrow={1}
-          />
-          <Select
-            selectValue={selectData.year}
-            id={"year"}
-            onChange={handleSelectChange}
-            label="년"
-            count={100}
-            formatOption={(i) => `${currentYear - i}년`}
-            flexGrow={1}
-          />
-        </div>
+        </a>
+        <span>
+          <span>을 포함해 </span>
+        </span>
+        <a
+          href="https://twitter.com/tos#new"
+          rel="noopener noreferrer nofollow"
+          target="_blank"
+          role="link"
+        >
+          <span>
+            <span>이용약관</span>
+          </span>
+        </a>
+        <span>
+          <span> 및 </span>
+        </span>
+        <a
+          href="https://twitter.com/privacy"
+          rel="noopener noreferrer nofollow"
+          target="_blank"
+          role="link"
+        >
+          <span>
+            <span>개인정보 처리방침</span>
+          </span>
+        </a>
+        <span>
+          <span>
+            에 동의하게 됩니다. 트위터는 계정을 안전하게 보호하고 광고를 포함한
+            맞춤 서비스를 제공하는 등 트위터 개인정보 처리방침에 명시된 목적을
+            위해 이메일 주소 및 전화번호 등의 내 연락처 정보를 사용할 수
+            있습니다.{" "}
+          </span>
+        </span>
+        <a
+          href="https://twitter.com/privacy"
+          rel="noopener noreferrer nofollow"
+          target="_blank"
+          role="link"
+        >
+          <span>
+            <span>자세히 알아보기</span>
+          </span>
+        </a>
+        <span>
+          <span>
+            . 이메일 또는 전화번호를 제공하시면 다른 사람들이 이 정보로 내
+            계정을 찾을 수 있게 됩니다. 해당 정보를 제공하지 않으시려면{" "}
+          </span>
+        </span>
+        <span role="button">
+          <span>
+            <span>여기</span>
+          </span>
+        </span>
+        <span>
+          <span>에서 변경하세요. </span>
+        </span>
       </div>
-      <div className="flex mt-[83px]">
+
+      <div className="flex mt-[30px]">
         <Button
           backgroundColor="black"
           color="white"
@@ -105,12 +140,12 @@ const SignThird = () => {
           // onClick={nextStep}
           onClick={nextStep}
           title={
-            <div className="flex justify-center text-[15px] font-bold leading-5">
+            <div className="flex justify-center text-[17px] font-bold leading-5">
               <span>다음</span>
             </div>
           }
         />
-      </div> */}
+      </div>
     </div>
   );
 };

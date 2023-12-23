@@ -1,6 +1,7 @@
 interface IconProps extends PathStyleProps {
   path: string;
   isHover?: boolean;
+  iconStyle?: string;
 }
 interface PathStyleProps {
   width: number | string;
@@ -88,8 +89,8 @@ const CloseIcon = () => (
 );
 
 const Icon: React.FC<IconProps> = (props) => {
-  const { path, width, height, isgoogle = false, color } = props;
-  const IconStyle = `w-${width} h-${height}`;
+  const { path, width, height, isgoogle = false, color, iconStyle } = props;
+  const IconStyle = `w-${width} h-${height} ${iconStyle}`;
   return (
     <div className={IconStyle}>
       <svg viewBox="0 0 24 24" aria-hidden="true">

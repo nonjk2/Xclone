@@ -110,7 +110,7 @@ const Signfirst = () => {
           />
         </div>
       </div>
-      <div className="flex mt-[83px]">
+      <div className="flex mt-[92px]">
         <Button
           backgroundColor="black"
           color="white"
@@ -119,7 +119,7 @@ const Signfirst = () => {
           // onClick={nextStep}
           onClick={nextStep}
           title={
-            <div className="flex justify-center text-[15px] font-bold leading-5">
+            <div className="flex justify-center text-[17px] font-bold leading-5">
               <span>다음</span>
             </div>
           }

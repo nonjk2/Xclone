@@ -59,66 +59,74 @@ const SignSecond = () => {
           </div>
         </label>
 
-        {/* <InformationDongeDiv dir="ltr">
-        <span>
-          <span>가입하면 트위터의 </span>
-        </span>
-        <a
-          href="https://twitter.com/tos#new"
-          rel="noopener noreferrer nofollow"
-          target="_blank"
-          role="link"
+        <div
+          dir="ltr"
+          className="inline leading-5 mt-10 text-inputColor tracking-tight text-[15px]"
         >
-          <span>
-            <span>운영원칙</span>
+          <span className="inherit-span">
+            <span>가입하면 트위터의 </span>
           </span>
-        </a>
-        <span>
-          <span>, </span>
-        </span>
-        <a
-          href="https://twitter.com/privacy"
-          rel="noopener noreferrer nofollow"
-          target="_blank"
-          role="link"
-        >
-          <span>
-            <span>개인정보 처리방침</span>
+          <a
+            href="https://twitter.com/tos#new"
+            rel="noopener noreferrer nofollow"
+            target="_blank"
+            role="link"
+            className="inherit-a"
+          >
+            <span className="inherit-span">
+              <span>운영원칙</span>
+            </span>
+          </a>
+          <span className="inherit-span">
+            <span className="inherit-span">, </span>
           </span>
-        </a>
-        <span>
-          <span> 및 </span>
-        </span>
-        <a
-          href="https://support.twitter.com/articles/20170514"
-          rel="noopener noreferrer nofollow"
-          target="_blank"
-          role="link"
-        >
-          <span>
-            <span>쿠키 사용</span>
+          <a
+            href="https://twitter.com/privacy"
+            rel="noopener noreferrer nofollow"
+            target="_blank"
+            role="link"
+            className="inherit-a"
+          >
+            <span className="inherit-span">
+              <span className="inherit-span">개인정보 처리방침</span>
+            </span>
+          </a>
+          <span className="inherit-span">
+            <span className="inherit-span"> 및 </span>
           </span>
-        </a>
-        <span>
-          <span>
-            에 동의하게 됩니다. 트위터에서는 개인정보 처리방침에 명시된 목적에
-            따라 이메일 주소 및 전화번호 등 내 연락처 정보를 사용할 수 있습니다.{" "}
+          <a
+            href="https://support.twitter.com/articles/20170514"
+            rel="noopener noreferrer nofollow"
+            target="_blank"
+            role="link"
+            className="inherit-a"
+          >
+            <span className="inherit-span">
+              <span className="inherit-span">쿠키 사용</span>
+            </span>
+          </a>
+          <span className="inherit-span">
+            <span className="inherit-span">
+              에 동의하게 됩니다. 트위터에서는 개인정보 처리방침에 명시된 목적에
+              따라 이메일 주소 및 전화번호 등 내 연락처 정보를 사용할 수
+              있습니다.{" "}
+            </span>
           </span>
-        </span>
-        <a
-          href="https://twitter.com/privacy"
-          rel="noopener noreferrer nofollow"
-          target="_blank"
-          role="link"
-        >
-          <span>
-            <span>자세히 알아보기</span>
-          </span>
-        </a>
-      </InformationDongeDiv> */}
+          <a
+            href="https://twitter.com/privacy"
+            rel="noopener noreferrer nofollow"
+            target="_blank"
+            role="link"
+            className="inherit-a"
+          >
+            <span className="inherit-span">
+              <span className="inherit-span">자세히 알아보기</span>
+            </span>
+          </a>
+        </div>
       </div>
 
-      <div className="flex mt-[83px]">
+      <div className="flex mt-[84px]">
         <Button
           backgroundColor="black"
           color="white"
@@ -127,7 +135,7 @@ const SignSecond = () => {
           // onClick={nextStep}
           onClick={nextStep}
           title={
-            <div className="flex justify-center text-[15px] font-bold leading-5">
+            <div className="flex justify-center text-[17px] font-bold leading-5">
               <span>다음</span>
             </div>
           }
