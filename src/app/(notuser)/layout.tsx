@@ -11,6 +11,7 @@ const LoginLayout = ({
   return (
     <section className="flex flex-col relative h-screen w-full">
       {children}
+      <Footer />
       {modal}
     </section>
   );

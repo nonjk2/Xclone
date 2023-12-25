@@ -1,9 +1,9 @@
 "use client";
 import { useRecoilState } from "recoil";
-import DynamicInput from "../ui/dynamicInput";
+import DynamicInput from "../../ui/dynamicInput";
 import { inputIdState, stepState, textState } from "@/context/store/signState";
-import Select from "../ui/select";
-import Button from "../ui/button";
+import Select from "../../ui/select";
+import Button from "../../ui/button";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 
 const Signfirst = () => {

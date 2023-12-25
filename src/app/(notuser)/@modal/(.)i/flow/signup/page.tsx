@@ -1,4 +1,4 @@
-import SignUpMain from "@/components/auth/signup";
+import SignUpMain from "@/components/auth/signup/signup";
 import { setTimeout } from "timers/promises";
 
 export default async function Signup() {

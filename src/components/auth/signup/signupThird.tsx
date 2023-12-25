@@ -1,8 +1,8 @@
 "use client";
 import { useRecoilState } from "recoil";
-import DynamicInput from "../ui/dynamicInput";
+import DynamicInput from "../../ui/dynamicInput";
 import { stepState, textState } from "@/context/store/signState";
-import Button from "../ui/button";
+import Button from "../../ui/button";
 
 const SignThird = () => {
   const [step, setStep] = useRecoilState(stepState);

@@ -1,9 +1,9 @@
 "use client";
 import { signAgreementState, stepState } from "@/context/store/signState";
 import { useRecoilState } from "recoil";
-import { Icon } from "../ui/icon/GoogleIcon";
+import { Icon } from "../../ui/icon/GoogleIcon";
 import { check } from "@/lib/Icon";
-import Button from "../ui/button";
+import Button from "../../ui/button";
 
 const SignSecond = () => {
   const [toggle, setToggle] = useRecoilState(signAgreementState);
