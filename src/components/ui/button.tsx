@@ -35,7 +35,7 @@ const colorStyles = {
   gray: "text-gray-500",
 
   hoverBlue: "hover:text-blue",
-  hoverLightBlue: "hover:bg-blue",
+  hoverLightBlue: "hover:bg-hoverLightBlue",
   hoverBlack: "hover:bg-hoverBlack",
   lightBlack: "hover:bg-hoverLightBlack",
   hoverLightBlack: "hover:bg-gray",
@@ -54,7 +54,7 @@ const sizeStyles = {
   follow: "w-78 h-32 px-16",
   logout: "w-256 h-44 px-24",
   login1: "w-300 h-10",
-  login2: "w-300 h-36 px-16",
+  login2: "w-[300px] h-9 px-4",
   register: "w-[440px] h-[52px] px-32",
   message: "w-200 h-13",
   main: "w-300 h-40",

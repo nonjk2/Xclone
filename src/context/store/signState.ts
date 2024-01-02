@@ -59,3 +59,15 @@ export const inputIdState = atom<"nickname" | "email" | string>({
   key: "inputIdState",
   default: "nickname",
 });
+
+export const inputLoginState = atom<{ login: string; password: string }>({
+  key: "inputLoginState",
+  default: {
+    login: "",
+    password: "",
+  },
+});
+export const inputLoginStepState = atom<number>({
+  key: "inputLoginStepState",
+  default: 1,
+});

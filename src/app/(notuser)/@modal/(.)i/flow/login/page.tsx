@@ -1,4 +1,4 @@
-import SignInMain from "@/components/auth/signin/signin";
+import SignInMain from "@/components/auth/signin/signIn";
 import Modal from "@/components/ui/modal";
 import { Suspense } from "react";
 

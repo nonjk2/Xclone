@@ -58,47 +58,50 @@ const SignThird = () => {
       </div>
 
       <div className="information">
-        <span>
-          <span>가입하면 </span>
+        <span className="inherit-span">
+          <span className="inherit-span">가입하면 </span>
         </span>
         <a
+          className="inherit-a"
           href="https://support.twitter.com/articles/20170514"
           rel="noopener noreferrer nofollow"
           target="_blank"
           role="link"
         >
-          <span>
-            <span>쿠키 사용</span>
+          <span className="inherit-span">
+            <span className="inherit-span">쿠키 사용</span>
           </span>
         </a>
-        <span>
-          <span>을 포함해 </span>
+        <span className="inherit-span">
+          <span className="inherit-span">을 포함해 </span>
         </span>
         <a
+          className="inherit-a"
           href="https://twitter.com/tos#new"
           rel="noopener noreferrer nofollow"
           target="_blank"
           role="link"
         >
-          <span>
-            <span>이용약관</span>
+          <span className="inherit-span">
+            <span className="inherit-span">이용약관</span>
           </span>
         </a>
-        <span>
-          <span> 및 </span>
+        <span className="inherit-span">
+          <span className="inherit-span"> 및 </span>
         </span>
         <a
+          className="inherit-a"
           href="https://twitter.com/privacy"
           rel="noopener noreferrer nofollow"
           target="_blank"
           role="link"
         >
-          <span>
-            <span>개인정보 처리방침</span>
+          <span className="inherit-span">
+            <span className="inherit-span">개인정보 처리방침</span>
           </span>
         </a>
-        <span>
-          <span>
+        <span className="inherit-span">
+          <span className="inherit-span">
             에 동의하게 됩니다. 트위터는 계정을 안전하게 보호하고 광고를 포함한
             맞춤 서비스를 제공하는 등 트위터 개인정보 처리방침에 명시된 목적을
             위해 이메일 주소 및 전화번호 등의 내 연락처 정보를 사용할 수
@@ -106,28 +109,29 @@ const SignThird = () => {
           </span>
         </span>
         <a
+          className="inherit-a"
           href="https://twitter.com/privacy"
           rel="noopener noreferrer nofollow"
           target="_blank"
           role="link"
         >
-          <span>
-            <span>자세히 알아보기</span>
+          <span className="inherit-span">
+            <span className="inherit-span">자세히 알아보기</span>
           </span>
         </a>
-        <span>
-          <span>
+        <span className="inherit-span">
+          <span className="inherit-span">
             . 이메일 또는 전화번호를 제공하시면 다른 사람들이 이 정보로 내
             계정을 찾을 수 있게 됩니다. 해당 정보를 제공하지 않으시려면{" "}
           </span>
         </span>
         <span role="button">
-          <span>
-            <span>여기</span>
+          <span className="inherit-span">
+            <span className="inherit-span">여기</span>
           </span>
         </span>
-        <span>
-          <span>에서 변경하세요. </span>
+        <span className="inherit-span">
+          <span className="inherit-span">에서 변경하세요. </span>
         </span>
       </div>
 

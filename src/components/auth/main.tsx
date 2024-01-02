@@ -65,7 +65,7 @@ const Main = () => {
             <div className="w-[300px] max-w-[380px]">
               <Button
                 // onClick={() => socialhandler(googleLinkOptions)}
-                hoverColor="hoverLightBlue"
+                hoverColor="hoverLightBlack"
                 size="login1"
                 color="blue"
                 backgroundColor="white"

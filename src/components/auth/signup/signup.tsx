@@ -17,11 +17,7 @@ const SignUpMain = () => {
   const [SignStep, setSignStep] = useRecoilState(stepState);
   const [signChecked, setSignChecked] = useRecoilState(signAgreementState);
   const [formData, setFormData] = useRecoilState(textState);
-  //   const [id, setId] = useState("");
-  //   const [password, setPassword] = useState("");
-  //   const [nickname, setNickname] = useState("");
-  //   const [image, setImage] = useState("");
-  //   const [imageFile, setImageFile] = useState<File>();
+
   useEffect(() => {
     return () => {
       setSignStep(1);
@@ -45,14 +41,12 @@ const SignUpMain = () => {
       default:
         return null;
     }
-    return null;
   }, [SignStep]);
 
   return (
     <div className="items-stretch overflow-hidden min-w-[600px] h-[650px] max-h-[90vh] max-w-[80vw] min-h-[400px]">
       <SignHeader />
       <StepSignUp />
-      {/* <Signfirst /> */}
     </div>
   );
 };

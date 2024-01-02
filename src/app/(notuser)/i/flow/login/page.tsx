@@ -1,6 +1,4 @@
-import SignInMain from "@/components/auth/signin/signin";
-import SignUpMain from "@/components/auth/signup/signup";
-import LoginModal from "@/components/flow/LoginModal";
+import SignInMain from "@/components/auth/signin/signIn";
 import Modal from "@/components/ui/modal";
 import { Suspense } from "react";
 

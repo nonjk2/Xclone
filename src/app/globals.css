@@ -176,25 +176,4 @@
   font-size: 13px;
   line-height: 16px;
   color: rgb(83, 100, 113);
-  span {
-    display: inline;
-    color: inherit;
-    font: inherit;
-    white-space: inherit;
-    min-width: 0px;
-    word-wrap: break-word;
-    font-family: inherit;
-  }
-  a {
-    -webkit-box-direction: normal;
-    background-color: rgba(0, 0, 0, 0);
-    display: inline;
-    font: inherit;
-    white-space: inherit;
-    min-width: 0px;
-    word-wrap: break-word;
-    font-family: inherit;
-    color: rgb(29, 155, 240);
-    cursor: pointer;
-  }
 }

@@ -6,14 +6,14 @@ import { inputCheck } from "@/lib/Icon";
 
 interface InputProps {
   value: string;
-  type?: "text" | "password"; // 예시로 text와 password만 사용 가능하도록 함
+  type?: "text" | "password" | "email"; // 예시로 text와 password만 사용 가능하도록 함
   placeholder: string;
   disabled?: boolean;
   handleInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   id: string;
   autoFocus?: boolean;
   onFocus?: (id: string, step: number) => void;
-  step: number;
+  step?: number;
   hasIcon?: boolean;
 }
 
@@ -43,7 +43,9 @@ const DynamicInput: React.FC<InputProps> = ({
         htmlFor={id}
         className={`border rounded ${
           active ? "border-blue" : "border-gray"
-        }  transition-all flex-row`}
+        }  transition-all flex-row
+        ${disabled ? "bg-gubunsun border-gubunsun" : "bg-white"} 
+        `}
       >
         <div className="absolute flex-row w-full h-full justify-between">
           {/* wrapper */}
@@ -70,7 +72,7 @@ const DynamicInput: React.FC<InputProps> = ({
               onFocus={() => setActive(true)}
               onBlur={() => setActive(false)}
               className={`grow z-50 cursor-text h-5 w-full outline-none border-none appearance-none resize-none bgtransparent ${
-                disabled ? "text-gray-700" : "text-black"
+                disabled ? "text-inputColor" : "text-black"
               }`}
               id={id}
             />
