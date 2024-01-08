@@ -177,3 +177,10 @@
   line-height: 16px;
   color: rgb(83, 100, 113);
 }
+
+.home-header {
+  position: relative;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+}

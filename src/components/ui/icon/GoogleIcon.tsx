@@ -102,4 +102,18 @@ const Icon: React.FC<IconProps> = (props) => {
   );
 };
 
-export { GoogleIcon, AppleIcon, CloseIcon, Icon };
+const MenuIconSvg: React.FC<IconProps> = (props) => {
+  const { path, width, height, isgoogle = false, color, iconStyle } = props;
+  // const IconStyle = `w-${width} h-${height} ${iconStyle}`;
+  return (
+    <div className={"h-[26.25px] w-[26.25px]"}>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d={path} color={color} fill={color}></path>
+        </g>
+      </svg>
+    </div>
+  );
+};
+
+export { GoogleIcon, AppleIcon, CloseIcon, Icon, MenuIconSvg };

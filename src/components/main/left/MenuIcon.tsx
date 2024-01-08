@@ -1,0 +1,62 @@
+"use client";
+import { Icon, MenuIconSvg } from "@/components/ui/icon/GoogleIcon";
+import Link from "next/link";
+import { useSelectedLayoutSegment } from "next/navigation";
+
+interface MainHeaderListItemProps {
+  title?: string;
+  path: string;
+  boldPath?: string;
+  link?: string;
+  color?: string;
+  pathname?: string;
+}
+
+const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
+  const { title, path, boldPath, color, pathname } = props;
+  const seg = useSelectedLayoutSegment();
+  const sameTitle = title && title.toLowerCase() === seg;
+  console.log(boldPath);
+  const boldIcon = sameTitle ? (
+    <>
+      {!!boldPath && (
+        <div className="relative">
+          {/* {pathname === "/notifications" && notice > 0 && <Notice />} */}
+          <MenuIconSvg path={boldPath} width={6} height={6} color={color} />
+        </div>
+      )}
+
+      {title && (
+        <div className="flex items-center ml-5 mr-4">
+          <span className="font-bold text-[21px]">{title}</span>
+        </div>
+      )}
+    </>
+  ) : (
+    <>
+      <div className="relative">
+        {/* {title === "Notifications" && notice > 0 && <Notice />} */}
+        <MenuIconSvg path={path} width={6} height={6} color={color} />
+      </div>
+      {title && (
+        <div className="flex items-center ml-5 mr-4">
+          <span className="text-xl">{title}</span>
+        </div>
+      )}
+    </>
+  );
+
+  return (
+    <Link
+      href={`/${pathname}`}
+      color={color}
+      className="flex w-[236.78px] h-[50.25px] text-black group"
+    >
+      <div className="group-hover:bg-lightblack flex p-3 rounded-full cursor-pointer transition-all duration-200 ease-in">
+        {boldIcon}
+      </div>
+    </Link>
+  );
+};
+
+export default MenuIcon;
