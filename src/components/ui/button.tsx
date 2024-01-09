@@ -48,17 +48,17 @@ const bgColorStyles = {
 };
 
 const sizeStyles = {
-  tweet1: "w-90 h-52 px-32 text-17 font-semibold",
-  tweet2: "w-75 h-36 px-16",
-  getVerify: "w-120.16 h-36 px-16",
-  follow: "w-78 h-32 px-16",
-  logout: "w-256 h-44 px-24",
-  login1: "w-300 h-10",
-  login2: "w-[300px] h-9 px-4",
-  register: "w-[440px] h-[52px] px-32",
-  message: "w-200 h-13",
-  main: "w-300 h-40",
-  editProfile: "w-113.73 h-36 font-semibold",
+  tweet1: "w-[90%] h-[52px] px-8 text-[17px] font-bold",
+  tweet2: "w-75 h-36 px-16 w-full",
+  getVerify: "h-9 px-4 w-[120px] text-[15px]",
+  follow: "w-78 h-32 px-16 w-full",
+  logout: "w-256 h-44 px-24 w-full",
+  login1: "w-300 h-10 w-full",
+  login2: "w-[300px] h-9 px-4 w-full",
+  register: "w-[440px] h-[52px] px-32 w-full",
+  message: "w-200 h-13 w-full",
+  main: "w-300 h-40 w-full",
+  editProfile: "w-113.73 h-36 font-semibold w-full",
 };
 
 const MyButton: React.FC<ButtonProps> = ({
@@ -76,7 +76,7 @@ const MyButton: React.FC<ButtonProps> = ({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-full border rounded-full outline-none transition duration-200 ${
+      className={`border rounded-full outline-none transition duration-200 ${
         sizeStyles[size]
       } border-buttonBorderGray ${color && colorStyles[color]} ${
         backgroundColor && bgColorStyles[backgroundColor]

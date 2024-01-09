@@ -14,6 +14,10 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
+    fontFamily: {
+      twitterFontFamily:
+        "font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;",
+    },
     colors: {
       gubunsun: "rgb(239, 243, 244)",
       blackText: "rgb(15,20,25)",
@@ -29,6 +33,8 @@ const config: Config = {
       gray: "rgb(207, 217, 222)",
       inputColor: "rgb(83, 100, 113)",
       modalback: "rgba(82, 82, 82, 0.7)",
+      hoverProfile: "rgb(247,249,249)",
+      backgroundOpacity: "rgba(0,0,0,0)",
       // primary: "#2DDAB0",
       // darkMint: "#00C092",
       // lightMint: "#ACECDC",

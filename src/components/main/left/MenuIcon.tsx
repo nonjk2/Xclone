@@ -50,7 +50,7 @@ const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
     <Link
       href={`/${pathname}`}
       color={color}
-      className="flex w-[236.78px] h-[50.25px] text-black group"
+      className="flex w-[236.78px] h-[50.25px] text-black group first:pt-[2px]"
     >
       <div className="group-hover:bg-lightblack flex p-3 rounded-full cursor-pointer transition-all duration-200 ease-in">
         {boldIcon}
