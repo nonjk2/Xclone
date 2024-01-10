@@ -16,7 +16,6 @@ const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
   const { title, path, boldPath, color, pathname } = props;
   const seg = useSelectedLayoutSegment();
   const sameTitle = title && title.toLowerCase() === seg;
-  console.log(boldPath);
   const boldIcon = sameTitle ? (
     <>
       {!!boldPath && (

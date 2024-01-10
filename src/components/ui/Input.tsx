@@ -37,10 +37,10 @@ const Input: React.FC<InputProps> = (props) => {
     <>
       <div className={`relative`}>
         <form
-          className={`bg-gubunsun flex flex-row box-border overflow-hidden ${sizeStyles[size]} rounded-full border-white border border-opacity-0 focus-within:border-blue focus-within:bg-white`}
+          className={`bg-gubunsun flex h-11 flex-row box-border overflow-hidden ${sizeStyles[size]} rounded-full border-white border border-opacity-0 focus-within:border-blue focus-within:bg-white`}
           onSubmit={handleInputSubmit}
         >
-          <div className="bg-transparent pl-3 flex items-center justify-center w-11 h-[42px]">
+          <div className="bg-transparent pl-3 flex items-center justify-center w-11">
             <Icon
               path={explore}
               width={5}

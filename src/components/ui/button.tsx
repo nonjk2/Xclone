@@ -49,7 +49,7 @@ const bgColorStyles = {
 
 const sizeStyles = {
   tweet1: "w-[90%] h-[52px] px-8 text-[17px] font-bold",
-  tweet2: "w-75 h-36 px-16 w-full",
+  tweet2: "w-[75px] h-9 px-4 w-full",
   getVerify: "h-9 px-4 w-[120px] text-[15px]",
   follow: "w-78 h-32 px-16 w-full",
   logout: "w-256 h-44 px-24 w-full",
