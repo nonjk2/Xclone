@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import {
   ChangeEvent,
   ChangeEventHandler,
@@ -7,12 +6,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { normal } from "../../../../public";
 import useInput from "@/lib/hooks/useInput";
 import useImageSelect from "@/lib/hooks/useImageSelect";
 import { Icon } from "@/components/ui/icon/GoogleIcon";
 import { down, earth, location, picture, postArray } from "@/lib/Icon";
 import Button from "@/components/ui/button";
+import { normal } from "../../../../public/index";
+import Image from "next/image";
 
 interface PostTweetProps {
   comment: string;
