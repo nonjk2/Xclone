@@ -1,10 +1,10 @@
-const convertToJSDate = (javaDate: string): Date => {
+const convertToJSDate = (javaDate: Date): Date => {
   const date = new Date(javaDate);
-  date.setHours(date.getHours() + 9);
+  date.setHours(date.getHours() - 9);
   return date;
 };
 
-const getTimeAgo = (javaDate: string): string => {
+const getTimeAgo = (javaDate: Date): string => {
   const date = convertToJSDate(javaDate);
   const now = new Date();
 

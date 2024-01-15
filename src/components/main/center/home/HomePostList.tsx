@@ -1,9 +1,14 @@
+import { mockPosts } from "@/__test__/MockPostData";
 import MainCenterListItem from "./HomePostItem";
+
+const DATA = mockPosts;
 
 const HomePostList = () => {
   return (
     <>
-      <MainCenterListItem key={"asd"} />
+      {DATA?.map((e) => (
+        <MainCenterListItem key={e.postId} {...e} />
+      ))}
     </>
   );
 };

@@ -5,19 +5,21 @@ import { forwardRef } from "react";
 import { normal } from "../../../../../public";
 import Image from "next/image";
 
-const MainCenterListItem = forwardRef<HTMLDivElement, any>((props, ref) => {
+const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
     content,
+    Comments,
+    Hearts,
+    Images,
+    Reposts,
+    User,
+    _count,
     createdAt,
-    hashtag,
-    hearts,
-    imgList,
-    views,
-    id,
-    heartCheck,
-    user,
+    postId,
+    Original,
+    Parent,
   } = props;
-
+  const { image, nickname, id } = User;
   // const onClickMoveHandler = (e) => {
   //   navigate(`/profile/${user.tagName}`);
   //   dispatch(profileSet({ tagName: user.tagName }));
@@ -27,28 +29,30 @@ const MainCenterListItem = forwardRef<HTMLDivElement, any>((props, ref) => {
   // const profileImage = user
   const ItemContents = (
     <div
-      className="py-4 pt-3 w-[598px] flex cursor-pointer flex-row border-b border-b-gubunsun hover:bg-opacity-5"
+      className="px-4 pt-3 w-[598px] flex cursor-pointer flex-row border-b border-b-gubunsun hover:bg-opacity-5"
       // onClick={() => {
       //   navigate(`/${id}`);
       // }}
     >
-      <div className="relative w-10 h-10 basis-[45px] mr-3 overflow-hidden rounded-full">
+      <div className="relative w-10 h-10 basis-[44px] mr-3 overflow-hidden rounded-full">
         <div className="avartar"></div>
         <Image src={profileImg} alt="asd" width={40} height={40} />
       </div>
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
-          <div className="first:font-bold">
-            <span>{"user?.nickname"}</span>
-            <span className="ml-1">{"hashtag"}</span>
-            <span>{"user?.nickname"}</span>
-            <span className="ml-1">@{"user?.nickname"}</span>
-            {/* <span className="text-inputColor">·{getTimeAgo(createdAt)}</span> */}
+          <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
+            <span className="text-[15px]">{nickname}</span>
+            <span className="text-[15px] text-inputColor font-normal">
+              @{id}
+            </span>
+            <span className="text-[15px] text-inputColor font-normal">
+              ·{getTimeAgo(createdAt)}
+            </span>
           </div>
           <Icon
             color={"rgb(83, 100, 113)"}
-            height={4}
-            width={4}
+            height={5}
+            width={5}
             path={threedot}
           />
         </div>

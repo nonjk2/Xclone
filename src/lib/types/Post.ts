@@ -1,7 +1,3 @@
-interface UserID {
-  userId: string;
-}
-
 interface Post {
   postId: number;
   User: User;
