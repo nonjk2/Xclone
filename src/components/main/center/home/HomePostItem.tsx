@@ -4,6 +4,7 @@ import { getTimeAgo } from "@/lib/func";
 import { forwardRef } from "react";
 import { normal } from "../../../../../public";
 import Image from "next/image";
+import HomeListItemActionBar from "./HomeListItemActionBar";
 
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
@@ -13,7 +14,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
     Images,
     Reposts,
     User,
-    _count,
+    _count: count,
     createdAt,
     postId,
     Original,
@@ -28,8 +29,8 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const profileImg = normal;
   // const profileImage = user
   const ItemContents = (
-    <div
-      className="px-4 pt-3 w-[598px] flex cursor-pointer flex-row border-b border-b-gubunsun hover:bg-opacity-5"
+    <article
+      className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer flex-row border-b border-b-gubunsun hover:bg-opacity-5"
       // onClick={() => {
       //   navigate(`/${id}`);
       // }}
@@ -69,11 +70,11 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
         </div>
         <div className="w-full pt-3">
           <div className="flex pb-1.5 justify-between">
-            {/* <MainCenterListItemIcon {...props} /> */}
+            <HomeListItemActionBar count={count} />
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
   const isLastItem = ref ? (
     <div ref={ref}>{ItemContents}</div>
