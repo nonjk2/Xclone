@@ -3,6 +3,7 @@ import Header from "@/components/main/center/header/Header";
 import NavMenu from "@/components/main/left/NavMenu";
 import Sidebar from "@/components/main/right/Sidebar";
 import MainHeaderProfile from "@/components/ui/profile";
+import HomeTabProvider from "@/context/HomeTabProvider";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { ReactNode } from "react";
 
@@ -12,10 +13,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const Content = (
     <div className="flex flex-row grow min-h-full w-full justify-between items-stretch bg-backgroundOpacity">
       <div className="items-stretch flex flex-col relative bg-white grow w-full border-gubunsun border-l border-r border-t max-w-[600px]">
-        <div className="hometimeline-container">
-          <Header />
-          {children}
-        </div>
+        <HomeTabProvider>
+          <div className="hometimeline-container">
+            <Header />
+            {children}
+          </div>
+        </HomeTabProvider>
       </div>
       <div className="items-stretch box-border flex flex-col relative z-0 mr-[10px] w-[350px]">
         <Sidebar />

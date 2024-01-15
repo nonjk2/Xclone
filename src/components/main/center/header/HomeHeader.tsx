@@ -1,4 +1,16 @@
+import { HomeTabContext } from "@/context/HomeTabProvider";
+import { useCallback, useContext } from "react";
+
 const HomeHeader = () => {
+  const { tab, setTab } = useContext(HomeTabContext);
+  // const BooleanTabFollow = useCallback((tab: "fol" | "rec") => {
+  //   return `${}`;
+  // }, []);
+
+  const BottomSlide = (
+    <div className="w-[54px] rounded-full inline-flex bottom-0 absolute min-w-[56px] h-1 self-center bg-blue" />
+  );
+
   return (
     <div className="home-header bg-opacity-80 backdrop-blur-md z-20 sticky -top-[1px] flex-col ">
       {/* <div className="home-header z-10 cursor-pointer h-[53px] px-4 items-center flex-row justify-center w-full">
@@ -14,18 +26,34 @@ const HomeHeader = () => {
           <div className="flex justify-center items-center">
             {/* homeheaderBottomLeft */}
 
-            <div className="py-4 flex-grow items-center justify-center cursor-pointer flex-col h-[52px] hover:bg-lightblack">
-              <div className="flex justify-center font-bold text-blackText text-[15px]">
+            <div
+              className="py-4 flex-grow items-center justify-center cursor-pointer flex-col h-[52px] hover:bg-lightblack"
+              onClick={() => setTab("rec")}
+              key={"rec"}
+            >
+              <div
+                className={`flex justify-center ${
+                  tab === "rec" ? "text-blackText font-bold" : "text-inputColor"
+                } text-[15px]`}
+              >
                 <span className="inherit-span">For you</span>
-                <div className="w-[54px] rounded-full inline-flex bottom-0 absolute min-w-[56px] h-1 self-center bg-blue" />
+                {tab === "rec" && BottomSlide}
               </div>
             </div>
 
             {/* homeheaderBottomLeft */}
-            <div className="py-4 flex-grow items-center justify-center cursor-pointer flex-col h-[52px] hover:bg-lightblack">
-              <div className="flex items-center justify-center text-inputColor text-[15px]">
+            <div
+              className="py-4 flex-grow items-center justify-center cursor-pointer flex-col h-[52px] hover:bg-lightblack"
+              onClick={() => setTab("fol")}
+              key={"fol"}
+            >
+              <div
+                className={`flex items-center justify-center ${
+                  tab === "fol" ? "text-blackText font-bold" : "text-inputColor"
+                } text-[15px]`}
+              >
                 <span className="inherit-span ">Following</span>
-                {/* <div /> */}
+                {tab === "fol" && BottomSlide}
               </div>
             </div>
             {/* setting */}

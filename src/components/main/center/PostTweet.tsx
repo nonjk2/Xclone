@@ -89,15 +89,15 @@ const PostTweet: React.FC<PostTweetProps> = ({ comment, type, reply }) => {
   //     .finally();
   // }, [value, dispatch, tweetResponseHandler]);
 
-  // const handleOnChange = useCallback(
-  //   (event: ChangeEvent<HTMLTextAreaElement>) => {
-  //     onChange(event);
-  //     const target = event.target;
-  //     target.style.height = "inherit";
-  //     target.style.height = `${target.scrollHeight}px`;
-  //   },
-  //   [onChange]
-  // );
+  const handleOnChange = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      onChange(event);
+      const target = event.target;
+      target.style.height = "inherit";
+      target.style.height = `${target.scrollHeight}px`;
+    },
+    [onChange]
+  );
   return (
     <div className="relative flex px-4 bg-white pt-1 z-10 border-b border-b-hoverProfile h-full">
       <div className="flex flex-col relative mr-3 basis-10 pt-3 ">
@@ -127,7 +127,7 @@ const PostTweet: React.FC<PostTweetProps> = ({ comment, type, reply }) => {
               font: '20px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;',
             }}
             value={value["content"]}
-            // onChange={handleOnChange}
+            onChange={handleOnChange}
             placeholder={comment}
             onFocus={() => settextFocus(true)}
             // onBlur={() => settextFocus(false)}
