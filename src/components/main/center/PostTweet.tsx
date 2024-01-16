@@ -13,6 +13,7 @@ import { down, earth, location, picture, postArray } from "@/lib/Icon";
 import Button from "@/components/ui/button";
 import { normal } from "../../../../public/index";
 import Image from "next/image";
+import Avatar from "@/components/ui/Avatar";
 
 interface PostTweetProps {
   comment: string;
@@ -101,10 +102,7 @@ const PostTweet: React.FC<PostTweetProps> = ({ comment, type, reply }) => {
   return (
     <div className="relative flex px-4 bg-white pt-1 z-10 border-b border-b-hoverProfile h-full">
       <div className="flex flex-col relative mr-3 basis-10 pt-3 ">
-        <div className="pointer-events-auto flex-col relative z-0 h-10 bottom-0 left-0 top-0 w-full rounded-full overflow-hidden">
-          <div className="avatar-box"></div>
-          <Image src={normal} alt="" />
-        </div>
+        <Avatar />
       </div>
       <div className="flex flex-col grow justify-between pt-1 static duration-100 transition-all ease-out">
         {/* {!reply && (textFocus || value["content"]) && (

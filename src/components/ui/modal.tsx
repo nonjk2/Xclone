@@ -9,6 +9,7 @@ interface ModalProps {
   children: ReactNode;
   setModal?: Dispatch<SetStateAction<boolean>>;
   onClick?: () => void;
+  compose?: boolean;
 }
 
 const Modal = ({
@@ -19,6 +20,7 @@ const Modal = ({
   setModal,
   type = "default",
   onClick,
+  compose = false,
 }: ModalProps) => {
   const ModalWidth = `w-[600px]`;
   const ModalHeight = `h-[${height}px]`;

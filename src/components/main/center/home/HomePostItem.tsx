@@ -43,7 +43,9 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
         <div className="avartar"></div>
         <Image src={profileImg} alt="asd" width={40} height={40} />
       </div> */}
-      <Avatar />
+      <div className="mr-3">
+        <Avatar imgUrl={image} />
+      </div>
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">

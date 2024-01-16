@@ -29,6 +29,7 @@ interface MyButtonProps {
     | "register"
     | "message"
     | "main"
+    | "draft"
     | "editProfile";
   borderColor?: "blue" | "gray";
 }
@@ -56,6 +57,7 @@ const bgColorStyles = {
 const sizeStyles = {
   tweet1: "w-[90%] h-[52px] px-8 text-[17px] font-bold",
   tweet2: "w-[75px] h-9 px-4 w-full",
+  draft: "h-9 px-4 border-none",
   getVerify: "h-9 px-4 w-[120px] text-[15px]",
   follow: "w-78 h-32 px-16 w-full",
   logout: "w-256 h-44 px-24 w-full",
