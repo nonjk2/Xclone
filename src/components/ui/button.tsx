@@ -12,7 +12,12 @@ interface ButtonProps extends MyButtonProps {
 interface MyButtonProps {
   color: "white" | "blue" | "hoverBlue" | "hoverBlack" | "lightBlack" | "black";
   backgroundColor: "white" | "blue" | "lightBlack" | "black";
-  hoverColor: "hoverBlue" | "hoverBlack" | "hoverLightBlue" | "hoverLightBlack";
+  hoverColor:
+    | "hoverBlue"
+    | "hoverBlack"
+    | "hoverLightBlue"
+    | "hoverLightBlack"
+    | "hoverBgblue";
   size:
     | "tweet1"
     | "tweet2"
@@ -38,6 +43,7 @@ const colorStyles = {
   hoverLightBlue: "hover:bg-hoverLightBlue",
   hoverBlack: "hover:bg-hoverBlack",
   lightBlack: "hover:bg-hoverLightBlack",
+  hoverBgblue: "hover:bg-hoverBlue",
   hoverLightBlack: "hover:bg-gray",
 };
 const bgColorStyles = {

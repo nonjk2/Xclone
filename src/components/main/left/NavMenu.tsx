@@ -1,6 +1,6 @@
 "use client";
 
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import MenuIcon from "./MenuIcon";
 import { boldSvgArray, svgArray } from "@/lib/Icon";
 import Button from "@/components/ui/button";
@@ -18,6 +18,7 @@ const NavMenuTitle = [
   "More",
 ];
 const NavMenu = () => {
+  const { push } = useRouter();
   return (
     <header className="flex flex-col gap-2 first:pt-[2px]">
       {svgArray.map((svg, idx) => (
@@ -33,9 +34,10 @@ const NavMenu = () => {
         <Button
           backgroundColor="blue"
           color="white"
-          hoverColor="hoverBlue"
+          hoverColor="hoverBgblue"
           size="tweet1"
           title={<span>Post</span>}
+          onClick={() => push("/compose/tweet")}
         />
       </div>
     </header>

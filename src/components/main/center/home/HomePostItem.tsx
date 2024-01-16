@@ -1,10 +1,11 @@
-import { Icon } from "@/components/ui/icon/GoogleIcon";
+import { ActionBarIconSvg, Icon } from "@/components/ui/icon/GoogleIcon";
 import { threedot } from "@/lib/Icon";
 import { getTimeAgo } from "@/lib/func";
 import { forwardRef } from "react";
 import { normal } from "../../../../../public";
 import Image from "next/image";
 import HomeListItemActionBar from "./HomeListItemActionBar";
+import { switchColor } from "./Actions";
 
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
@@ -52,13 +53,24 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
               ·{getTimeAgo(createdAt)}
             </span>
           </div>
-          <Icon
-            color={"rgb(83, 100, 113)"}
-            height={5}
-            width={5}
-            path={threedot}
-          />
+
+          <div className="relative group">
+            <div
+              className={`w-[34.75px] h-[34.75px] absolute ring-0 top-0 bottom-0 left-0 transition-all duration-200 rounded-full -m-2 ${
+                switchColor("BookMark").hoverCircle
+              }`}
+            />
+            <div className={`flex ${switchColor("BookMark").hoverIcon}`}>
+              <ActionBarIconSvg
+                color={"rgb(83, 100, 113)"}
+                height={5}
+                width={5}
+                path={threedot}
+              />
+            </div>
+          </div>
         </div>
+
         <div className="main-contnet">
           <div className="main-contnet-comment">
             <span>{content}</span>
@@ -70,6 +82,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
             </div>
           )} */}
         </div>
+
         <div className="w-full pt-3">
           <div className="flex pb-1.5 justify-between">
             <HomeListItemActionBar count={count} />
