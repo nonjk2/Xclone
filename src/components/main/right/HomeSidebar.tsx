@@ -17,8 +17,8 @@ const HomeSidebar = () => {
   // };
 
   return (
-    <div>
-      <div className="flex h-[53px] mb-3 items-center">
+    <div className="relative">
+      <div className="fixed w-full bg-white backdrop-blur-md flex h-[53px] mb-3 items-center">
         <Input
           placeholder="Search Twitter"
           size="medium"
@@ -26,7 +26,7 @@ const HomeSidebar = () => {
           // handleInputChange={onChangesearchDataHandler}
         />
       </div>
-
+      <div className="w-full h-[53px] -z-10" />
       <div className="rounded-lg flex flex-col py-3 px-4 bg-hoverProfile mb-4 gap-[10px] h-[126px]">
         <div className="font-bold text-[20px]">Get Verified</div>
         <div className="text-[15px] font-bold">

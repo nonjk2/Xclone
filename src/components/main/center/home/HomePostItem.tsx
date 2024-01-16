@@ -21,11 +21,13 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
     Parent,
   } = props;
   const { image, nickname, id } = User;
+
   // const onClickMoveHandler = (e) => {
   //   navigate(`/profile/${user.tagName}`);
   //   dispatch(profileSet({ tagName: user.tagName }));
   //   e.stopPropagation();
   // };
+
   const profileImg = normal;
   // const profileImage = user
   const ItemContents = (

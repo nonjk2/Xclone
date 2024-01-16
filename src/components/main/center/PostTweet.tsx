@@ -124,7 +124,7 @@ const PostTweet: React.FC<PostTweetProps> = ({ comment, type, reply }) => {
             className="leading-normal overflow-hidden resize-none min-h-[1.5em] relative flex box-border border-none rounded-md placeholder:break-words text-xl text-hoverProfile whitespace-pre-wrap"
             rows={1}
             style={{
-              font: '20px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;',
+              font: '20px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif',
             }}
             value={value["content"]}
             onChange={handleOnChange}
