@@ -3,7 +3,7 @@ import Modal from "@/components/ui/modal";
 const Page = () => {
   return (
     <>
-      <Modal width="650" height="600">
+      <Modal width="600" height="278">
         asd
       </Modal>
     </>

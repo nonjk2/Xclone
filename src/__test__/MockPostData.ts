@@ -15,7 +15,7 @@ const mockPostImages: PostImage[] = [
 const user1: User = {
   id: "user1",
   nickname: "JohnDoe",
-  image: "profile-image-1.jpg",
+  image: null,
   Followers: [{ id: "user2" }, { id: "user3" }],
   _count: {
     Followers: 2,
@@ -26,7 +26,7 @@ const user1: User = {
 const user2: User = {
   id: "user2",
   nickname: "JaneSmith",
-  image: "profile-image-2.jpg",
+  image: null,
   Followers: [{ id: "user1" }],
   _count: {
     Followers: 1,
@@ -37,7 +37,7 @@ const user2: User = {
 const user3: User = {
   id: "user3",
   nickname: "AliceJohnson",
-  image: "profile-image-3.jpg",
+  image: null,
   Followers: [],
   _count: {
     Followers: 0,

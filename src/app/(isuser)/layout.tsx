@@ -7,7 +7,13 @@ import HomeTabProvider from "@/context/HomeTabProvider";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { ReactNode } from "react";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({
+  children,
+  modal,
+}: {
+  children: ReactNode;
+  modal: ReactNode;
+}) => {
   const seg = useSelectedLayoutSegment();
 
   const Content = (
@@ -43,6 +49,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           {seg === "messages" ? <>{children}</> : <>{Content}</>}
         </div>
       </div>
+      {modal}
     </div>
   );
 };

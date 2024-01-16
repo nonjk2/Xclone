@@ -17,7 +17,7 @@ const Header = () => {
     case "home":
       return <HomeHeader />;
     default:
-      return <div>header</div>;
+      return <HomeHeader />;
   }
 };
 ``;

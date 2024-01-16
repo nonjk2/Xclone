@@ -5,7 +5,7 @@ interface UserID {
 interface User {
   id: string;
   nickname: string;
-  image: string;
+  image: string | null;
   Followers: UserID[];
   _count: {
     Followers: number;

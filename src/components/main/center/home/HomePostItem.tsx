@@ -6,6 +6,7 @@ import { normal } from "../../../../../public";
 import Image from "next/image";
 import HomeListItemActionBar from "./HomeListItemActionBar";
 import { switchColor } from "./Actions";
+import Avatar from "@/components/ui/Avatar";
 
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
@@ -38,10 +39,11 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
       //   navigate(`/${id}`);
       // }}
     >
-      <div className="relative w-10 h-10 basis-[44px] mr-3 overflow-hidden rounded-full">
+      {/* <div className="relative w-10 h-10 basis-[44px] mr-3 overflow-hidden rounded-full">
         <div className="avartar"></div>
         <Image src={profileImg} alt="asd" width={40} height={40} />
-      </div>
+      </div> */}
+      <Avatar />
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
