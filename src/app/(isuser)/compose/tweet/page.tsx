@@ -1,4 +1,4 @@
-import ComposePost from "@/components/main/ComposePost";
+import ComposePost from "@/components/main/modal/compose/ComposePost";
 import Modal from "@/components/ui/modal";
 
 const Page = () => {
