@@ -6,7 +6,7 @@ interface AvatarProps {
 const Avatar = ({ imgUrl }: AvatarProps) => {
   const AvatarImage = imgUrl ?? "/normal.png";
   return (
-    <div className="relative w-10 h-10 basis-[40px] overflow-hidden rounded-full">
+    <div className="relative w-10 h-10 basis-[40px] overflow-hidden rounded-full select-none">
       <div className="avartar"></div>
 
       <img

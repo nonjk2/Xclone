@@ -12,7 +12,7 @@ const HomeHeader = () => {
   );
 
   return (
-    <div className="sticky flex bg-opacity-80 bg-white backdrop-blur-md z-20 -top-[1px] flex-col ">
+    <div className="sticky flex bg-opacity-80 bg-white backdrop-blur-md z-20 top-0 flex-col ">
       {/* <div className="home-header z-10 cursor-pointer h-[53px] px-4 items-center flex-row justify-center w-full">
         <div className="home-header h-full justify-center flex-grow flex-shrink items-start">
           <h2 className="bg-[rgba(0,0,0,0)] list-none inline max-w-full overflow-hidden text-ellipsis flex-nowrap py-[2px] break-words font-bold text-blackText text-xl">

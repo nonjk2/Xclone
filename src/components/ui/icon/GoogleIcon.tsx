@@ -90,7 +90,9 @@ const CloseIcon = () => (
 
 const Icon: React.FC<IconProps> = (props) => {
   const { path, width, height, isgoogle = false, color, iconStyle } = props;
-  const IconStyle = `w-${width} h-${height} ${iconStyle}`;
+  const IconStyle =
+    width === 4 ? `w-4 h-4` : `w-${width} h-${height} ${iconStyle}`;
+
   return (
     <div className={IconStyle}>
       <svg viewBox="0 0 24 24" aria-hidden="true">

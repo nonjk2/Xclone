@@ -27,7 +27,9 @@ const Modal = ({
   return (
     <>
       <div
-        className={`${ModalWidth} ${ModalHeight} fixed flex top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh] bg-white rounded-2xl z-[10000] text-black overflow-hidden`}
+        className={`${ModalWidth} ${ModalHeight} fixed flex left-1/2 -translate-x-1/2 ${
+          compose ? "top-[5%]" : "top-1/2 -translate-y-1/2"
+        } max-h-[90vh] bg-white rounded-2xl z-[10000] text-black overflow-hidden`}
       >
         <div className="flex h-full w-full transition-all">{children}</div>
       </div>
