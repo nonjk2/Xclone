@@ -34,22 +34,6 @@ const PostTweet: React.FC<PostTweetProps> = ({ comment, type, reply }) => {
   } = useImageSelect();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  // const dispatch = useAppDispatch();
-
-  // /// 트윗 포스트후 초기화 ///
-  // const tweetResponseHandler = useCallback(
-  //   (res: TweetPostResponse) => {
-  //     console.log(res);
-  //     setForm({ content: "" });
-  //     setPreviewImage(null);
-  //     dispatch(addTweet(res.result));
-  //     if (inputRef.current) {
-  //       inputRef.current.value = "";
-  //     }
-  //   },
-  //   [dispatch, setForm, setPreviewImage, inputRef]
-  // );
-
   /// 해시태그 추출
   const extractHashtags = (text: string) => {
     // 해시태그 추출 정규식

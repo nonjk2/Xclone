@@ -1,3 +1,5 @@
+import { ActionType } from "@/components/main/center/home/HomeListItemActionBar";
+
 const convertToJSDate = (javaDate: Date): Date => {
   const date = new Date(javaDate);
   date.setHours(date.getHours() - 9);
@@ -35,4 +37,28 @@ const getTimeAgo = (javaDate: Date): string => {
   return `${seconds}s`;
 };
 
-export { convertToJSDate, getTimeAgo };
+const switchColor = (type: ActionType) => {
+  switch (type) {
+    case "RePost":
+      return {
+        hoverCircle: "group-hover:bg-hoverGreen",
+        hoverText: "group-hover:text-green",
+        hoverIcon: "group-hover:text-green",
+      };
+    case "Heart":
+      return {
+        hoverCircle: "group-hover:bg-hoverRed",
+        hoverText: "group-hover:text-red",
+        hoverIcon: "group-hover:text-red",
+      };
+
+    default:
+      return {
+        hoverCircle: "group-hover:bg-hoverLightBlue",
+        hoverText: "group-hover:text-blue",
+        hoverIcon: "group-hover:text-blue",
+      };
+  }
+};
+
+export { convertToJSDate, getTimeAgo, switchColor };

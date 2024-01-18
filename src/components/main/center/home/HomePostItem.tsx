@@ -1,12 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 import { ActionBarIconSvg, Icon } from "@/components/ui/icon/GoogleIcon";
 import { threedot } from "@/lib/Icon";
-import { getTimeAgo } from "@/lib/func";
+import { getTimeAgo, switchColor } from "@/lib/func";
 import { forwardRef } from "react";
 import { normal } from "../../../../../public";
 import Image from "next/image";
 import HomeListItemActionBar from "./HomeListItemActionBar";
-import { switchColor } from "./Actions";
 import Avatar from "@/components/ui/Avatar";
+import Link from "next/link";
 
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
@@ -27,18 +28,12 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   // const onClickMoveHandler = (e) => {
   //   navigate(`/profile/${user.tagName}`);
   //   dispatch(profileSet({ tagName: user.tagName }));
-  //   e.stopPropagation();
   // };
 
   const profileImg = normal;
   // const profileImage = user
   const ItemContents = (
-    <article
-      className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer flex-row border-b border-b-gubunsun hover:bg-opacity-5"
-      // onClick={() => {
-      //   navigate(`/${id}`);
-      // }}
-    >
+    <article className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer flex-row border-b bg-[rgba(0,0,0,0)] transition-all hover:bg-[rgba(0,0,0,0.03)] duration-200 border-b-gubunsun">
       {/* <div className="relative w-10 h-10 basis-[44px] mr-3 overflow-hidden rounded-full">
         <div className="avartar"></div>
         <Image src={profileImg} alt="asd" width={40} height={40} />
@@ -46,6 +41,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
       <div className="mr-3">
         <Avatar imgUrl={image} />
       </div>
+
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
@@ -79,16 +75,20 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
           <div className="main-contnet-comment">
             <span>{content}</span>
           </div>
-          {/* {imgList[0] && (
+          {Images[0] && (
             <div className="relative rounded-2xl mt-3 w-full h-full overflow-hidden">
               <div className="flex basis-auto flex-col bottom-0 left-0 right-0 top-0 absolute"></div>
-              <Image src={imgList[0]} alt="" />
+              <img
+                src={`${Images[0].link}`}
+                alt="asdasd"
+                className="w-full h-full"
+              />
             </div>
-          )} */}
+          )}
         </div>
 
-        <div className="w-full pt-3">
-          <div className="flex pb-1.5 justify-between">
+        <div className="w-full">
+          <div className="flex justify-between">
             <HomeListItemActionBar count={count} />
           </div>
         </div>
@@ -100,7 +100,8 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   ) : (
     <div>{ItemContents}</div>
   );
-  return isLastItem;
+
+  return <Link href={`/${nickname}/status/${id}`}>{isLastItem}</Link>;
 });
 
 MainCenterListItem.displayName = "listitem";

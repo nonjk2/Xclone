@@ -1,13 +1,14 @@
 "use client";
 import { useSelectedLayoutSegment } from "next/navigation";
 import HomeHeader from "./HomeHeader";
+import ExploreHeader from "./ExploreHeader";
 
 const Header = () => {
   const pathname = useSelectedLayoutSegment();
 
   switch (pathname) {
-    // case "explore":
-    //   return <ExploreHeader />;
+    case "explore":
+      return <ExploreHeader />;
     // case "notifications":
     //   return <NotificationsHeader />;
     // case "messages":

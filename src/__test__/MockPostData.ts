@@ -1,14 +1,14 @@
 const mockPostImages: PostImage[] = [
   {
-    link: "post-image-1.jpg",
+    link: "https://cdn.pixabay.com/photo/2017/08/26/23/04/flower-2684651_1280.jpg",
     imageId: 1,
   },
   {
-    link: "post-image-2.jpg",
+    link: "https://cdn.pixabay.com/photo/2018/03/12/22/15/no-person-3221109_1280.jpg",
     imageId: 2,
   },
   {
-    link: "post-image-3.jpg",
+    link: "https://cdn.pixabay.com/photo/2017/09/23/23/22/tomato-2780424_1280.jpg",
     imageId: 3,
   },
 ];

@@ -1,29 +1,7 @@
+"use client";
 import { ActionBarIconSvg } from "@/components/ui/icon/GoogleIcon";
 import { ActionType } from "./HomeListItemActionBar";
-
-export const switchColor = (type: ActionType) => {
-  switch (type) {
-    case "RePost":
-      return {
-        hoverCircle: "group-hover:bg-hoverGreen",
-        hoverText: "group-hover:text-green",
-        hoverIcon: "group-hover:text-green",
-      };
-    case "Heart":
-      return {
-        hoverCircle: "group-hover:bg-hoverRed",
-        hoverText: "group-hover:text-red",
-        hoverIcon: "group-hover:text-red",
-      };
-
-    default:
-      return {
-        hoverCircle: "group-hover:bg-hoverLightBlue",
-        hoverText: "group-hover:text-blue",
-        hoverIcon: "group-hover:text-blue",
-      };
-  }
-};
+import { MouseEvent, MouseEventHandler } from "react";
 
 const Actions = ({
   count,
@@ -36,18 +14,49 @@ const Actions = ({
   icon: string;
   short?: boolean;
 }) => {
+  const switchColor = (type: ActionType) => {
+    switch (type) {
+      case "RePost":
+        return {
+          hoverCircle: "group-hover:bg-hoverGreen",
+          hoverText: "group-hover:text-green",
+          hoverIcon: "group-hover:text-green",
+        };
+      case "Heart":
+        return {
+          hoverCircle: "group-hover:bg-hoverRed",
+          hoverText: "group-hover:text-red",
+          hoverIcon: "group-hover:text-red",
+        };
+
+      default:
+        return {
+          hoverCircle: "group-hover:bg-hoverLightBlue",
+          hoverText: "group-hover:text-blue",
+          hoverIcon: "group-hover:text-blue",
+        };
+    }
+  };
+
+  const onClickActionHandler = (event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log("hi");
+  };
+
   return (
     <div
       className={`${short ? "" : "grow"} ${
         type === "BookMark" && "mr-2"
       } flex relative`}
     >
-      <div className="flex group">
+      <div className="z-50 flex group" onClick={onClickActionHandler}>
         <div
           className={`w-[34.75px] h-[34.75px] absolute ring-0 top-0 bottom-0 left-0 transition-all duration-200 rounded-full -m-2 ${
             switchColor(type).hoverCircle
           }`}
-        ></div>
+        />
         <div className={`flex ${switchColor(type).hoverIcon}`}>
           <ActionBarIconSvg
             width={5}
