@@ -1,4 +1,5 @@
 import { ActionType } from "@/components/main/center/home/HomeListItemActionBar";
+import isString from "lodash/isString";
 
 const convertToJSDate = (javaDate: Date): Date => {
   const date = new Date(javaDate);
@@ -61,4 +62,9 @@ const switchColor = (type: ActionType) => {
   }
 };
 
-export { convertToJSDate, getTimeAgo, switchColor };
+const replaceString = (str: string, replacer: any) =>
+  isString(str) ? str.replace(replacer, "") : "";
+
+const numberFilter = (str: string) => replaceString(str, /[^0-9]/g);
+
+export { convertToJSDate, getTimeAgo, switchColor, numberFilter };

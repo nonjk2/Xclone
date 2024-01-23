@@ -120,7 +120,7 @@ const MenuIconSvg: React.FC<IconProps> = (props) => {
 const ActionBarIconSvg: React.FC<IconProps> = (props) => {
   const { path, width, height, isgoogle = false, color, iconStyle } = props;
   return (
-    <div className={"h-[18.75px] w-[18.75px] transition-all duration-200"}>
+    <div className={"h-5 w-5 transition-all duration-200"}>
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <g>
           <path d={path} fill={"currentcolor"}></path>

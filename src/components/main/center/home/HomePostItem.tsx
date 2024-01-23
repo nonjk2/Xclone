@@ -34,14 +34,9 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   // const profileImage = user
   const ItemContents = (
     <article className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer flex-row border-b bg-[rgba(0,0,0,0)] transition-all hover:bg-[rgba(0,0,0,0.03)] duration-200 border-b-gubunsun">
-      {/* <div className="relative w-10 h-10 basis-[44px] mr-3 overflow-hidden rounded-full">
-        <div className="avartar"></div>
-        <Image src={profileImg} alt="asd" width={40} height={40} />
-      </div> */}
       <div className="mr-3">
         <Avatar imgUrl={image} />
       </div>
-
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
