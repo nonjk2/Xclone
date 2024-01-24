@@ -1,113 +1,56 @@
-import React, { useEffect } from "react";
-import { useSpring, animated } from "react-spring";
-import useCounter from "@/lib/hooks/useCounter";
+import { MotionValue, motion, useSpring, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
 
-const transformY = (size: number, css = {}) => ({
-  transform: `translate3d(0, ${size}px, 0)`,
-  ...css,
-});
+const fontSize = 13;
+const padding = 10;
+const height = fontSize + padding;
 
-let firstLoad = true;
+function Counter({ value }: { value: number }) {
+  return (
+    <div style={{ fontSize }} className="flex">
+      {value >= 100 && <Digit place={100} value={value} />}
+      {value >= 10 && <Digit place={10} value={value} />}
+      <Digit place={1} value={value} />
+    </div>
+  );
+}
 
-const Digit = ({
-  originNumber,
-  numbers,
-  isIncreasing,
-}: {
-  originNumber: any;
-  numbers: any;
-  isIncreasing: any;
-}) => {
+function Digit({ place, value }: { place: number; value: number }) {
+  let valueRoundedToPlace = Math.floor(value / place);
+  let animatedValue = useSpring(valueRoundedToPlace);
+
   useEffect(() => {
-    firstLoad = false;
-  }, []);
+    animatedValue.set(valueRoundedToPlace);
+  }, [animatedValue, valueRoundedToPlace]);
 
-  const getFrom = () => {
-    if (firstLoad) {
-      return transformY(0);
+  return (
+    <div style={{ height }} className="relative w-2">
+      {[...Array(10).keys()].map((i) => (
+        <Number key={i} mv={animatedValue} number={i} />
+      ))}
+    </div>
+  );
+}
+
+function Number({ mv, number }: { mv: MotionValue; number: number }) {
+  let y = useTransform(mv, (latest) => {
+    let placeValue = latest % 10;
+    let offset = (10 + number - placeValue) % 10;
+
+    let memo = offset * height;
+
+    if (offset > 5) {
+      memo -= 10 * height;
     }
 
-    if (isIncreasing) {
-      return transformY(20 * (numbers.length - 1));
-    }
-
-    return transformY(0);
-  };
-
-  const getTo = () => {
-    if (firstLoad) {
-      return transformY(0);
-    }
-
-    if (isIncreasing) {
-      return transformY(0);
-    }
-
-    return transformY(20 * (numbers.length - 1));
-  };
-
-  const from = getFrom();
-  const to = getTo();
-
-  const props = useSpring({
-    from,
-    to,
+    return memo;
   });
 
   return (
-    <animated.span
-      className={"felx flex-col justify-end"}
-      style={{
-        ...props,
-      }}
-    >
-      {numbers.map((diskValue: any, i: number) => {
-        return (
-          <span
-            key={`${diskValue}-${i}-${originNumber}`}
-            className={"leading-5 text-right"}
-          >
-            {diskValue}
-          </span>
-        );
-      })}
-    </animated.span>
+    <motion.span style={{ y }} className="inherit-Span absolute inset-0 flex">
+      {number}
+    </motion.span>
   );
-};
-
-const Counter = ({ from, to }: { from: string; to: string }) => {
-  const { createCounterMap } = useCounter();
-
-  const counterTransitionMap = createCounterMap(from, to);
-
-  return (
-    <span className={"relative inline-block"}>
-      <span
-        className={
-          "absolute -top-[17px] left-0 inline-flex h-5 overflow-hidden"
-        }
-      >
-        {counterTransitionMap.map(
-          (
-            {
-              numbers,
-              isIncreasing,
-            }: { numbers: string; isIncreasing: string },
-            i: number
-          ) => {
-            return (
-              <Digit
-                key={from !== to ? i : `${i}-${Math.random()}`}
-                numbers={numbers}
-                originNumber={to}
-                isIncreasing={isIncreasing}
-              />
-            );
-          }
-        )}
-      </span>
-    </span>
-  );
-};
+}
 
 export default Counter;

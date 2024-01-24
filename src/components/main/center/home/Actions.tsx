@@ -1,13 +1,18 @@
 "use client";
 import { ActionBarIconSvg } from "@/components/ui/icon/GoogleIcon";
 import { ActionType } from "./HomeListItemActionBar";
-import { MouseEvent, MouseEventHandler, useRef, useState } from "react";
+import {
+  MouseEvent,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Player, PlayerState } from "@lottiefiles/react-lottie-player";
 import Counter from "@/components/ui/Counter";
-import { isNumber, isString, parseInt } from "lodash";
 
 const Actions = ({
-  count,
+  count = 140,
   type,
   icon,
   short = false,
@@ -18,7 +23,8 @@ const Actions = ({
   short?: boolean;
 }) => {
   const [heartIcon, setHeartIcon] = useState<boolean>(false);
-  const [heartCount, setHeartCount] = useState<string>("0");
+  const [heartCount, setHeartCount] = useState<number>(count);
+  const [liked, setLiked] = useState<boolean>(false);
   const playerRef = useRef<Player>(null);
   const switchColor = (type: ActionType) => {
     switch (type) {
@@ -43,13 +49,20 @@ const Actions = ({
         };
     }
   };
+  console.log(heartCount);
+  useEffect(() => {
+    if (liked) {
+      setHeartCount((prev) => prev + 1);
+    } else if (!liked) {
+      setHeartCount(count);
+    }
+  }, [liked, count]);
+
   const onClickActionHeart = () => {
     const heartInstance = playerRef.current;
     setHeartIcon((prev) => !prev);
-    setHeartCount((prev) => {
-      const a = parseInt(prev) + 1;
-      return a.toString();
-    });
+    setLiked((prev) => !prev);
+
     if (heartInstance) {
       const currentState = heartInstance.state.playerState;
       // const { play, pause ,stop} = heartInstance;
@@ -60,7 +73,7 @@ const Actions = ({
           break;
         case PlayerState.Playing:
           // console.log("playing -> pause");
-          heartInstance.pause();
+          heartInstance.stop();
           break;
         case PlayerState.Stopped:
           // console.log("stopped -> playing");
@@ -111,13 +124,6 @@ const Actions = ({
                   autoplay={false}
                   loop={false}
                   controls={true}
-                  onStateChange={(state) => {
-                    if (state === "playing") {
-                      console.log("playing");
-                    } else {
-                      console.log(state);
-                    }
-                  }}
                   keepLastFrame
                   className="absolute w-10 h-10 -top-1/2 -left-1/2"
                   background="none"
@@ -140,15 +146,13 @@ const Actions = ({
               />
             )}
           </div>
-          {count ? (
+          {!short ? (
             <div
               className={`text-inputColor ${
                 switchColor(type).hoverText
-              } px-1 min-w-[calc(1em + 24px)] duration-200 transition-colors text-[13px] `}
+              } px-1 min-w-[calc(1em + 24px)] duration-200 transition-colors text-[13px] overflow-hidden`}
             >
-              <span className="inherit-span">
-                <Counter from={"0"} to={heartCount} />
-              </span>
+              <Counter value={heartCount} />
             </div>
           ) : (
             <></>
