@@ -2,6 +2,7 @@ export interface TrendingTopic {
   category: string;
   topic: string;
   postsCount: number;
+  sidebar?: boolean;
 }
 
 export type TrendingData = TrendingTopic[];

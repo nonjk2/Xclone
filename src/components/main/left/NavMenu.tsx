@@ -20,7 +20,7 @@ const NavMenuTitle = [
 const NavMenu = () => {
   const { push } = useRouter();
   return (
-    <header className="flex flex-col gap-2 first:pt-[2px]">
+    <header className="flex flex-col items-start first:pt-[2px]">
       {svgArray.map((svg, idx) => (
         <MenuIcon
           path={svg}
@@ -30,7 +30,7 @@ const NavMenu = () => {
           pathname={NavMenuTitle[idx].toLowerCase()}
         />
       ))}
-      <div className="my-4">
+      <div className="my-4 w-[275px]">
         <Button
           backgroundColor="blue"
           color="white"

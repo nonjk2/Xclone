@@ -3,19 +3,23 @@ import { Icon } from "@/components/ui/icon/GoogleIcon";
 import { threedot } from "@/lib/Icon";
 
 const TrendItem: React.FC<TrendingTopic> = (props) => {
-  const { category, postsCount, topic } = props;
+  const { category, postsCount, topic, sidebar } = props;
 
   // const moveNavigateHandler = () => {
   //   dispatch(inputSet({ inputValue: hashTag }));
   //   nevigate("/explore");
   // };
   return (
-    <article className="cursor-pointer h-[82px] w-full py-3 px-4 hover:bg-opacity-5">
+    <article className="cursor-pointer h-[82px] w-full py-3 px-4 hover:bg-[rgba(0,0,0,0.03)] transition-all duration-200">
       <div className="flex flex-row justify-between">
-        <div className="main">
-          <div className="h-4 w-full text-inputColor text-sm">{category}</div>
-          <div className="h-5 w-full font-semibold pt-[2px]">{topic}</div>
-          <div className="h-4 text-inputColor text-sm w-full mt-1">
+        <div className="">
+          <div className="h-4 w-full text-inputColor text-[13px]">
+            {category}
+          </div>
+          <div className="h-5 w-full font-semibold pt-[2px] text-[15px]">
+            {topic}
+          </div>
+          <div className="h-4 text-inputColor text-[13px] w-full mt-1">
             {postsCount} Tweets
           </div>
         </div>

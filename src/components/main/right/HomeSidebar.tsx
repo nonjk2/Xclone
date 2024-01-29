@@ -42,7 +42,7 @@ const HomeSidebar = () => {
       </div>
       <div className="rounded-lg">
         <Suspense>
-          <SidebarTrendList />
+          <SidebarTrendList sidebar />
         </Suspense>
       </div>
       <div className="sidebar-who to follow"></div>

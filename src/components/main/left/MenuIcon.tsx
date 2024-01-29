@@ -19,7 +19,7 @@ const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
   const boldIcon = sameTitle ? (
     <>
       {!!boldPath && (
-        <div className="relative">
+        <div className="relative flex grow">
           {/* {pathname === "/notifications" && notice > 0 && <Notice />} */}
           <MenuIconSvg path={boldPath} width={6} height={6} color={color} />
         </div>
