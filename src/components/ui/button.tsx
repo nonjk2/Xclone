@@ -66,7 +66,7 @@ const sizeStyles = {
   register: "w-[440px] h-[52px] px-32 w-full",
   message: "w-200 h-13 w-full",
   main: "w-300 h-40 w-full",
-  editProfile: "w-113.73 h-36 font-semibold w-full",
+  editProfile: "w-[113.73px] h-9 font-semibold",
 };
 
 const MyButton: React.FC<ButtonProps> = ({

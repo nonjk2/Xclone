@@ -1,5 +1,5 @@
 "use client";
-import { close, prev } from "@/lib/Icon";
+import { close } from "@/lib/Icon";
 import { Icon } from "../../ui/icon/GoogleIcon";
 import { useRecoilState } from "recoil";
 import { stepState } from "@/context/store/signState";

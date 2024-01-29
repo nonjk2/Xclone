@@ -2,6 +2,7 @@
 import { useSelectedLayoutSegment } from "next/navigation";
 import HomeHeader from "./HomeHeader";
 import ExploreHeader from "./ExploreHeader";
+import ProfileHeader from "./ProfileHeader";
 
 const Header = () => {
   const pathname = useSelectedLayoutSegment();
@@ -13,8 +14,8 @@ const Header = () => {
     //   return <NotificationsHeader />;
     // case "messages":
     //   return <MessagesHeader />;
-    // case "profile":
-    //   return <ProfileHeader />;
+    case "profile":
+      return <ProfileHeader />;
     case "home":
       return <HomeHeader />;
     default:
