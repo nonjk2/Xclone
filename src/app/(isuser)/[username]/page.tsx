@@ -1,5 +1,7 @@
 import Avatar from "@/components/ui/Avatar";
 import Button from "@/components/ui/button";
+import { Icon, SmallIconSvg } from "@/components/ui/icon/GoogleIcon";
+import { calender } from "@/lib/Icon";
 
 const Page = () => {
   return (
@@ -28,7 +30,25 @@ const Page = () => {
         </div>
         <div className="flex flex-col mt-1 mb-3">
           <span className="text-xl font-extrabold">유저네임</span>
-          <span className="flex items-center text-[15px]">@ㅇㅇ</span>
+          <span className="flex items-center text-inputColor text-[15px]">
+            @ㅇㅇ
+          </span>
+        </div>
+
+        <div className="flex mb-3 flex-col">
+          <span className="text-[15px] text-black">ㅁㄴㅇㅁㄴㅇ</span>
+          <span className="text-blue text-[13px] hover:underline">
+            Translate bio
+          </span>
+        </div>
+
+        <div className="flex mb-3 items-center text-inputColor text-[15px] leading-3 font-normal">
+          <div className="mr-1">
+            <SmallIconSvg path={calender} height={18.75} width={18.75} />
+          </div>
+          <span>
+            Joined {new Date().getMonth() + 1} {new Date().getFullYear()}
+          </span>
         </div>
       </div>
     </main>
