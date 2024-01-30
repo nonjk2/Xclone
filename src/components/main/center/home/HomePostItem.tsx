@@ -8,6 +8,7 @@ import Image from "next/image";
 import HomeListItemActionBar from "./HomeListItemActionBar";
 import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
+import IdPath from "./homepostaction/IdPath";
 
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
@@ -40,10 +41,11 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
-            <span className="text-[15px]">{nickname}</span>
-            <span className="text-[15px] text-inputColor font-normal">
-              @{id}
-            </span>
+            <IdPath id={id} nickname>
+              {nickname}
+            </IdPath>
+
+            <IdPath id={id} />
             <span className="text-[15px] text-inputColor font-normal">
               ·{getTimeAgo(createdAt)}
             </span>
@@ -96,7 +98,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
     <div>{ItemContents}</div>
   );
 
-  return <Link href={`/${nickname}/status/${id}`}>{isLastItem}</Link>;
+  return <Link href={`/${nickname}/status/${postId}`}>{isLastItem}</Link>;
 });
 
 MainCenterListItem.displayName = "listitem";

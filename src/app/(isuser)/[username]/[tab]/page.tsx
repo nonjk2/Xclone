@@ -4,8 +4,8 @@ import { Icon, SmallIconSvg } from "@/components/ui/icon/GoogleIcon";
 import { calender } from "@/lib/Icon";
 import Link from "next/link";
 
-const Page = ({ searchParams }: any) => {
-  console.log(searchParams);
+const Page = ({ searchParams }: { searchParams: { slug: string } }) => {
+  console.log("asdfasdf", searchParams);
   return (
     <main className="relative w-full">
       <div className="w-full h-[200px] bg-inputColor"></div>
