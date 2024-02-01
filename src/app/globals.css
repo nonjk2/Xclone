@@ -8,6 +8,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+body {
+  overflow-y: scroll; /* 수직 스크롤바 항상 표시 */
+  scrollbar-color: rgb(185, 202, 211) rgb(247, 249, 249);
+}
+
 .btn {
   width: 300px;
   height: 40px;

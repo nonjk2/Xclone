@@ -16,12 +16,13 @@ const TAB = [
   { tab: "Likes", link: "likes" },
 ];
 
-const Tab = ({ tab = "Posts" }: { tab: Tabs }) => {
+const Tab = ({ tab = "Posts" }: { tab?: Tabs }) => {
   const router = useRouter();
-  const pathname = usePathname().split("/")[2];
+  const pathname = usePathname().split("/")[2] ?? "";
   const BottomSlide = (
     <div className="rounded-full inline-flex bottom-0 absolute min-w-[56px] h-1 self-center bg-blue" />
   );
+
   return (
     <div className="home-header border-b border-gubunsun flex-row items-center h-full grow shrink outline-none block overflow-hidden">
       <div className="overflow-x-auto overflow-y-hidden flex-no-wrap h-full flex-col relative items-stretch flex snap-mandatory">
