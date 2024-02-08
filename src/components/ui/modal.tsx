@@ -10,6 +10,7 @@ interface ModalProps {
   setModal?: Dispatch<SetStateAction<boolean>>;
   onClick?: () => void;
   compose?: boolean;
+  screen?: boolean;
 }
 
 const Modal = ({
@@ -21,9 +22,22 @@ const Modal = ({
   type = "default",
   onClick,
   compose = false,
+  screen = false,
 }: ModalProps) => {
   const ModalWidth = `w-[600px]`;
   const ModalHeight = `h-[${height}px]`;
+  if (screen) {
+    return (
+      <>
+        <div
+          className={`w-screen h-screen fixed flex left-0 top-0 z-[10000] text-black overflow-hidden`}
+        >
+          <div className="flex h-full w-full transition-all">{children}</div>
+        </div>
+        <div className="fixed top-0 left-0 w-screen h-screen bg-modalback z-40" />
+      </>
+    );
+  }
   return (
     <>
       <div

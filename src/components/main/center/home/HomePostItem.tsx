@@ -1,15 +1,17 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 import { ActionBarIconSvg, Icon } from "@/components/ui/icon/GoogleIcon";
 import { threedot } from "@/lib/Icon";
 import { getTimeAgo, switchColor } from "@/lib/func";
-import { forwardRef } from "react";
+import { MouseEventHandler, forwardRef } from "react";
 import { normal } from "../../../../../public";
 import Image from "next/image";
 import HomeListItemActionBar from "./HomeListItemActionBar";
 import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
 import IdPath from "./homepostaction/IdPath";
-
+import { faker } from "@faker-js/faker";
+import { useRouter } from "next/navigation";
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
     content,
@@ -25,12 +27,16 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
     Parent,
   } = props;
   const { image, nickname, id } = User;
-
+  const { push } = useRouter();
   // const onClickMoveHandler = (e) => {
   //   navigate(`/profile/${user.tagName}`);
   //   dispatch(profileSet({ tagName: user.tagName }));
   // };
-
+  const onClickImageRouteHandler: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    push(`/${id}/status/${postId}/photo/1`, { scroll: false });
+  };
   const profileImg = normal;
   // const profileImage = user
   const ItemContents = (
@@ -73,10 +79,14 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
             <span>{content}</span>
           </div>
           {Images[0] && (
-            <div className="relative rounded-2xl mt-3 w-full h-full overflow-hidden">
+            <div
+              className="relative rounded-2xl mt-3 w-full h-full overflow-hidden"
+              onClick={onClickImageRouteHandler}
+            >
               <div className="flex basis-auto flex-col bottom-0 left-0 right-0 top-0 absolute"></div>
               <img
-                src={`${Images[0].link}`}
+                // src={`${Images[0].link}`}
+                src={`${faker.image.urlLoremFlickr()}`}
                 alt="asdasd"
                 className="w-full h-full"
               />

@@ -30,7 +30,9 @@ const Tab = ({ tab = "Posts" }: { tab?: Tabs }) => {
           {TAB.map((e) => (
             <div
               className="flex py-4 flex-grow items-center justify-center min-w-[56px] cursor-pointer flex-col h-[52px] hover:bg-lightblack"
-              onClick={() => router.replace(`/${"profile"}/${e.link}`)}
+              onClick={() =>
+                router.replace(`/${"profile"}/${e.link}`, { scroll: false })
+              }
               key={e.tab}
             >
               <div

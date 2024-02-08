@@ -37,7 +37,7 @@ const NavMenu = () => {
           hoverColor="hoverBgblue"
           size="tweet1"
           title={<span>Post</span>}
-          onClick={() => push("/compose/tweet")}
+          onClick={() => push("/compose/tweet", { scroll: false })}
         />
       </div>
     </header>
