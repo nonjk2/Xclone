@@ -49,7 +49,6 @@ const Actions = ({
         };
     }
   };
-  console.log(heartCount);
   useEffect(() => {
     if (liked) {
       setHeartCount((prev) => prev + 1);

@@ -1,9 +1,10 @@
+import PhotoComponents from "@/components/photo/PhotoComponents";
 import Modal from "@/components/ui/modal";
 
-const Page = () => {
+const Page = async () => {
   return (
     <Modal screen>
-      <div>aaaaa</div>
+      <PhotoComponents />
     </Modal>
   );
 };

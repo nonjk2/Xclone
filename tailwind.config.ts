@@ -37,6 +37,7 @@ const config: Config = {
       gray: "rgb(207, 217, 222)",
       inputColor: "rgb(83, 100, 113)",
       modalback: "rgba(82, 82, 82, 0.7)",
+      modalbackscreen: "rgba(0, 0, 0, 0.95)",
       hoverProfile: "rgb(247,249,249)",
       backgroundOpacity: "rgba(0,0,0,0)",
     },
