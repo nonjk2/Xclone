@@ -52,7 +52,7 @@ const mockPosts: Post[] = [
     User: user1,
     content: "This is my first post!",
     createdAt: new Date(),
-    Images: [mockPostImages[0]],
+    Images: [mockPostImages[0], mockPostImages[1], mockPostImages[2]],
     Hearts: [{ id: "user2" }],
     Reposts: [],
     Comments: [],
