@@ -1,6 +1,9 @@
 "use client";
-import { ActionBarIconSvg } from "@/components/ui/icon/GoogleIcon";
-import { ActionType } from "./HomeListItemActionBar";
+import {
+  ActionBarIconSvg,
+  PhotoActionBarIconSvg,
+} from "@/components/ui/icon/GoogleIcon";
+
 import {
   MouseEvent,
   MouseEventHandler,
@@ -10,23 +13,26 @@ import {
 } from "react";
 import { Player, PlayerState } from "@lottiefiles/react-lottie-player";
 import Counter from "@/components/ui/Counter";
+import { PostActionType } from "./HomeListItemActionBar";
 
 const Actions = ({
   count = 140,
   type,
   icon,
   short = false,
+  photo = false,
 }: {
   count?: number;
-  type: ActionType;
+  type: PostActionType;
   icon: string;
   short?: boolean;
+  photo?: boolean;
 }) => {
   const [heartIcon, setHeartIcon] = useState<boolean>(false);
   const [heartCount, setHeartCount] = useState<number>(count);
   const [liked, setLiked] = useState<boolean>(false);
   const playerRef = useRef<Player>(null);
-  const switchColor = (type: ActionType) => {
+  const switchColor = (type: PostActionType) => {
     switch (type) {
       case "RePost":
         return {
@@ -100,20 +106,46 @@ const Actions = ({
         break;
     }
   };
-
+  const WhiteSvg = ({ photo }: { photo: boolean }) => {
+    if (photo) {
+      return (
+        <PhotoActionBarIconSvg
+          width={22.5}
+          height={22.5}
+          path={icon}
+          color="rgb(255,255,255)"
+        />
+      );
+    }
+    return (
+      <ActionBarIconSvg
+        width={5}
+        height={5}
+        path={icon}
+        color="rgb(83,100,113)"
+      />
+    );
+  };
   return (
     <div
       className={`${short ? "" : "grow"} ${
         type === "BookMark" && "mr-2"
       } flex relative`}
     >
-      <div className="z-50 flex group" onClick={onClickActionHandler}>
+      <div
+        className="z-50 flex group cursor-pointer"
+        onClick={onClickActionHandler}
+      >
         <div
           className={`w-[34.75px] h-[34.75px] absolute ring-0 top-0 bottom-0 left-0 transition-all duration-200 rounded-full -m-2 ${
             switchColor(type).hoverCircle
           }`}
         />
-        <div className={`flex ${switchColor(type).hoverIcon} text-inputColor`}>
+        <div
+          className={`flex ${switchColor(type).hoverIcon} ${
+            photo ? "text-white" : "text-inputColor"
+          }`}
+        >
           <div className="relative w-5 h-5">
             {type === "Heart" ? (
               <>
@@ -127,29 +159,18 @@ const Actions = ({
                   className="absolute w-10 h-10 -top-1/2 -left-1/2"
                   background="none"
                 />
-                {!heartIcon && (
-                  <ActionBarIconSvg
-                    width={5}
-                    height={5}
-                    path={icon}
-                    color="rgb(83,100,113)"
-                  />
-                )}
+                {!heartIcon && <WhiteSvg photo={photo} />}
               </>
             ) : (
-              <ActionBarIconSvg
-                width={5}
-                height={5}
-                path={icon}
-                color="rgb(83,100,113)"
-              />
+              <WhiteSvg photo={photo} />
             )}
           </div>
+
           {!short ? (
             <div
-              className={`text-inputColor ${
+              className={`${
                 switchColor(type).hoverText
-              } px-1 min-w-[calc(1em + 24px)] duration-200 transition-colors text-[13px] overflow-hidden`}
+              } px-1 flex justify-center items-center min-w-[calc(1em + 24px)] duration-200 transition-colors text-[13px] overflow-hidden`}
             >
               <Counter value={heartCount} />
             </div>

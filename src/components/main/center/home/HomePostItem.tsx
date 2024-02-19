@@ -96,7 +96,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
 
         <div className="w-full">
           <div className="flex justify-between">
-            <HomeListItemActionBar count={count} />
+            <HomeListItemActionBar count={count} type="post" />
           </div>
         </div>
       </div>

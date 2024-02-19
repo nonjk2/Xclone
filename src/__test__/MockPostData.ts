@@ -57,8 +57,8 @@ const mockPosts: Post[] = [
     Reposts: [],
     Comments: [],
     _count: {
-      Hearts: 1,
-      Reposts: 0,
+      Hearts: 233,
+      Reposts: 44,
       Comments: 0,
     },
   },
@@ -72,7 +72,7 @@ const mockPosts: Post[] = [
     Reposts: [],
     Comments: [],
     _count: {
-      Hearts: 1,
+      Hearts: 2222,
       Reposts: 0,
       Comments: 0,
     },

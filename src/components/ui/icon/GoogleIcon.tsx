@@ -129,6 +129,18 @@ const ActionBarIconSvg: React.FC<IconProps> = (props) => {
     </div>
   );
 };
+const PhotoActionBarIconSvg: React.FC<IconProps> = (props) => {
+  const { path } = props;
+  return (
+    <div className={"h-[22.5px] w-[22.5px] transition-all duration-200"}>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d={path} fill={"currentcolor"}></path>
+        </g>
+      </svg>
+    </div>
+  );
+};
 const SmallIconSvg: React.FC<IconProps> = (props) => {
   const { path } = props;
   return (
@@ -150,4 +162,5 @@ export {
   Icon,
   MenuIconSvg,
   ActionBarIconSvg,
+  PhotoActionBarIconSvg,
 };
