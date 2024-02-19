@@ -40,6 +40,8 @@ const config: Config = {
       modalbackscreen: "rgba(0, 0, 0, 0.95)",
       hoverProfile: "rgb(247,249,249)",
       backgroundOpacity: "rgba(0,0,0,0)",
+      ButtonOpacity: "rgba(26,26,26,0.75)",
+      ButtonIconOpacity: "rgba(0,0,0,0.75)",
     },
   },
 
