@@ -133,11 +133,13 @@ const Actions = ({
       } flex relative`}
     >
       <div
-        className="z-50 flex group cursor-pointer"
+        className="z-0 flex group cursor-pointer"
         onClick={onClickActionHandler}
       >
         <div
-          className={`w-[34.75px] h-[34.75px] absolute ring-0 top-0 bottom-0 left-0 transition-all duration-200 rounded-full -m-2 ${
+          className={`${
+            photo ? "w-[38.5px] h-[38.5px]" : "w-[34.75px] h-[34.75px]"
+          } absolute ring-0 top-0 bottom-0 left-0 transition-all duration-200 rounded-full -m-2 ${
             switchColor(type).hoverCircle
           }`}
         />
@@ -146,7 +148,11 @@ const Actions = ({
             photo ? "text-white" : "text-inputColor"
           }`}
         >
-          <div className="relative w-5 h-5">
+          <div
+            className={`relative ${
+              photo ? "w-[22.5px] h-[22.5px]" : "w-5 h-5"
+            }`}
+          >
             {type === "Heart" ? (
               <>
                 <Player
@@ -156,7 +162,7 @@ const Actions = ({
                   loop={false}
                   controls={true}
                   keepLastFrame
-                  className="absolute w-10 h-10 -top-1/2 -left-1/2"
+                  className="absolute w-[45px] h-[45px] -top-1/2 -left-1/2"
                   background="none"
                 />
                 {!heartIcon && <WhiteSvg photo={photo} />}
