@@ -1,3 +1,5 @@
+"use client";
+import { useRouter } from "next/navigation";
 import { Dispatch, ReactNode, SetStateAction, useRef } from "react";
 
 interface ModalProps {
@@ -26,6 +28,7 @@ const Modal = ({
 }: ModalProps) => {
   const ModalWidth = `w-[600px]`;
   const ModalHeight = `h-[${height}px]`;
+  const router = useRouter();
   if (screen) {
     return (
       <>
@@ -34,7 +37,10 @@ const Modal = ({
         >
           <div className="flex h-full w-full transition-all">{children}</div>
         </div>
-        <div className="fixed top-0 left-0 w-screen h-screen bg-modalbackscreen z-40" />
+        <div
+          className="fixed top-0 left-0 w-screen h-screen bg-modalbackscreen z-40"
+          onClick={() => router.back()}
+        />
       </>
     );
   }

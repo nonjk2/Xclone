@@ -1,4 +1,4 @@
-import { ActionType } from "@/components/main/center/home/HomeListItemActionBar";
+import { PostActionType } from "@/components/main/center/home/HomeListItemActionBar";
 import isString from "lodash/isString";
 
 const convertToJSDate = (javaDate: Date): Date => {
@@ -38,7 +38,7 @@ const getTimeAgo = (javaDate: Date): string => {
   return `${seconds}s`;
 };
 
-const switchColor = (type: ActionType) => {
+const switchColor = (type: PostActionType | "Close") => {
   switch (type) {
     case "RePost":
       return {
@@ -51,6 +51,12 @@ const switchColor = (type: ActionType) => {
         hoverCircle: "group-hover:bg-hoverRed",
         hoverText: "group-hover:text-red",
         hoverIcon: "group-hover:text-red",
+      };
+    case "Close":
+      return {
+        hoverCircle: "group-hover:bg-ButtonOpacity",
+        hoverText: "group-hover:text-white",
+        hoverIcon: "group-hover:text-white",
       };
 
     default:
