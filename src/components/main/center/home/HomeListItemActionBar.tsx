@@ -120,7 +120,7 @@ const HomeListItemActionBar = ({
         );
       case "photo":
         return (
-          <div className="flex mx-auto my-0 w-[600px] px-4 items-center justify-center">
+          <div className="flex mx-auto my-0 w-[600px] px-7 items-center justify-center h-full">
             {PhotoActionsArray.map((e) => (
               <Fragment key={e}>{IconContainer(e)}</Fragment>
             ))}
