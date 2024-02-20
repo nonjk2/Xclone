@@ -1,10 +1,11 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useContext } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Icon } from "../ui/icon/GoogleIcon";
 import { CaroucelNext, CaroucelPrev } from "@/lib/Icon";
+import { StyleContext } from "@/context/StyleProvider";
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -54,15 +55,20 @@ interface CaroucelProp {
 }
 
 const MultiCaruocel: FC<CaroucelProp> = ({ children }) => {
+  const { photoBoard } = useContext(StyleContext);
   return (
     <Carousel
       arrows
       className="w-full h-full"
-      itemClass="flex items-center justify-center"
+      itemClass={`flex items-center justify-center ${
+        photoBoard ? "w-full" : "w-[calc(100%-350px)]"
+      }`}
       responsive={responsive}
       // deviceType={""}
       customRightArrow={<RightArrow />}
       customLeftArrow={<LeftArrow />}
+      draggable={false}
+      swipeable={false}
     >
       {children}
     </Carousel>
