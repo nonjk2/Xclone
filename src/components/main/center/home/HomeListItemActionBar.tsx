@@ -24,6 +24,13 @@ const PhotoActionsArray: PhotoActionType[] = [
   "View",
   "Share",
 ];
+const PhotoBoardActionsArray: PhotoBoardActionType[] = [
+  "Message",
+  "RePost",
+  "Heart",
+  "BookMark",
+  "Share",
+];
 
 export type PostActionType =
   | "Message"
@@ -34,13 +41,14 @@ export type PostActionType =
   | "Share";
 
 export type PhotoActionType = Exclude<PostActionType, "BookMark">;
+export type PhotoBoardActionType = Exclude<PostActionType, "View">;
 
 const HomeListItemActionBar = ({
   count,
   type,
   photo = false,
 }: {
-  type: "post" | "photo";
+  type: "post" | "photo" | "photoboard";
   count: ActionCount;
   photo?: boolean;
 }) => {
@@ -108,7 +116,7 @@ const HomeListItemActionBar = ({
     }
   };
 
-  const SwitchActionBar = (type: "post" | "photo") => {
+  const SwitchActionBar = (type: "post" | "photo" | "photoboard") => {
     switch (type) {
       case "post":
         return (
@@ -122,6 +130,14 @@ const HomeListItemActionBar = ({
         return (
           <div className="flex mx-auto my-0 w-[600px] px-7 items-center justify-center h-full">
             {PhotoActionsArray.map((e) => (
+              <Fragment key={e}>{IconContainer(e)}</Fragment>
+            ))}
+          </div>
+        );
+      case "photoboard":
+        return (
+          <div className="flex w-full items-center justify-center h-full">
+            {PhotoBoardActionsArray.map((e) => (
               <Fragment key={e}>{IconContainer(e)}</Fragment>
             ))}
           </div>

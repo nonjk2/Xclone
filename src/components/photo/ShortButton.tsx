@@ -17,9 +17,11 @@ const ShortButton = () => {
         if (photoBoard) {
           caroucelSection.style.width = "calc(100% - 350px)";
           photoSection.style.width = "350px";
+          photoSection.style.display = "flex";
         } else {
           caroucelSection.style.width = "100%";
           photoSection.style.width = "0";
+          photoSection.style.display = "none";
         }
       }
     },

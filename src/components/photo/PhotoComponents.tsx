@@ -4,6 +4,12 @@ import CloseButton from "./CloseButton";
 import ShortButton from "./ShortButton";
 import PhotoCaroucel from "./PhotoCaroucel";
 import StyleProvider from "@/context/StyleProvider";
+import Avatar from "../ui/Avatar";
+import IdPath from "../main/center/home/homepostaction/IdPath";
+import { switchColor } from "@/lib/func";
+import { ActionBarIconSvg } from "../ui/icon/GoogleIcon";
+import { threedot } from "@/lib/Icon";
+import PhotoBoardSection from "./PhotoBoardSection";
 const DATA = mockPosts[0];
 
 const PhotoComponents = () => {
@@ -24,10 +30,8 @@ const PhotoComponents = () => {
           <CloseButton />
           <ShortButton />
         </section>
-        <section
-          id="photo-section-2"
-          className="flex w-[350px] bg-white"
-        ></section>
+
+        <PhotoBoardSection Post={DATA} />
       </main>
     </StyleProvider>
   );

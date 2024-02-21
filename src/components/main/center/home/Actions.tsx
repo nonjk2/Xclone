@@ -14,6 +14,7 @@ import {
 import { Player, PlayerState } from "@lottiefiles/react-lottie-player";
 import Counter from "@/components/ui/Counter";
 import { PostActionType } from "./HomeListItemActionBar";
+import { usePathname } from "next/navigation";
 
 const Actions = ({
   count = 140,
@@ -32,6 +33,8 @@ const Actions = ({
   const [heartCount, setHeartCount] = useState<number>(count);
   const [liked, setLiked] = useState<boolean>(false);
   const playerRef = useRef<Player>(null);
+  const photos = usePathname().includes("photo");
+
   const switchColor = (type: PostActionType) => {
     switch (type) {
       case "RePost":
@@ -107,6 +110,16 @@ const Actions = ({
     }
   };
   const WhiteSvg = ({ photo }: { photo: boolean }) => {
+    if (photos) {
+      return (
+        <PhotoActionBarIconSvg
+          width={22.5}
+          height={22.5}
+          path={icon}
+          color="rgb(83,100,113)"
+        />
+      );
+    }
     if (photo) {
       return (
         <PhotoActionBarIconSvg
