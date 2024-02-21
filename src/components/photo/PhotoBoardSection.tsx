@@ -7,6 +7,7 @@ import Avatar from "../ui/Avatar";
 import { ActionBarIconSvg } from "../ui/icon/GoogleIcon";
 import HomeListItemActionBar from "../main/center/home/HomeListItemActionBar";
 import PostTweet from "../main/center/PostTweet";
+import { Suspense } from "react";
 
 const PhotoBoardSection = ({ Post }: { Post: Post }) => {
   const { id, nickname, image } = Post.User;
@@ -31,6 +32,7 @@ const PhotoBoardSection = ({ Post }: { Post: Post }) => {
     <section
       id="photo-section-2"
       className="flex flex-col w-[350px] bg-white overflow-y-scroll"
+      onClick={(e) => e.stopPropagation()}
     >
       <article className="flex w-full px-4 pt-3 flex-col">
         {/* 프로필 */}
@@ -77,7 +79,10 @@ const PhotoBoardSection = ({ Post }: { Post: Post }) => {
           <HomeListItemActionBar count={_count} type="photoboard" />
         </div>
       </article>
+      {/* Reply */}
       <PostTweet type="tweet" comment="Post Reply" photo />
+      {/* 게시물 */}
+      <Suspense></Suspense>
       <div className="min-h-[1200px] h-[1200px] bg-blue"></div>
     </section>
   );

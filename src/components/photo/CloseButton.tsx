@@ -2,14 +2,19 @@
 import { close } from "@/lib/Icon";
 import { Icon } from "../ui/icon/GoogleIcon";
 import { useRouter } from "next/navigation";
+import { MouseEventHandler } from "react";
 
 const CloseButton = () => {
   const router = useRouter();
+  const onClickHandler: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
+    router.back();
+  };
   return (
     <div className="absolute flex justify-center items-center left-0 top-0 w-[60px] h-[60px]">
       <div className="relative">
         <div
-          onClick={() => router.back()}
+          onClick={onClickHandler}
           className={`flex items-center justify-center z-20 hover:bg-ButtonOpacity cursor-pointer w-[34.75px] h-[34.75px] bg-ButtonIconOpacity transition-all duration-200 rounded-full`}
         >
           <Icon

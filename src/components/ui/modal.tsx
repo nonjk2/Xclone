@@ -35,12 +35,16 @@ const Modal = ({
         <div
           className={`w-screen h-screen fixed flex left-0 top-0 z-[10000] text-black overflow-hidden`}
         >
-          <div className="flex h-full w-full transition-all">{children}</div>
+          <div
+            onClick={() => {
+              router.back();
+            }}
+            className="flex h-full w-full transition-all z-50"
+          >
+            {children}
+          </div>
+          <div className="fixed top-0 left-0 w-screen h-screen bg-modalbackscreen z-40" />
         </div>
-        <div
-          className="fixed top-0 left-0 w-screen h-screen bg-modalbackscreen z-40"
-          onClick={() => router.back()}
-        />
       </>
     );
   }

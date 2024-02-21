@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import PhotoImage from "../ui/Image";
 import MultiCaruocel from "./MultiCaruocel";
 
 const PhotoCaroucel = ({ images }: { images: PostImage[] }) => {
@@ -10,7 +11,7 @@ const PhotoCaroucel = ({ images }: { images: PostImage[] }) => {
             key={item.imageId}
             className="w-full h-full relative overflow-hidden flex items-center justify-center"
           >
-            <img
+            <PhotoImage
               src={`${item.link}`}
               alt="asdf"
               className="bg-contain bg-no-repeat bg-center"

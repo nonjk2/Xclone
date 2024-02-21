@@ -10,6 +10,7 @@ const ShortButton = () => {
   const onClickHandler: MouseEventHandler<HTMLDivElement> = useCallback(
     (e) => {
       e.preventDefault();
+      e.stopPropagation();
       const photoSection = document.getElementById("photo-section-2");
       const caroucelSection = document.getElementById("photo-section-1");
       if (photoSection && caroucelSection) {
