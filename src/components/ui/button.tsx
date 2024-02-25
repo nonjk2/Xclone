@@ -64,7 +64,7 @@ const sizeStyles = {
   login1: "w-300 h-10 w-full",
   login2: "w-[300px] h-9 px-4 w-full",
   register: "w-[440px] h-[52px] px-32 w-full",
-  message: "w-200 h-13 w-full",
+  message: "w-[200px] h-[52px]",
   main: "w-300 h-40 w-full",
   editProfile: "w-[113.73px] h-9 font-semibold",
 };
