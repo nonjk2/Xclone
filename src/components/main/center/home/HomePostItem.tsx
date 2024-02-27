@@ -3,15 +3,17 @@
 import { ActionBarIconSvg, Icon } from "@/components/ui/icon/GoogleIcon";
 import { threedot } from "@/lib/Icon";
 import { getTimeAgo, switchColor } from "@/lib/func";
-import { MouseEventHandler, forwardRef } from "react";
+import { MouseEventHandler, Suspense, forwardRef } from "react";
 import { normal } from "../../../../../public";
-import Image from "next/image";
 import HomeListItemActionBar from "./HomeListItemActionBar";
 import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
 import IdPath from "./homepostaction/IdPath";
 import { faker } from "@faker-js/faker";
 import { useRouter } from "next/navigation";
+import ImageWithSuspense from "@/components/ui/ImageSuspense";
+import Loading from "@/app/(isuser)/home/loading";
+import Image from "next/image";
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
     content,
@@ -80,15 +82,17 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
           </div>
           {Images[0] && (
             <div
-              className="relative rounded-2xl mt-3 w-full h-full overflow-hidden"
+              className="relative rounded-2xl mt-3 w-full h-full overflow-hidden border border-gubunsun"
               onClick={onClickImageRouteHandler}
             >
-              <div className="flex basis-auto flex-col bottom-0 left-0 right-0 top-0 absolute"></div>
-              <img
-                // src={`${Images[0].link}`}
+              <div className="flex basis-auto flex-col bottom-0 left-0 right-0 top-0 absolute "></div>
+              <Image
                 src={`${faker.image.urlLoremFlickr()}`}
-                alt="asdasd"
+                alt="Image description"
                 className="w-full h-full"
+                width={100}
+                height={100}
+                priority
               />
             </div>
           )}
