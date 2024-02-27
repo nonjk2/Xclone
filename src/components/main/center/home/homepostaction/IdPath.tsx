@@ -7,17 +7,29 @@ interface IdPathProps {
   id: string;
   nickname?: boolean;
   children?: ReactNode;
+  message?: boolean;
 }
-const IdPath = ({ id, nickname = false, children }: IdPathProps) => {
+const IdPath = ({
+  id,
+  nickname = false,
+  children,
+  message = false,
+}: IdPathProps) => {
   const router = useRouter();
   const onClickHandler: MouseEventHandler<HTMLSpanElement> = (e) => {
     e.preventDefault();
+    if (message) {
+      return;
+    }
     e.stopPropagation();
     router.push(`/${id}`);
   };
   if (nickname) {
     return (
-      <span onClick={onClickHandler} className="text-[15px] hover:underline">
+      <span
+        onClick={onClickHandler}
+        className={`text-[15px] ${message ? "" : "hover:underline"}`}
+      >
         {children}
       </span>
     );

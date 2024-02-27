@@ -10,16 +10,16 @@ const MessagesHeader = () => {
         </div>
       </div>
       <div className="flex h-full items-center">
-        <div className="flex items-center justify-center relative w-[34px] h-[34px] cursor-pointer">
+        <div className="group flex items-center justify-center relative w-[34px] h-[34px] cursor-pointer">
           <div
-            className="absolute flex justify-center items-center rounded-full flex-row cursor-pointer hover:bg-hoverLightBlack transition-all duration-200"
+            className="group-hover:bg-hoverLightBlack w-full h-full absolute flex justify-center items-center rounded-full flex-row cursor-pointer transition-all duration-200"
             title="close"
           />
           <Icon path={setting} height={5} width={5} />
         </div>
-        <div className="flex items-center justify-center relative w-[34px] h-[34px] cursor-pointer">
+        <div className="group/close flex items-center justify-center relative w-[34px] h-[34px] cursor-pointer">
           <div
-            className="absolute flex justify-center items-center rounded-full flex-row cursor-pointer hover:bg-hoverLightBlack transition-all duration-200"
+            className="group-hover/close:bg-hoverLightBlack w-full h-full absolute flex justify-center items-center rounded-full flex-row cursor-pointer transition-all duration-200"
             title="close"
           />
           <Icon path={MessagePlus} height={5} width={5} />

@@ -19,7 +19,9 @@ const page = () => {
           hoverColor="hoverBgblue"
           backgroundColor="blue"
           borderColor="blue"
-          title={<span>new Message</span>}
+          title={
+            <span className="text-white font-bold text-lg">new Message</span>
+          }
         />
       </div>
     </div>
