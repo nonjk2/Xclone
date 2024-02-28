@@ -2,7 +2,12 @@ import PhotoComponents from "@/components/photo/PhotoComponents";
 import Modal from "@/components/ui/modal";
 import KeyDownProvider from "@/context/KeyDownProvider";
 
-const Page = async () => {
+const Page = async ({
+  params,
+}: {
+  params: { username: string; id: string; photoid: number };
+}) => {
+  console.log(params);
   return (
     <KeyDownProvider>
       <Modal screen>
