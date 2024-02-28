@@ -56,6 +56,10 @@ body {
   filter: invert(1);
 }
 
+textarea:focus {
+  outline: none;
+}
+
 .clone-a-tag {
   direction: ltr;
   unicode-bidi: isolate;
