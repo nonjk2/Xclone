@@ -1,7 +1,7 @@
 import PostTweet from "@/components/main/center/PostTweet";
 import HomePostList from "@/components/main/center/home/HomePostList";
 import { Suspense } from "react";
-import Loading from "./loading";
+import Loading from "../explore/loading";
 
 const Page = async () => {
   return (
