@@ -1,17 +1,32 @@
-const mockPostImages: PostImage[] = [
-  {
-    link: "https://cdn.pixabay.com/photo/2017/08/26/23/04/flower-2684651_1280.jpg",
-    imageId: 1,
-  },
-  {
-    link: "https://cdn.pixabay.com/photo/2018/03/12/22/15/no-person-3221109_1280.jpg",
-    imageId: 2,
-  },
-  {
-    link: "https://cdn.pixabay.com/photo/2017/09/23/23/22/tomato-2780424_1280.jpg",
-    imageId: 3,
-  },
-];
+import { faker } from "@faker-js/faker";
+
+const mockPostImages: PostImage[] = Array.from({ length: 10 }, (_, index) => ({
+  link: faker.image.urlLoremFlickr(),
+  imageId: index + 1,
+}));
+
+// [
+//   {
+//     link: faker.image.urlLoremFlickr(),
+//     imageId: 1,
+//   },
+//   {
+//     link: faker.image.urlLoremFlickr(),
+//     imageId: 2,
+//   },
+//   {
+//     link: faker.image.urlLoremFlickr(),
+//     imageId: 3,
+//   },
+//   {
+//     link: faker.image.urlLoremFlickr(),
+//     imageId: 4,
+//   },
+//   {
+//     link: faker.image.urlLoremFlickr(),
+//     imageId: 5,
+//   },
+// ];
 const user1: User = {
   id: "user1",
   nickname: "JohnDoe",
@@ -67,7 +82,7 @@ const mockPosts: Post[] = [
     User: user2,
     content: "Just shared an amazing photo!",
     createdAt: new Date(),
-    Images: [mockPostImages[1]],
+    Images: [mockPostImages[3], mockPostImages[4]],
     Hearts: [{ id: "user1" }],
     Reposts: [],
     Comments: [],
@@ -82,13 +97,33 @@ const mockPosts: Post[] = [
     User: user3,
     content: "Feeling good today!",
     createdAt: new Date(),
-    Images: [mockPostImages[2]],
+    Images: [mockPostImages[5]],
     Hearts: [],
     Reposts: [],
     Comments: [],
     _count: {
       Hearts: 0,
       Reposts: 0,
+      Comments: 0,
+    },
+  },
+  {
+    postId: 4,
+    User: user3,
+    content: "Feeling good today!",
+    createdAt: new Date(),
+    Images: [
+      mockPostImages[6],
+      mockPostImages[7],
+      mockPostImages[8],
+      mockPostImages[9],
+    ],
+    Hearts: [],
+    Reposts: [],
+    Comments: [],
+    _count: {
+      Hearts: 22,
+      Reposts: 11,
       Comments: 0,
     },
   },
