@@ -16,7 +16,8 @@ const PhotoCaroucel = ({ images }: { images: PostImage[] }) => {
               <PhotoImage
                 src={`${item.link}`}
                 alt="asdf"
-                className="bg-contain bg-no-repeat bg-center"
+                className="object-cover"
+                loading="lazy"
               />
             </Suspense>
           </div>
