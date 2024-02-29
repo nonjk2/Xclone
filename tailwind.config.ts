@@ -14,6 +14,10 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
+    screens: {
+      short: { raw: "(max-height: 844px)" },
+      "max-xl": { max: "1300px" },
+    },
     fontFamily: {
       twitterFontFamily:
         "font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;",
