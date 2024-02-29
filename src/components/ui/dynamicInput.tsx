@@ -15,6 +15,8 @@ interface InputProps {
   onFocus?: (id: string, step: number) => void;
   step?: number;
   hasIcon?: boolean;
+  validationMessages: string;
+  validation: boolean;
 }
 
 const DynamicInput: React.FC<InputProps> = ({
@@ -28,9 +30,24 @@ const DynamicInput: React.FC<InputProps> = ({
   autoFocus = false,
   step,
   hasIcon = false,
+  validationMessages,
+  validation,
 }) => {
   const [active, setActive] = useState(false);
   const setId = useSetRecoilState(inputIdState);
+
+  const getBorderClass = () => {
+    if (value.length === 0) return "border-inputColor";
+    if (active) return validation ? "border-red" : "border-blue";
+    return validation ? "border-red" : "border-inputColor";
+  };
+
+  const getTextClass = () => {
+    if (value.length === 0) return "text-inputColor";
+    if (active) return validation ? "text-red" : "text-blue";
+    return validation ? "text-red" : "text-inputColor";
+  };
+
   return (
     <div
       className="py-3 w-full flex flex-col relative"
@@ -41,9 +58,7 @@ const DynamicInput: React.FC<InputProps> = ({
     >
       <label
         htmlFor={id}
-        className={`border rounded ${
-          active ? "border-blue" : "border-gray"
-        }  transition-all flex-row
+        className={`border rounded ${getBorderClass()} transition-all flex-row
         ${disabled ? "bg-gubunsun border-gubunsun" : "bg-white"} 
         `}
       >
@@ -54,7 +69,7 @@ const DynamicInput: React.FC<InputProps> = ({
               disabled || value.length >= 1 || active
                 ? "text-xs pt-2"
                 : "text-[17px] pt-4"
-            } ${active ? "text-blue" : "text-inputColor"} pl-2 pr-2`}
+            } ${getTextClass()} pl-2 pr-2`}
           >
             {placeholder}
           </div>
@@ -89,6 +104,13 @@ const DynamicInput: React.FC<InputProps> = ({
           </div>
         </div>
       </label>
+      {validation && value.length > 0 && (
+        <div className="flex w-full px-2 pt-1">
+          <span className="leading-3 text-[13px] text-red">
+            {validationMessages}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

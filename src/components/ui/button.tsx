@@ -53,6 +53,7 @@ const bgColorStyles = {
   blue: "bg-blue",
   black: "bg-black",
   lightBlack: "hover:bg-gray",
+  gray: "bg-[rgba(82,82,82,0.75)]",
 };
 
 const sizeStyles = {
@@ -90,7 +91,9 @@ const MyButton: React.FC<ButtonProps> = ({
         sizeStyles[size]
       } border-buttonBorderGray ${color && colorStyles[color]} ${
         backgroundColor && bgColorStyles[backgroundColor]
-      } ${hoverColor && colorStyles[hoverColor]}`}
+      } ${hoverColor && !disabled && colorStyles[hoverColor]} ${
+        disabled && bgColorStyles["gray"]
+      }`}
     >
       {children}
     </button>
