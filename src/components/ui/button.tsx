@@ -21,6 +21,7 @@ interface MyButtonProps {
   size:
     | "tweet1"
     | "tweet2"
+    | "tweet3"
     | "getVerify"
     | "follow"
     | "logout"
@@ -55,8 +56,9 @@ const bgColorStyles = {
 };
 
 const sizeStyles = {
-  tweet1: "w-[90%] h-[52px] px-8 text-[17px] font-bold",
+  tweet1: "w-full h-[52px] px-8 text-[17px] font-bold",
   tweet2: "w-[75px] h-9 px-4 w-full",
+  tweet3: "w-full h-full",
   draft: "h-9 px-4 border-none",
   getVerify: "h-9 px-4 w-[120px] text-[15px]",
   follow: "w-78 h-32 px-16 w-full",

@@ -35,9 +35,9 @@ const Layout = ({
   return (
     <div className="flex flex-row w-full">
       <div className="flex basis-auto flex-col relative grow z-20 items-end">
-        <div className="flex items-stretch z-0 w-[275px] relative">
-          <div className="items-stretch flex fixed top-0 h-full">
-            <div className="items-stretch flex relative h-full justify-between flex-col overflow-y-auto gap-2 w-[275px] px-2">
+        <div className="flex items-stretch z-0 w-[275px] max-xl:w-[88px] relative">
+          <div className="items-stretch flex fixed top-0 h-full w-[275px] max-xl:items-end">
+            <div className="items-stretch flex relative h-full justify-between flex-col overflow-y-auto gap-2 w-[275px] px-2 max-xl:w-[88px]">
               <NavMenu />
               <MainHeaderProfile type="profile" />
             </div>
