@@ -61,7 +61,7 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
       case "follow":
         return "flex items-center";
       case "profile":
-        return "flex-end flex rounded-full transition-all duration-300";
+        return "flex-end flex rounded-full transition-all duration-300 max-xl:hidden";
       case "search":
         return "flex items-center";
 
@@ -70,7 +70,7 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
     }
   };
   return (
-    <div className="flex my-3 w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 hover:rounded-full items-center">
+    <div className="flex my-3 max-xl:w-[64px] w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 hover:rounded-full items-center">
       <div
         className="flex justify-between p-3 w-full items-center"
         //   onClick={logoutHandelr}
@@ -82,7 +82,7 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
             className="inset-0 h-full absolute w-full -z-10"
           />
         </div>
-        <div className="mx-3 grow">
+        <div className="mx-3 grow max-xl:hidden">
           <div className="font-semibold">{"asd"}</div>
           <div className="text-inputColor">{"adsf"}</div>
         </div>
