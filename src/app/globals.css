@@ -10,6 +10,7 @@
 
 body {
   overflow-y: scroll; /* 수직 스크롤바 항상 표시 */
+  overflow-x: hidden;
   scrollbar-color: rgb(185, 202, 211) rgb(247, 249, 249);
 }
 
