@@ -11,6 +11,7 @@ const Signfirst = () => {
   const [step, setStep] = useRecoilState(stepState);
   const [formdataState, setformData] = useRecoilState(textState);
   const { formData, selectData } = formdataState;
+
   const [validate, setValidator] = useState<{ name: boolean; email: boolean }>({
     name: false,
     email: false,
@@ -76,6 +77,7 @@ const Signfirst = () => {
             <span className="inherit-span">계정을 생성하세요</span>
           </h1>
         </div>
+
         <div className="flex flex-col relative">
           <DynamicInput
             value={formData["nickname"]}
