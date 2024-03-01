@@ -15,8 +15,8 @@ interface InputProps {
   onFocus?: (id: string, step: number) => void;
   step?: number;
   hasIcon?: boolean;
-  validationMessages: string;
-  validation: boolean;
+  validationMessages?: string;
+  validation?: boolean;
 }
 
 const DynamicInput: React.FC<InputProps> = ({

@@ -81,10 +81,11 @@ const MyButton: React.FC<ButtonProps> = ({
   onClick,
   disabled,
   children,
+  type,
 }) => {
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className={`border rounded-full outline-none transition duration-200 ${
@@ -104,7 +105,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   const {
     onClick,
     title,
-    type,
+    type = "button",
     color,
     size,
     backgroundColor,
