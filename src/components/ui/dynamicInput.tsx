@@ -17,6 +17,7 @@ interface InputProps {
   hasIcon?: boolean;
   validationMessages?: string;
   validation?: boolean;
+  required?: boolean;
 }
 
 const DynamicInput: React.FC<InputProps> = ({
@@ -32,6 +33,7 @@ const DynamicInput: React.FC<InputProps> = ({
   hasIcon = false,
   validationMessages,
   validation,
+  required = false,
 }) => {
   const [active, setActive] = useState(false);
   const setId = useSetRecoilState(inputIdState);
@@ -79,6 +81,7 @@ const DynamicInput: React.FC<InputProps> = ({
             <input
               disabled={disabled}
               autoFocus={autoFocus}
+              required={required}
               type={type}
               name="text"
               dir="auto"
