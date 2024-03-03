@@ -1,6 +1,9 @@
 "use server";
 
-export const loginOnSubmit = (prevState: any, formData: FormData) => {
+import { signIn } from "@/auth";
+import { redirect } from "next/navigation";
+
+export const loginOnSubmit = async (prevState: any, formData: FormData) => {
   //   if (!formData.get("id") || !(formData.get("id") as string)?.trim()) {
   //     return { message: "no_id" };
   //   }
@@ -17,9 +20,17 @@ export const loginOnSubmit = (prevState: any, formData: FormData) => {
   //     return { message: "no_image" };
   //   }
   //   formData.set("nickname", formData.get("name") as string);
-  //   let shouldRedirect = false;
+  let shouldRedirect = false;
+  try {
+    await signIn("credentials", {
+      username: formData.get("name") as string,
+      password: formData.get("password") as string,
+      redirect: false,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  redirect("/home");
 
-  console.log("formdata : ", formData, "prevState : ", formData);
-
-  return { message: null };
+  //   return { message: null };
 };
