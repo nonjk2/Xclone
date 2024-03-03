@@ -13,6 +13,7 @@ interface SelectProps extends SelectStyleProps {
   formatOption: (index: number) => string;
   selectValue: string;
   id: string;
+  required?: boolean;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -23,6 +24,7 @@ const Select: FC<SelectProps> = ({
   flexGrow,
   selectValue,
   id,
+  required = false,
   onChange,
 }) => {
   const [focus, setFocus] = useState(false);
@@ -44,6 +46,7 @@ const Select: FC<SelectProps> = ({
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
         onChange={onChange}
+        required={required}
         className="w-full p-2 pt-3 leading-5 outline-none text-[17px] mt-4 appearance-none opacity-1 text-black border-none"
       >
         {/* <option disabled /> */}
