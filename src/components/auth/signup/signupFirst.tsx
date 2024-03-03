@@ -89,6 +89,7 @@ const Signfirst = () => {
             // autoFocus
             onFocus={onFocus}
             step={step}
+            required
           />
 
           <DynamicInput
@@ -100,6 +101,7 @@ const Signfirst = () => {
             validationMessages={"올바른 이메일을 입력해 주세요."}
             onFocus={onFocus}
             step={step}
+            required
           />
           <div className="hover:underline cursor-pointer whitespace-pre-wrap text-right break-words leading-5 text-blue z-50">
             <span className="inherit-span text-right cursor-pointer">
@@ -125,6 +127,7 @@ const Signfirst = () => {
               formatOption={(i) => `${i + 1}월`}
               flexGrow={2}
               id={"month"}
+              required
             />
             <Select
               onChange={handleSelectChange}
@@ -134,6 +137,7 @@ const Signfirst = () => {
               count={31}
               formatOption={(i) => `${i + 1}일`}
               flexGrow={1}
+              required
             />
             <Select
               selectValue={selectData.year}
@@ -143,6 +147,7 @@ const Signfirst = () => {
               count={100}
               formatOption={(i) => `${currentYear - i}년`}
               flexGrow={1}
+              required
             />
           </div>
         </div>
