@@ -6,13 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mock": "npx tsx watch ./src/mocks/https.ts"
   },
   "dependencies": {
+    "@auth/core": "^0.28.0",
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "framer-motion": "^11.0.3",
     "lodash": "^4.17.21",
     "next": "14.0.3",
+    "next-auth": "^4.24.6",
     "react": "^18",
     "react-dom": "^18",
     "react-multi-carousel": "^2.8.4",
@@ -34,7 +37,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "express": "^4.18.2",
-    "msw": "^2.2.2",
+    "msw": "2.1",
     "postcss": "^8",
     "postcss-nesting": "^12.0.2",
     "tailwindcss": "^3.3.0",
