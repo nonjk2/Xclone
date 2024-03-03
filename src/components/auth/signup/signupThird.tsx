@@ -4,7 +4,7 @@ import DynamicInput from "../../ui/dynamicInput";
 import { stepState, textState } from "@/context/store/signState";
 import Button from "../../ui/button";
 import { useFormState, useFormStatus } from "react-dom";
-import { loginOnSubmit } from "@/lib/action/action";
+import { loginOnSubmit } from "@/lib/action/auth/action";
 
 const SignThird = () => {
   const [step, setStep] = useRecoilState(stepState);
@@ -12,7 +12,7 @@ const SignThird = () => {
   const { formData, selectData } = formdataState;
   const { pending } = useFormStatus();
   const [state, formAction] = useFormState(loginOnSubmit, { message: null });
-  const nextStep = () => setStep((step) => step + 1);
+  // const nextStep = () => setStep((step) => step + 1);
 
   const onFocus = (id: string, step: number) => {
     if (step === 3) {
