@@ -1,17 +1,12 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import MainCenterListItem from "./HomePostItem";
-import { getPostList } from "@/lib/action/server";
+import { getPostFollowList } from "@/lib/action/server";
 
-// const DATA = mockPosts;
-
-const HomePostList = () => {
+const HomeFollowPostList = () => {
   const { data: res } = useQuery({
-    queryKey: ["post", "recommend"],
-    queryFn: getPostList,
+    queryKey: ["post", "follow"],
+    queryFn: getPostFollowList,
   });
-
   return res?.map((e) => <MainCenterListItem key={e.postId} {...e} />);
 };
-export default HomePostList;
+export default HomeFollowPostList;
