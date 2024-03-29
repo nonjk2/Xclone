@@ -5,7 +5,8 @@ import Sidebar from "@/components/main/right/Sidebar";
 import MainHeaderProfile from "@/components/ui/profile";
 import HomeTabProvider from "@/context/HomeTabProvider";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
+import Loading from "../(notuser)/@modal/(.)i/flow/signup/loading";
 
 const Layout = ({
   children,
@@ -39,7 +40,9 @@ const Layout = ({
           <div className="items-stretch flex fixed top-0 h-full w-[275px] max-xl:items-end">
             <div className="items-stretch flex relative h-full justify-between flex-col overflow-y-auto gap-2 w-[275px] px-2 max-xl:w-[88px]">
               <NavMenu />
-              <MainHeaderProfile type="profile" />
+              <Suspense fallback={<Loading />}>
+                <MainHeaderProfile type="profile" />
+              </Suspense>
             </div>
           </div>
         </div>

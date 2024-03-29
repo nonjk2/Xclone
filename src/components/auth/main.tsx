@@ -3,6 +3,7 @@ import { AppleIcon, GoogleIcon } from "../ui/icon/GoogleIcon";
 import Button from "../ui/button";
 import Image from "next/image";
 import { logo, main } from "../../../public";
+import SignInButton from "./signin/signInButton";
 
 const Main = () => {
   return (
@@ -41,26 +42,7 @@ const Main = () => {
           {/* 로그인 폼 섹션 */}
           <div className="w-full h-[344px]">
             <div className="w-[300px] mb-2 max-w-[380px]">
-              <Button
-                // onClick={() => socialhandler(googleLinkOptions)}
-                hoverColor="hoverLightBlue"
-                size="login1"
-                color="blue"
-                backgroundColor="white"
-                borderColor="gray"
-                title={
-                  <div className="flex items-center justify-center gap-1 font-bold">
-                    <GoogleIcon
-                      height={18}
-                      path=""
-                      width={18}
-                      isgoogle
-                      isHover
-                    />
-                    <span className="google-span">Google 계정으로 로그인</span>
-                  </div>
-                }
-              />
+              <SignInButton />
             </div>
             <div className="w-[300px] max-w-[380px]">
               <Button

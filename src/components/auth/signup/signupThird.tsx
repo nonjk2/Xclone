@@ -4,14 +4,13 @@ import DynamicInput from "../../ui/dynamicInput";
 import { stepState, textState } from "@/context/store/signState";
 import Button from "../../ui/button";
 import { useFormState, useFormStatus } from "react-dom";
-import { loginOnSubmit } from "@/lib/action/auth/action";
 
 const SignThird = () => {
   const [step, setStep] = useRecoilState(stepState);
   const [formdataState, setformData] = useRecoilState(textState);
   const { formData, selectData } = formdataState;
   const { pending } = useFormStatus();
-  const [state, formAction] = useFormState(loginOnSubmit, { message: null });
+  // const [state, formAction] = useFormState(loginOnSubmit, { message: null });
   // const nextStep = () => setStep((step) => step + 1);
 
   const onFocus = (id: string, step: number) => {
@@ -23,7 +22,7 @@ const SignThird = () => {
 
   return (
     <div className="flex flex-col relative px-20 max-w-[600px] grow">
-      <form action={formAction}>
+      <form>
         <div className="flex relative my-5">
           <h1 className="font-bold text-[31px] leading-9 text-black">
             <span className="inherit-span">계정을 생성하세요</span>
