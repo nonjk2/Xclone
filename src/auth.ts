@@ -1,96 +1,70 @@
-import NextAuth from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from "next/headers";
-import cookie from "cookie";
-import { SignInOptions } from "next-auth/react";
-import { ProviderType } from "next-auth/providers/index";
+import GoogleProvider from "next-auth/providers/google";
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  signIn,
-}: {
-  handlers: any;
-  auth: any;
-  signIn: (
-    provider: ProviderType,
-    options: SignInOptions,
-    authorizationParams?: Record<string, string>
-  ) => void;
-} = NextAuth({
+export const authOption: NextAuthOptions = {
   pages: {
-    signIn: "/i/flow/login",
-    newUser: "/i/flow/signup",
+    signIn: "/",
   },
-  //   callbacks: {
-  //     jwt({ token }) {
-  //       console.log("auth.ts jwt", token);
-  //       return token;
-  //     },
-  //     session({ session, newSession, user }) {
-  //       console.log("auth.ts session", session, newSession, user);
-  //       return session;
-  //     },
-  //   },
-  //   events: {
-  //     signOut(data) {
-  //       console.log(
-  //         "auth.ts events signout",
-  //         "session" in data && data.session,
-  //         "token" in data && data.token
-  //       );
-  //       // if ('session' in data) {
-  //       //   data.session = null;
-  //       // }
-  //       // if ('token' in data) {
-  //       //   data.token = null;
-  //       // }
-  //     },
-  //     session(data) {
-  //       console.log(
-  //         "auth.ts events session",
-  //         "session" in data && data.session,
-  //         "token" in data && data.token
-  //       );
-  //     },
-  //   },
+  secret: process.env.NEXTAUTH_SECRET,
+  logger: {
+    error: (err) => console.log(err),
+  },
+  callbacks: {
+    async jwt({ token, user, account }) {
+      if (user) {
+        // console.log("user : ", user, "token : ", token, "account : ", account);
+        // token.uid = user.id;
+        // token.role = user.role;
+        // token.email = user.email;
+        // token.name = user.name;
+        // token.picture = user.image;
+      }
+      // console.log("token : ", token);
+      return token;
+    },
+    async session({ session, token, user }) {
+      if (token.uid) {
+        // console.log("session : ", session, "token : ", token);
+        // session.user.id = token.uid as string;
+        // session.user.email = token.email;
+        // session.user.image = token.picture;
+        // session.user.nickname = token.name;
+        // session.user.role = token.role;
+        // session.user.role =
+      }
+      return session;
+    },
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
+  events: {
+    signOut(data) {},
+    session(data) {},
+  },
   providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "email", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials, req) {
-        const authResponse = await fetch(`${process.env.AUTH_URL}/api/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-        });
-        const userResponse = await authResponse.json();
-        const user = {
-          id: userResponse.id,
-          nickname: userResponse.nickname,
-          email: userResponse.nickname,
-          image: userResponse.image,
-        };
-        console.log(user);
-
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
-        }
-      },
+    // CredentialsProvider({
+    //   name: "Credentials",
+    //   credentials: {
+    //     email: { value: "asdfasd@nasdd", type: "email", label: "email" },
+    //     password: { value: "12312411", type: "password", label: "password" },
+    //   },
+    //   async authorize(credentials, req) {
+    //     if (!(credentials?.email && credentials.password)) {
+    //       return null;
+    //     }
+    //     const response = await authenticateUser(
+    //       credentials.email,
+    //       credentials.password
+    //     );
+    //     return response;
+    //   },
+    // }),
+    GoogleProvider({
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET_ID || "",
     }),
   ],
-});
+};
