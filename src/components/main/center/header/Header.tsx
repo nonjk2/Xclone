@@ -10,6 +10,8 @@ const Header = () => {
   switch (pathname) {
     case "explore":
       return <ExploreHeader />;
+    case "search":
+      return <ExploreHeader />;
     // case "notifications":
     //   return <NotificationsHeader />;
     case "messages":
