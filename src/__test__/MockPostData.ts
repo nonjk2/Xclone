@@ -203,5 +203,86 @@ const mockFollowPosts: Post[] = [
     },
   },
 ];
+const mockSearchPosts = (tag: string | readonly string[]): Post[] => {
+  return [
+    {
+      postId: 1,
+      User: user1,
+      content: `${tag}asd followTest`,
+      createdAt: new Date(),
+      Images: [
+        mockPostImagestwo[0],
+        mockPostImagestwo[1],
+        mockPostImagestwo[2],
+      ],
+      Hearts: [{ id: "user2" }],
+      Reposts: [],
+      Comments: [],
+      _count: {
+        Hearts: 233,
+        Reposts: 44,
+        Comments: 0,
+      },
+    },
+    {
+      postId: 2,
+      User: user2,
+      content: `${tag}asd followTestaaa`,
+      createdAt: new Date(),
+      Images: [mockPostImagestwo[3], mockPostImagestwo[4]],
+      Hearts: [{ id: "user1" }],
+      Reposts: [],
+      Comments: [],
+      _count: {
+        Hearts: 2222,
+        Reposts: 0,
+        Comments: 0,
+      },
+    },
+    {
+      postId: 3,
+      User: user3,
+      content: `${tag}asd followTest333`,
+      createdAt: new Date(),
+      Images: [mockPostImagestwo[5]],
+      Hearts: [],
+      Reposts: [],
+      Comments: [],
+      _count: {
+        Hearts: 0,
+        Reposts: 0,
+        Comments: 0,
+      },
+    },
+    {
+      postId: 4,
+      User: user3,
+      content: `${tag}asd followTest53535`,
+      createdAt: new Date(),
+      Images: [
+        mockPostImagestwo[6],
+        mockPostImagestwo[7],
+        mockPostImagestwo[8],
+        mockPostImagestwo[9],
+      ],
+      Hearts: [],
+      Reposts: [],
+      Comments: [],
+      _count: {
+        Hearts: 22,
+        Reposts: 11,
+        Comments: 0,
+      },
+    },
+  ];
+};
 
-export { mockPostImages, mockPosts, user1, user2, user3, mockFollowPosts };
+export {
+  mockPostImages,
+  mockPosts,
+  user1,
+  user2,
+  user3,
+  mockFollowPosts,
+  mockSearchPosts,
+};
