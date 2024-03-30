@@ -1,6 +1,10 @@
 import { http, HttpResponse, StrictResponse } from "msw";
 import { faker } from "@faker-js/faker";
-import { mockFollowPosts, mockPosts } from "@/__test__/MockPostData";
+import {
+  mockFollowPosts,
+  mockPosts,
+  mockSearchPosts,
+} from "@/__test__/MockPostData";
 
 function generateDate() {
   const lastWeek = new Date(Date.now());
@@ -123,43 +127,7 @@ export const handlers = [
   }),
   http.get("/api/search/:tag", ({ request, params }) => {
     const { tag } = params;
-    return HttpResponse.json([
-      {
-        postId: 1,
-        User: User[0],
-        content: `${1} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-      {
-        postId: 2,
-        User: User[0],
-        content: `${2} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-      {
-        postId: 3,
-        User: User[0],
-        content: `${3} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-      {
-        postId: 4,
-        User: User[0],
-        content: `${4} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-      {
-        postId: 5,
-        User: User[0],
-        content: `${5} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-    ]);
+    return HttpResponse.json(mockSearchPosts(tag));
   }),
   http.get("/api/users/:userId/posts", ({ request, params }) => {
     const { userId } = params;

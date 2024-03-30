@@ -1,10 +1,11 @@
-import { ChangeEvent, FocusEventHandler, FormEvent } from "react";
+import {
+  ChangeEvent,
+  FocusEventHandler,
+  FormEvent,
+  InputHTMLAttributes,
+} from "react";
 import { Icon } from "./icon/GoogleIcon";
 import { explore } from "@/lib/Icon";
-interface InputStyleProps {
-  size: "large" | "medium";
-  show?: boolean;
-}
 
 const sizeStyles = {
   large: `w-[502px] h-[44px]`,
@@ -12,32 +13,25 @@ const sizeStyles = {
 };
 
 //
-export interface InputProps extends InputStyleProps {
-  handleInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleInputSubmit?: (event: FormEvent<HTMLFormElement>) => void;
-  placeholder?: string;
-  className?: string;
-  value?: string;
-  onFocus?: FocusEventHandler<HTMLInputElement>; // 추가
-  onBlur?: FocusEventHandler<HTMLInputElement>;
+export interface InputProps {
+  onInputSubmit?: (event: FormEvent<HTMLFormElement>) => void;
+  InputProps: {
+    handleInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    placeholder?: string;
+    sizes: "large" | "medium";
+    show?: boolean;
+  } & InputHTMLAttributes<HTMLInputElement>;
 }
 
 const Input: React.FC<InputProps> = (props) => {
-  const {
-    placeholder,
-    size,
-    value,
-    handleInputChange,
-    handleInputSubmit,
-    onFocus,
-    onBlur,
-  } = props;
+  const { InputProps, onInputSubmit: handleInputSubmit } = props;
+  const { sizes, placeholder } = InputProps;
 
   return (
     <>
-      <div className={`relative`}>
+      <div className={`relative grow`}>
         <form
-          className={`bg-gubunsun flex h-11 flex-row box-border overflow-hidden ${sizeStyles[size]} rounded-full border-white border border-opacity-0 focus-within:border-blue focus-within:bg-white`}
+          className={`bg-gubunsun w-full flex h-11 flex-row box-border overflow-hidden ${sizeStyles[sizes]} rounded-full border-white border border-opacity-0 focus-within:border-blue focus-within:bg-white`}
           onSubmit={handleInputSubmit}
         >
           <div className="bg-transparent pl-3 flex items-center justify-center w-11">
@@ -51,10 +45,7 @@ const Input: React.FC<InputProps> = (props) => {
           <input
             className="w-full bg-gubunsun focus:bg-white border-none outline-none p-3 placeholder:text-[15px]"
             placeholder={placeholder}
-            value={value}
-            onChange={handleInputChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
+            {...InputProps}
           />
         </form>
       </div>

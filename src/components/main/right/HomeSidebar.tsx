@@ -18,10 +18,13 @@ const HomeSidebar = () => {
 
   return (
     <div className="relative">
-      <div className="fixed w-full bg-white backdrop-blur-md flex h-[53px] mb-3 items-center">
+      <div className="fixed w-[350px] bg-white backdrop-blur-md flex h-[53px] mb-3 items-center">
         <Input
-          placeholder="Search Twitter"
-          size="medium"
+          InputProps={{
+            placeholder: "Search Twitter",
+            sizes: "medium",
+          }}
+
           // handleInputSubmit={onSubmitMoveExpolreHandler}
           // handleInputChange={onChangesearchDataHandler}
         />

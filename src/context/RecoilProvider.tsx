@@ -11,7 +11,7 @@ interface RecoilProviderProps {
 const RecoilProvider = ({ children }: RecoilProviderProps) => {
   return (
     <SessionProvider>
-      <RecoilRoot>{children}</RecoilRoot>;
+      <RecoilRoot>{children}</RecoilRoot>
     </SessionProvider>
   );
 };

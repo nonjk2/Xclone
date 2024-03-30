@@ -9,7 +9,7 @@ interface InputProps {
   type?: "text" | "password" | "email"; // 예시로 text와 password만 사용 가능하도록 함
   placeholder: string;
   disabled?: boolean;
-  handleInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleinputchange?: (event: ChangeEvent<HTMLInputElement>) => void;
   id: string;
   autoFocus?: boolean;
   onFocus?: (id: string, step: number) => void;
@@ -25,7 +25,7 @@ const DynamicInput: React.FC<InputProps> = ({
   type = "text",
   placeholder,
   disabled = false,
-  handleInputChange = () => {},
+  handleinputchange: handleInputChange = () => {},
   id,
   onFocus,
   autoFocus = false,

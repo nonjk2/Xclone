@@ -22,10 +22,10 @@ const useInput = (
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const { className, value } = event.target;
+    const { className, value, id } = event.target;
     const newForm = {
       ...form,
-      [className]: value,
+      [id]: value,
     };
     setForm(newForm);
   };
