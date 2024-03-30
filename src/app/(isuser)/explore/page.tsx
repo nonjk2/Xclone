@@ -4,6 +4,8 @@ const Page = () => {
   return (
     <>
       <SidebarTrendList />
+      <SidebarTrendList />
+      <SidebarTrendList />
     </>
   );
 };
