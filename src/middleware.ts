@@ -1,11 +1,16 @@
-import { NextResponse } from "next/server";
-
+import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
+import { authOption } from "./auth";
+import { getToken } from "next-auth/jwt";
+export { default } from "next-auth/middleware";
+const secret = process.env.NEXTAUTH_SECRET;
 // export { auth as middleware } from "./auth";
-export async function middleware() {
-  // const session = await auth();
-  const session = true;
+export async function middleware(req: NextRequest) {
+  const session = await getToken({ req, secret });
   if (!session) {
-    return NextResponse.redirect("http://localhost:3000/i/flow/login");
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
   }
 }
 
