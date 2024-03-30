@@ -84,7 +84,7 @@ const SignInFirst = () => {
           id="login"
           type="email"
           value={loginInputValue["login"]}
-          handleInputChange={signInOnChangeHandler}
+          handleinputchange={signInOnChangeHandler}
         />
 
         <div className="flex py-3">

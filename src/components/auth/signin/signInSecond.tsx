@@ -32,7 +32,7 @@ const SignInSecond = () => {
             placeholder="비밀번호"
             id="password"
             type="password"
-            handleInputChange={signInOnChangeHandler}
+            handleinputchange={signInOnChangeHandler}
             value={loginInputValue["password"]}
           />
         </div>

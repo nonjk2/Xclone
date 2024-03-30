@@ -81,7 +81,7 @@ const Signfirst = () => {
         <div className="flex flex-col relative">
           <DynamicInput
             value={formData["nickname"]}
-            handleInputChange={handleInputChange}
+            handleinputchange={handleInputChange}
             placeholder="이름"
             id={"nickname"}
             validation={!validate.name}
@@ -94,7 +94,7 @@ const Signfirst = () => {
 
           <DynamicInput
             value={formData["email"]}
-            handleInputChange={handleInputChange}
+            handleinputchange={handleInputChange}
             placeholder="이메일"
             id={"email"}
             validation={!validate.email}
