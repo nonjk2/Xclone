@@ -16,7 +16,7 @@ const Layout = ({
       <main className="relative w-full">
         <div className="w-full h-[200px] bg-inputColor"></div>
         <ProfileLayout />
-        <Tab tab={tab} />
+        <Tab tab="profile" />
         <Suspense fallback={<Loading />}>{children}</Suspense>
       </main>
     </>
