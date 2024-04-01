@@ -11,7 +11,7 @@ import HomeTabPostList from "@/components/main/center/home/HomeTabPostList";
 
 const Page = async () => {
   const client = new QueryClient();
-  await client.fetchQuery({
+  await client.prefetchQuery({
     queryKey: ["post", "recommend"],
     queryFn: getPostList,
   });

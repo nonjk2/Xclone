@@ -5,16 +5,11 @@ import { MouseEventHandler, ReactNode } from "react";
 
 interface IdPathProps {
   id: string;
-  nickname?: boolean;
+  nickname?: string;
   children?: ReactNode;
   message?: boolean;
 }
-const IdPath = ({
-  id,
-  nickname = false,
-  children,
-  message = false,
-}: IdPathProps) => {
+const IdPath = ({ id, nickname, children, message = false }: IdPathProps) => {
   const router = useRouter();
   const onClickHandler: MouseEventHandler<HTMLSpanElement> = (e) => {
     e.preventDefault();
@@ -22,7 +17,7 @@ const IdPath = ({
       return;
     }
     e.stopPropagation();
-    router.push(`/${id}`);
+    router.push(`/${nickname}`);
   };
   if (nickname) {
     return (

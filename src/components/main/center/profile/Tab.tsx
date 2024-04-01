@@ -40,6 +40,7 @@ const TabList = ({
 }) => {
   const pathname = usePathname().split("/")[2] ?? "";
   const searchParams = useSearchParams().get("f");
+  console.log("searchParams : ", searchParams);
 
   const BottomSlide = (
     <div className="rounded-full inline-flex bottom-0 absolute min-w-[56px] h-1 self-center bg-blue" />
@@ -67,7 +68,7 @@ const TabList = ({
         };
     }
   };
-  return TAB.map((e) => (
+  return TAB.map((e, idx) => (
     <div
       className="flex py-4 flex-grow items-center justify-center min-w-[56px] cursor-pointer flex-col h-[52px] hover:bg-lightblack"
       onClick={() => onClickHandler(e.link)}
@@ -75,11 +76,15 @@ const TabList = ({
     >
       <div
         className={`flex items-center w-full h-full justify-center ${
-          switchStyle(tabs, e.link).text
+          searchParams
+            ? switchStyle(tabs, e.link).text
+            : idx === 0 && `text-blackText font-bold`
         } text-[15px]`}
       >
         <span className="inherit-span ">{e.tab}</span>
-        {switchStyle(tabs, e.link).bottomslide}
+        {searchParams
+          ? switchStyle(tabs, e.link).bottomslide
+          : idx === 0 && BottomSlide}
       </div>
     </div>
   ));

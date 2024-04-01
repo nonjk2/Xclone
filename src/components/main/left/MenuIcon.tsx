@@ -1,5 +1,6 @@
 "use client";
 import { Icon, MenuIconSvg } from "@/components/ui/icon/GoogleIcon";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
@@ -9,7 +10,7 @@ interface MainHeaderListItemProps {
   boldPath?: string;
   link?: string;
   color?: string;
-  pathname?: string;
+  pathname?: string | null;
 }
 
 const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
@@ -20,7 +21,6 @@ const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
     <>
       {!!boldPath && (
         <div className="relative flex grow">
-          {/* {pathname === "/notifications" && notice > 0 && <Notice />} */}
           <MenuIconSvg path={boldPath} width={6} height={6} color={color} />
         </div>
       )}

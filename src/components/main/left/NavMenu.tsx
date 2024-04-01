@@ -5,6 +5,8 @@ import MenuIcon from "./MenuIcon";
 import { PostBtnSvg, boldSvgArray, svgArray } from "@/lib/Icon";
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon/GoogleIcon";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 const NavMenuTitle = [
   "",
   "Home",
@@ -19,18 +21,36 @@ const NavMenuTitle = [
   "More",
 ];
 const NavMenu = () => {
+  const session = useSession();
+
   const { push } = useRouter();
+  // if (!session.data) {
+  //   return null;
+  // }
   return (
     <header className="flex flex-col items-start max-xl:w-full first:pt-[2px] max-xl:items-center gap-2 short:gap-0">
-      {svgArray.map((svg, idx) => (
-        <MenuIcon
-          path={svg}
-          boldPath={boldSvgArray[idx]}
-          key={svg}
-          title={NavMenuTitle[idx]}
-          pathname={NavMenuTitle[idx].toLowerCase()}
-        />
-      ))}
+      {svgArray.map((svg, idx) => {
+        if (idx === 9) {
+          return (
+            <MenuIcon
+              path={svg}
+              boldPath={boldSvgArray[idx]}
+              key={svg}
+              title={NavMenuTitle[idx]}
+              pathname={session.data?.user?.name}
+            />
+          );
+        }
+        return (
+          <MenuIcon
+            path={svg}
+            boldPath={boldSvgArray[idx]}
+            key={svg}
+            title={NavMenuTitle[idx]}
+            pathname={NavMenuTitle[idx].toLowerCase()}
+          />
+        );
+      })}
       <div className="my-4 w-[233px] max-xl:hidden">
         <Button
           backgroundColor="blue"

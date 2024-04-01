@@ -175,7 +175,7 @@ const Actions = ({
                   loop={false}
                   controls={true}
                   keepLastFrame
-                  className="absolute w-[45px] h-[45px] -top-1/2 -left-1/2"
+                  className="absolute w-[40px] h-[40px] -top-1/2 -left-1/2"
                   background="none"
                 />
                 {!heartIcon && <WhiteSvg photo={photo} />}

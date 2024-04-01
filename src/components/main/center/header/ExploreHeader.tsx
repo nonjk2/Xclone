@@ -25,20 +25,25 @@ const ExploreHeader = () => {
   const handleBlur = () => {
     setIsIconVisible(true);
   };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/search?q=${searchValue["searchValue"]}`);
   };
+  const BackBtn = () => (
+    <div
+      className="flex min-w-[56px] h-full items-center "
+      onClick={() => router.back()}
+    >
+      <HoverIcons className="hover:bg-lightblack cursor-pointer">
+        <Icon height={5} path={prev} width={5} />
+      </HoverIcons>
+    </div>
+  );
   return (
-    <div className="sticky top-0 w-full bg-white backdrop-blur-md flex flex-col items-center justify-between">
+    <div className="sticky top-0 w-full bg-white bg-opacity-80 backdrop-blur-md z-20 flex flex-col items-center justify-between">
       <div className="flex w-full items-center px-4 h-[53px]">
-        {!isIconVisible && (
-          <div className="flex min-w-[56px] h-full items-center ">
-            <HoverIcons className="hover:bg-lightblack cursor-pointer">
-              <Icon height={5} path={prev} width={5} />
-            </HoverIcons>
-          </div>
-        )}
+        {seg === "search" ? <BackBtn /> : !isIconVisible && <BackBtn />}
         <Input
           InputProps={{
             placeholder: "Search Twitter",

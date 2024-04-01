@@ -1,4 +1,6 @@
-import { QueryFunction } from "@tanstack/react-query";
+"use client";
+import MainCenterListItem from "@/components/main/center/home/HomePostItem";
+import { QueryFunction, useQuery } from "@tanstack/react-query";
 
 const getSearchPosts: QueryFunction<
   Post[],
@@ -17,11 +19,25 @@ const getSearchPosts: QueryFunction<
   return res.json();
 };
 
-const SearchPage = ({
-  searchParams,
-}: {
+interface SearchPageProps {
   searchParams: { q: string; f?: string; pf?: string };
-}) => {
-  return <div>SearchPage</div>;
+}
+
+const SearchPage = ({ searchParams }: SearchPageProps) => {
+  const { data } = useQuery<
+    Post[],
+    any,
+    Post[],
+    [
+      _1: string,
+      _2: string,
+      searchParams: { q: string; f?: string; pf?: string }
+    ]
+  >({
+    queryKey: ["post", "search", searchParams],
+    queryFn: getSearchPosts,
+    // gcTime: 60 * 1000,
+  });
+  return data?.map((e) => <MainCenterListItem key={e.postId} {...e} />);
 };
 export default SearchPage;

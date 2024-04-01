@@ -1,3 +1,5 @@
+import { QueryFunction } from "@tanstack/react-query";
+
 const getPostList = async (): Promise<Post[]> => {
   const res = await fetch("http://localhost:9090/api/postRecommends", {
     method: "GET",
@@ -14,5 +16,16 @@ const getPostFollowList = async (): Promise<Post[]> => {
   });
   return res.json();
 };
+const getUsers: QueryFunction<User, [_1: string, string]> = async ({
+  queryKey,
+}) => {
+  const [_1, username] = queryKey;
+  const res = await fetch(`http://localhost:9090/api/users/${username}`, {
+    method: "GET",
+    next: { tags: ["users", username] },
+    cache: "no-store",
+  });
+  return res.json();
+};
 
-export { getPostList, getPostFollowList };
+export { getPostList, getPostFollowList, getUsers };

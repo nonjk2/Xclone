@@ -35,7 +35,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
-            <IdPath id={id} nickname>
+            <IdPath id={id} nickname={nickname}>
               {nickname}
             </IdPath>
 

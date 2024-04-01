@@ -80,6 +80,36 @@ const User: User[] = [
       Followings: 0,
     },
   },
+  {
+    id: "asddddwwweeqeq",
+    nickname: "JohnDoe",
+    image: null,
+    Followers: [{ id: "user2" }, { id: "user3" }],
+    _count: {
+      Followers: 2,
+      Followings: 0,
+    },
+  },
+  {
+    id: "user3",
+    nickname: "AliceJohnson",
+    image: null,
+    Followers: [],
+    _count: {
+      Followers: 0,
+      Followings: 0,
+    },
+  },
+  {
+    id: "user2",
+    nickname: "JaneSmith",
+    image: null,
+    Followers: [{ id: "user1" }],
+    _count: {
+      Followers: 1,
+      Followings: 0,
+    },
+  },
 ];
 
 // [
@@ -171,7 +201,9 @@ export const handlers = [
   }),
   http.get("/api/users/:userId", ({ request, params }): StrictResponse<any> => {
     const { userId } = params;
-    const found = User.find((v) => v.id === userId);
+    console.log("asdfasdf", userId);
+    const found = User.find((v) => v.nickname === userId);
+    console.log(found);
     if (found) {
       return HttpResponse.json(found);
     }
