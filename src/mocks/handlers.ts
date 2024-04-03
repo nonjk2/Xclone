@@ -159,46 +159,24 @@ export const handlers = [
     const { tag } = params;
     return HttpResponse.json(mockSearchPosts(tag));
   }),
-  http.get("/api/users/:userId/posts", ({ request, params }) => {
-    const { userId } = params;
-    return HttpResponse.json([
-      {
-        postId: 1,
-        User: User[0],
-        content: `${1} ${userId}의 게시글`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-      {
-        postId: 2,
-        User: User[0],
-        content: `${2} ${userId}의 게시글`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-      {
-        postId: 3,
-        User: User[0],
-        content: `${3} ${userId}의 게시글`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-      {
-        postId: 4,
-        User: User[0],
-        content: `${4} ${userId}의 게시글`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-      {
-        postId: 5,
-        User: User[0],
-        content: `${5} ${userId}의 게시글`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
-        createdAt: generateDate(),
-      },
-    ]);
-  }),
+  http.get(
+    "/api/users/:userId/posts",
+    ({ request, params }): StrictResponse<any> => {
+      const { userId } = params;
+      const UserPosts = mockPosts.filter(
+        (post) => post.User.nickname === userId
+      );
+      if (UserPosts) {
+        return HttpResponse.json(UserPosts);
+      }
+      return HttpResponse.json(
+        { message: "no_such_user" },
+        {
+          status: 404,
+        }
+      );
+    }
+  ),
   http.get("/api/users/:userId", ({ request, params }): StrictResponse<any> => {
     const { userId } = params;
     console.log("asdfasdf", userId);

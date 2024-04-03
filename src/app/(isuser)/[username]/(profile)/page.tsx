@@ -1,8 +1,9 @@
 import Loading from "@/app/(notuser)/@modal/(.)i/flow/signup/loading";
 import HomePostList from "@/components/main/center/home/HomePostList";
 import ProfileLayout from "@/components/main/center/profile/ProfileLayout";
+import ProfilePost from "@/components/main/center/profile/ProfilePost";
 import Tab from "@/components/main/center/profile/Tab";
-import { getUsers } from "@/lib/action/server";
+import { getUsers, getUsersPosts } from "@/lib/action/server";
 import {
   HydrationBoundary,
   QueryClient,
@@ -17,22 +18,16 @@ interface ProfilePageProps {
 const page = async ({ params }: ProfilePageProps) => {
   const { username } = params;
   const client = new QueryClient();
+
   await client.prefetchQuery({
-    queryKey: ["users", username],
-    queryFn: getUsers,
+    queryKey: ["users", "posts", username],
+    queryFn: getUsersPosts,
   });
   const dehydratedState = dehydrate(client);
   return (
-    <main className="relative w-full">
-      <HydrationBoundary state={dehydratedState}>
-        <div className="w-full h-[200px] bg-inputColor"></div>
-        <ProfileLayout username={username} />
-        <Tab />
-        <Suspense fallback={<Loading />}>
-          <HomePostList />
-        </Suspense>
-      </HydrationBoundary>
-    </main>
+    <HydrationBoundary state={dehydratedState}>
+      <ProfilePost username={username} />
+    </HydrationBoundary>
   );
 };
 export default page;

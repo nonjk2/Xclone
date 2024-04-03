@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-  useSelectedLayoutSegment,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 // type ProfileTabs = "Posts" | "Replies" | "Highlight" | "Media" | "Likes";
 // type SearchTabs = "Top" | "latest" | "People" | "Media" | " Lists";
@@ -93,10 +88,12 @@ const TabList = ({
 const Tab = ({ tab = "profile" }: { tab?: "profile" | "search" }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname().split("/")[1];
+  console.log(pathname);
 
   const onClickhandler = (link: string) => {
     if (tab === "profile") {
-      return router.replace(`/${tab}/${link}`, { scroll: false });
+      return router.replace(`/${pathname}/${link}`, { scroll: false });
     } else if (tab === "search") {
       let newSearchParams = new URLSearchParams(searchParams.toString());
       if (link === "") {

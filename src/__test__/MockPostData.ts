@@ -36,7 +36,7 @@ const mockPostImagestwo: PostImage[] = Array.from(
 // ];
 const user1: User = {
   id: "user1",
-  nickname: "JohnDoe",
+  nickname: "은돌",
   image: null,
   Followers: [{ id: "user2" }, { id: "user3" }],
   _count: {

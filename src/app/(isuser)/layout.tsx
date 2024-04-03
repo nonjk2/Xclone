@@ -6,7 +6,6 @@ import MainHeaderProfile from "@/components/ui/profile";
 import HomeTabProvider from "@/context/HomeTabProvider";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { ReactNode, Suspense } from "react";
-import Loading from "../(notuser)/@modal/(.)i/flow/signup/loading";
 
 const Layout = ({
   children,

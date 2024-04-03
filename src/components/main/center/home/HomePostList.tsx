@@ -11,6 +11,8 @@ const HomePostList = () => {
     queryKey: ["post", "recommend"],
     queryFn: getPostList,
   });
+  if (res) {
+  }
 
   return res?.map((e) => <MainCenterListItem key={e.postId} {...e} />);
 };
