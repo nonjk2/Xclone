@@ -32,7 +32,7 @@ const Layout = async ({
       <HydrationBoundary state={dehydratedState}>
         <div className="w-full h-[200px] bg-inputColor"></div>
         <ProfileLayout username={username} />
-        <Tab />
+        <Tab tab="profile" />
         {children}
       </HydrationBoundary>
     </main>

@@ -24,11 +24,8 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
     Parent,
   } = props;
   const { image, nickname, id } = User;
-
-  const profileImg = normal;
-  // const profileImage = user
   const ItemContents = (
-    <article className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer flex-row border-b bg-[rgba(0,0,0,0)] transition-all hover:bg-[rgba(0,0,0,0.03)] duration-200 border-b-gubunsun">
+    <article className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer transition-all hover:bg-[rgba(0,0,0,0.03)] duration-200 flex-row border-b bg-[rgba(0,0,0,0)] border-b-gubunsun">
       <div className="mr-3">
         <Avatar imgUrl={image} />
       </div>
