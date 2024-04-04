@@ -1,8 +1,14 @@
+import { SupabaseAdapter } from "@auth/supabase-adapter";
 import { NextAuthOptions } from "next-auth";
+import { Adapter } from "next-auth/adapters";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOption: NextAuthOptions = {
+  adapter: SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY || "",
+  }) as Adapter,
   pages: {
     signIn: "/",
   },
@@ -14,24 +20,21 @@ export const authOption: NextAuthOptions = {
     async jwt({ token, user, account }) {
       if (user) {
         // console.log("user : ", user, "token : ", token, "account : ", account);
-        // token.uid = user.id;
-        // token.role = user.role;
-        // token.email = user.email;
-        // token.name = user.name;
-        // token.picture = user.image;
+        token.uid = user.id;
+        token.email = user.email;
+        token.name = user.name;
+        token.picture = user.image;
       }
       // console.log("token : ", token);
       return token;
     },
     async session({ session, token, user }) {
       if (token.uid) {
-        // console.log("session : ", session, "token : ", token);
-        // session.user.id = token.uid as string;
-        // session.user.email = token.email;
-        // session.user.image = token.picture;
-        // session.user.nickname = token.name;
-        // session.user.role = token.role;
-        // session.user.role =
+        session.user.id = token.uid as string;
+        session.user.email = token.email;
+        session.user.image = token.picture;
+        session.user.nickname = token.name;
+        session.user.role = token.role;
       }
       return session;
     },
