@@ -35,7 +35,6 @@ const TabList = ({
 }) => {
   const pathname = usePathname().split("/")[2] ?? "";
   const searchParams = useSearchParams().get("f");
-  console.log("searchParams : ", searchParams);
 
   const BottomSlide = (
     <div className="rounded-full inline-flex bottom-0 absolute min-w-[56px] h-1 self-center bg-blue" />
@@ -71,13 +70,13 @@ const TabList = ({
     >
       <div
         className={`flex items-center w-full h-full justify-center ${
-          searchParams
+          searchParams || pathname
             ? switchStyle(tabs, e.link).text
             : idx === 0 && `text-blackText font-bold`
         } text-[15px]`}
       >
         <span className="inherit-span ">{e.tab}</span>
-        {searchParams
+        {searchParams || pathname
           ? switchStyle(tabs, e.link).bottomslide
           : idx === 0 && BottomSlide}
       </div>
@@ -89,7 +88,6 @@ const Tab = ({ tab = "profile" }: { tab?: "profile" | "search" }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname().split("/")[1];
-  console.log(pathname);
 
   const onClickhandler = (link: string) => {
     if (tab === "profile") {
