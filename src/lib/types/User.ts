@@ -12,3 +12,22 @@ interface User {
     Followings: number;
   };
 }
+
+interface authUser {
+  id: string;
+  nickname?: string | null;
+  email?: string | null;
+  image?: string | null;
+  phone?: string;
+  address?: UserAddress;
+  bio?: string;
+  createdAt?: Date;
+}
+interface UserAddress {
+  user_id: string;
+  address: string;
+  detail_address: string;
+  city: string;
+  state: string;
+  postal_code: string;
+}

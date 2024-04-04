@@ -194,6 +194,7 @@ export const handlers = [
   }),
   http.get("/api/posts/:postId", ({ request, params }): StrictResponse<any> => {
     const { postId } = params;
+    const found = mockPosts.find((v) => String(v.postId) === postId);
     if (parseInt(postId as string) > 10) {
       return HttpResponse.json(
         { message: "no_such_post" },
@@ -202,17 +203,7 @@ export const handlers = [
         }
       );
     }
-    return HttpResponse.json({
-      postId,
-      User: User[0],
-      content: `${1} 게시글 아이디 ${postId}의 내용`,
-      Images: [
-        { imageId: 1, link: faker.image.urlLoremFlickr() },
-        { imageId: 2, link: faker.image.urlLoremFlickr() },
-        { imageId: 3, link: faker.image.urlLoremFlickr() },
-      ],
-      createdAt: generateDate(),
-    });
+    return HttpResponse.json(found);
   }),
   http.get("/api/posts/:postId/comments", ({ request, params }) => {
     const { postId } = params;

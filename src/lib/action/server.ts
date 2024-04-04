@@ -53,5 +53,26 @@ const getUsersPosts: QueryFunction<
   }
   return res.json();
 };
+const getSinglePost: QueryFunction<Post, [_1: string, _2: number]> = async ({
+  queryKey,
+}) => {
+  const [_1, id] = queryKey;
 
-export { getPostList, getPostFollowList, getUsers, getUsersPosts };
+  const res = await fetch(`http://localhost:9090/api/posts/${id}`, {
+    method: "GET",
+    next: { tags: ["users", String(id)] },
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error("failed");
+  }
+  return res.json();
+};
+
+export {
+  getPostList,
+  getPostFollowList,
+  getUsers,
+  getUsersPosts,
+  getSinglePost,
+};
