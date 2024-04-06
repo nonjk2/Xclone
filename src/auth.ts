@@ -3,6 +3,7 @@ import { NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { fetchUserFromDatabase } from "./lib/action/auth-server";
 
 export const authOption: NextAuthOptions = {
   adapter: SupabaseAdapter({
@@ -15,27 +16,37 @@ export const authOption: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   logger: {
     error: (err) => console.log(err),
+    debug: (err) => console.log(err),
   },
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (user) {
-        // console.log("user : ", user, "token : ", token, "account : ", account);
-        token.uid = user.id;
-        token.email = user.email;
-        token.name = user.name;
-        token.picture = user.image;
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "google") {
+        const userInfo = await fetchUserFromDatabase(user.id);
+        if (!userInfo) {
+          return false;
+        }
       }
-      // console.log("token : ", token);
+      return true;
+    },
+    async jwt({ token, user, account, trigger, profile }) {
+      if (user) {
+        token.uid = user.id;
+      }
+
       return token;
     },
+
     async session({ session, token, user }) {
-      if (token.uid) {
-        session.user.id = token.uid as string;
-        session.user.email = token.email;
-        session.user.image = token.picture;
-        session.user.nickname = token.name;
-        session.user.role = token.role;
+      if (token) {
+        const [userInfo] = await fetchUserFromDatabase(token.uid as string);
+        session.user.id = userInfo.user_id;
+        session.user.email = userInfo.email;
+        session.user.image = userInfo.image;
+        session.user.name = userInfo.name;
+        session.user.nickname = userInfo.nickname;
+        console.log("session : ", session, "token : ", token);
       }
+
       return session;
     },
   },

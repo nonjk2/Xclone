@@ -16,12 +16,14 @@ interface User {
 interface authUser {
   id: string;
   nickname?: string | null;
+  name?: string | null;
   email?: string | null;
   image?: string | null;
   phone?: string;
-  address?: UserAddress;
+  address?: string;
   bio?: string;
   createdAt?: Date;
+  user_id: string;
 }
 interface UserAddress {
   user_id: string;

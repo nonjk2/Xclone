@@ -8,15 +8,17 @@ declare module "next-auth" {
 
   interface DefaultJWT {
     role?: RoleType;
+    nickname: string;
   }
 
   interface User extends DefaultUser {
     role?: RoleType;
   }
+  interface DefaultUser extends authUser {}
 }
 
 declare module "next-auth/jwt" {
   interface DefaultJWT {
-    role?: RoleType;
+    nickname: string;
   }
 }

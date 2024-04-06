@@ -85,7 +85,7 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
           />
         </div>
         <div className="mx-3 max-xl:hidden grow">
-          <div className="font-semibold">{session?.user?.name}</div>
+          <div className="font-semibold">{session?.user?.nickname}</div>
           <div className="text-inputColor">
             {session?.user?.email?.split("@")[0]}
           </div>

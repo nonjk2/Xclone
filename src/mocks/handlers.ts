@@ -179,7 +179,6 @@ export const handlers = [
   ),
   http.get("/api/users/:userId", ({ request, params }): StrictResponse<any> => {
     const { userId } = params;
-    console.log("asdfasdf", userId);
     const found = User.find((v) => v.nickname === userId);
     console.log(found);
     if (found) {

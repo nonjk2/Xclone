@@ -26,7 +26,6 @@ const getUsers: QueryFunction<User, [_1: string, string]> = async ({
   queryKey,
 }) => {
   const [_1, username] = queryKey;
-  console.log("asd", username);
   const res = await fetch(`http://localhost:9090/api/users/${username}`, {
     method: "GET",
     next: { tags: ["users", username] },
@@ -42,7 +41,6 @@ const getUsersPosts: QueryFunction<
   [_1: string, _2: string, string]
 > = async ({ queryKey }) => {
   const [_1, _2, username] = queryKey;
-  console.log("asd", username);
   const res = await fetch(`http://localhost:9090/api/users/${username}/posts`, {
     method: "GET",
     next: { tags: ["users", "posts", username] },
