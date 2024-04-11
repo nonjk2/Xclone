@@ -7,6 +7,18 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
+@keyframes progress {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(500%);
+  }
+}
+
+.progress-bar {
+  animation: progress 1200ms ease-in-out infinite;
+}
 
 body {
   overflow-y: scroll; /* 수직 스크롤바 항상 표시 */
