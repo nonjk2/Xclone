@@ -15,6 +15,11 @@ const nextConfig = {
         hostname: "loremflickr.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "yibcxyvqjodskbgyvobk.supabase.co",
+        port: "",
+      },
     ],
   },
 };
