@@ -1,7 +1,6 @@
 import { SupabaseAdapter } from "@auth/supabase-adapter";
 import { NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
-import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { fetchUserFromDatabase } from "./lib/action/auth-server";
 
@@ -37,14 +36,13 @@ export const authOption: NextAuthOptions = {
     },
 
     async session({ session, token, user }) {
+      const [userInfo] = await fetchUserFromDatabase(token.uid as string);
       if (token) {
-        const [userInfo] = await fetchUserFromDatabase(token.uid as string);
-        session.user.id = userInfo.user_id;
+        session.user.id = userInfo.id;
         session.user.email = userInfo.email;
         session.user.image = userInfo.image;
         session.user.name = userInfo.name;
         session.user.nickname = userInfo.nickname;
-        console.log("session : ", session, "token : ", token);
       }
 
       return session;
