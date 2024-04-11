@@ -38,7 +38,6 @@ const ComposeActionBar = ({}: ComposeActionProps) => {
       case "location":
         return;
       case "picture":
-        console.log("asdfsadf");
       case "poll":
         return;
       case "smile":
