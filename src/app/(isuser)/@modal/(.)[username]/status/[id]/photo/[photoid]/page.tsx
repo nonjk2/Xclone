@@ -7,7 +7,6 @@ const Page = async ({
 }: {
   params: { username: string; id: string; photoid: number };
 }) => {
-  console.log(params);
   return (
     <KeyDownProvider>
       <Modal screen>

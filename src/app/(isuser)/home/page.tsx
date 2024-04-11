@@ -1,13 +1,14 @@
 import PostTweet from "@/components/main/center/PostTweet";
 import { Suspense } from "react";
 import Loading from "../explore/loading";
-import { getPostList } from "@/lib/action/server";
+
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
 import HomeTabPostList from "@/components/main/center/home/HomeTabPostList";
+import { getPostList } from "@/lib/action/post-server";
 
 const Page = async () => {
   const client = new QueryClient();

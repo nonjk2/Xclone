@@ -18,6 +18,7 @@
     transform: rotate(360deg);
   }
 }
+
 .loader {
   animation: rotating 2s linear infinite;
 }
