@@ -3,7 +3,6 @@ import { ActionBarIconSvg } from "@/components/ui/icon/GoogleIcon";
 import { threedot } from "@/lib/Icon";
 import { getTimeAgo, switchColor } from "@/lib/func";
 import { forwardRef } from "react";
-import { normal } from "../../../../../public";
 import HomeListItemActionBar from "./HomeListItemActionBar";
 import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
@@ -12,18 +11,15 @@ import HomePostImage from "./HomePostImage";
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const {
     content,
-    Comments,
-    Hearts,
     Images,
-    Reposts,
     User,
     _count: count,
     createdAt,
-    postId,
-    Original,
+    OriginalPost,
     Parent,
+    id: postId,
   } = props;
-  const { image, nickname, id } = User;
+  const { image, nickname, id, name } = User;
   const ItemContents = (
     <article className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer transition-all hover:bg-[rgba(0,0,0,0.03)] duration-200 flex-row border-b bg-[rgba(0,0,0,0)] border-b-gubunsun">
       <div className="mr-3">
@@ -32,13 +28,13 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
-            <IdPath id={id} nickname={nickname}>
-              {nickname}
+            <IdPath id={nickname} nickname={name}>
+              {name}
             </IdPath>
 
-            <IdPath id={id} />
+            <IdPath id={nickname} />
             <span className="text-[15px] text-inputColor font-normal">
-              ·{getTimeAgo(createdAt)}
+              ·{getTimeAgo(new Date(createdAt as string))}
             </span>
           </div>
 
@@ -63,7 +59,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
           <div className="main-contnet-comment">
             <span>{content}</span>
           </div>
-          {Images[0] && (
+          {Images && Images[0] && (
             <div className="relative rounded-2xl mt-3 min-h-[290px] w-full h-full overflow-hidden border border-gubunsun">
               <div className="flex basis-auto flex-col bottom-0 left-0 right-0 top-0 absolute "></div>
               <HomePostImage Images={Images} postId={postId} id={id} />

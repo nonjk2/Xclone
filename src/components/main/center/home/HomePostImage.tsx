@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { faker } from "@faker-js/faker";
 import { useRouter } from "next/navigation";
 import { MouseEvent, MouseEventHandler } from "react";
 
@@ -11,7 +10,7 @@ const HomePostImage = ({
 }: {
   Images: PostImage[];
   id: string;
-  postId: number;
+  postId: string;
 }) => {
   const { push } = useRouter();
 
@@ -31,7 +30,7 @@ const HomePostImage = ({
           onClick={(e) => onClickImageRouteHandler(e, 1)}
         >
           <Image
-            src={`${Images[0].link}`}
+            src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[0].link}`}
             alt="Image description"
             className="w-full h-full"
             width={100}
@@ -44,12 +43,12 @@ const HomePostImage = ({
         <div className="flex divide-x-2 w-full h-full absolute top-0 divide-white">
           {Images.map((img, idx) => (
             <div
-              key={img.imageId}
+              key={img.id}
               className="w-1/2 h-full relative"
               onClick={(e) => onClickImageRouteHandler(e, idx + 1)}
             >
               <Image
-                src={`${Images[idx].link}`}
+                src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[idx].link}`}
                 alt="Image description"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover"
@@ -67,7 +66,7 @@ const HomePostImage = ({
             onClick={(e) => onClickImageRouteHandler(e, 1)}
           >
             <Image
-              src={`${Images[0].link}`}
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[0].link}`}
               alt="Image description"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover"
@@ -79,11 +78,13 @@ const HomePostImage = ({
               {Images.slice(1).map((img, idx) => (
                 <div
                   className="w-full h-1/2 relative"
-                  key={img.imageId + idx}
+                  key={img.id + idx}
                   onClick={(e) => onClickImageRouteHandler(e, idx + 2)}
                 >
                   <Image
-                    src={`${Images[idx + 1].link}`}
+                    src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${
+                      Images[idx + 1].link
+                    }`}
                     alt="Image description"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     fill
@@ -100,12 +101,12 @@ const HomePostImage = ({
         <div className="flex divide-x-2 divide-y-2 w-full h-full absolute top-0 divide-white flex-wrap">
           {Images.map((img, idx) => (
             <div
-              key={img.imageId}
+              key={img.id}
               className="w-1/2 h-1/2 relative"
               onClick={(e) => onClickImageRouteHandler(e, idx + 1)}
             >
               <Image
-                src={`${Images[idx].link}`}
+                src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[idx].link}`}
                 alt="Image description"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 fill

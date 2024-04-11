@@ -2,7 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import MainCenterListItem from "./HomePostItem";
-import { getPostList } from "@/lib/action/server";
+import { getPostList } from "@/lib/action/post-server";
+// import { getPostList } from "@/lib/action/server";
 
 // const DATA = mockPosts;
 
@@ -14,6 +15,6 @@ const HomePostList = () => {
   if (res) {
   }
 
-  return res?.map((e) => <MainCenterListItem key={e.postId} {...e} />);
+  return res?.map((e) => <MainCenterListItem key={e.id} {...e} />);
 };
 export default HomePostList;
