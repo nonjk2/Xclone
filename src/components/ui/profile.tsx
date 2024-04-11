@@ -6,6 +6,7 @@ import normal from "../../../public/normal.png";
 import { signOut, useSession } from "next-auth/react";
 import { MouseEventHandler } from "react";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/(isuser)/explore/loading";
 
 interface MainHeaderProfileProps {
   type: "follow" | "profile" | "search";
@@ -15,12 +16,12 @@ interface MainHeaderProfileProps {
 
 const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
   const { type } = props;
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+  if (!session && status === "unauthenticated") {
+    return null;
+  }
 
-  const user = {
-    picture: "",
-  };
   const sideClickItem = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":
@@ -56,8 +57,6 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
     signOut({ redirect: false }).then(() => router.push("/"));
   };
 
-  const Profileimg = normal;
-
   const typeStyle = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":
@@ -77,19 +76,25 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
         className="flex justify-between p-3 w-full items-center"
         onClick={onClickLogoutHandelr}
       >
-        <div className="flex flex-row w-10 h-10 relative overflow-hidden rounded-full z-20">
-          <img
-            alt=""
-            src={`${session?.user?.image}`}
-            className="inset-0 h-full absolute w-full -z-10"
-          />
-        </div>
-        <div className="mx-3 max-xl:hidden grow">
-          <div className="font-semibold">{session?.user?.nickname}</div>
-          <div className="text-inputColor">
-            {session?.user?.email?.split("@")[0]}
-          </div>
-        </div>
+        {status === "loading" ? (
+          <Loading />
+        ) : (
+          <>
+            <div className="flex flex-row w-10 h-10 relative overflow-hidden rounded-full z-20">
+              <img
+                alt="미리보기"
+                src={`${session?.user?.image}`}
+                className="inset-0 h-full absolute w-full -z-10"
+              />
+            </div>
+            <div className="mx-3 max-xl:hidden grow">
+              <div className="font-semibold">{session?.user?.name}</div>
+              <div className="text-inputColor text-sm">
+                @{session?.user?.nickname}
+              </div>
+            </div>
+          </>
+        )}
         <div className={typeStyle(type)}>
           <div className="flex w-[63px] items-center">
             {sideClickItem(type)}
