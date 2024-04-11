@@ -63,8 +63,8 @@ const Signfirst = () => {
     document.getElementById(id)?.focus();
   }, [id]);
   useEffect(() => {
-    console.log(validate.name);
-    console.log(validate.email);
+    // console.log(validate.name);
+    // console.log(validate.email);
   }, [validate]);
 
   const currentYear = new Date().getFullYear();
