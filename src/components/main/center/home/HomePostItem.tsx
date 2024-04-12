@@ -18,6 +18,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
     OriginalPost,
     Parent,
     id: postId,
+    Heart: heart,
   } = props;
   const { image, nickname, id, name } = User;
   const ItemContents = (
@@ -66,11 +67,16 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
             </div>
           )}
         </div>
-
         <div className="w-full">
           <div className="flex justify-between">
-            <HomeListItemActionBar count={count} type="post" />
+            <HomeListItemActionBar
+              count={count}
+              heart={heart}
+              postId={postId}
+              type="post"
+            />
           </div>
+          b
         </div>
       </div>
     </article>

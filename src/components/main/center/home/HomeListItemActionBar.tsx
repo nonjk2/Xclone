@@ -47,10 +47,14 @@ const HomeListItemActionBar = ({
   count,
   type,
   photo = false,
+  heart = [],
+  postId,
 }: {
   type: "post" | "photo" | "photoboard";
   count: ActionCount;
   photo?: boolean;
+  heart: [];
+  postId: string;
 }) => {
   const { Comments, Hearts, Reposts } = count;
 
@@ -83,6 +87,7 @@ const HomeListItemActionBar = ({
             type="Heart"
             icon={ActionBarHeart}
             count={Hearts}
+            postId={postId}
           />
         );
 

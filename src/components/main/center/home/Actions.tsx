@@ -15,6 +15,8 @@ import { Player, PlayerState } from "@lottiefiles/react-lottie-player";
 import Counter from "@/components/ui/Counter";
 import { PostActionType } from "./HomeListItemActionBar";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { updateHeartPost } from "@/lib/action/post-server";
 
 const Actions = ({
   count = 140,
@@ -22,19 +24,21 @@ const Actions = ({
   icon,
   short = false,
   photo = false,
+  postId,
 }: {
   count?: number;
   type: PostActionType;
   icon: string;
   short?: boolean;
   photo?: boolean;
+  postId?: string;
 }) => {
   const [heartIcon, setHeartIcon] = useState<boolean>(false);
   const [heartCount, setHeartCount] = useState<number>(count);
   const [liked, setLiked] = useState<boolean>(false);
   const playerRef = useRef<Player>(null);
   const photos = usePathname().includes("photo");
-
+  const session = useSession();
   const switchColor = (type: PostActionType) => {
     switch (type) {
       case "RePost":
@@ -66,36 +70,44 @@ const Actions = ({
     }
   }, [liked, count]);
 
-  const onClickActionHeart = () => {
+  const onClickActionHeart = async () => {
     const heartInstance = playerRef.current;
     setHeartIcon((prev) => !prev);
     setLiked((prev) => !prev);
-
-    if (heartInstance) {
-      const currentState = heartInstance.state.playerState;
-      // const { play, pause ,stop} = heartInstance;
-      switch (currentState) {
-        case PlayerState.Paused:
-          // console.log("paused -> ");
-          heartInstance.stop();
-          break;
-        case PlayerState.Playing:
-          // console.log("playing -> pause");
-          heartInstance.stop();
-          break;
-        case PlayerState.Stopped:
-          // console.log("stopped -> playing");
-          heartInstance.play();
-          break;
-        case "frozen":
-        case PlayerState.Loading:
-          // console.log("loading -> playing");
-          heartInstance.play();
-          break;
-        default:
-          break;
-      }
+    if (session.data && postId) {
+      console.log("postId : ", postId);
+      console.log("session.data.user.id : ", session.data.user.id);
+      const res = await updateHeartPost({
+        post_id: postId,
+        type: "like",
+        user_id: session.data?.user.id,
+      });
     }
+    // if (heartInstance) {
+    //   const currentState = heartInstance.state.playerState;
+    //   // const { play, pause ,stop} = heartInstance;
+    //   switch (currentState) {
+    //     case PlayerState.Paused:
+    //       // console.log("paused -> ");
+    //       heartInstance.stop();
+    //       break;
+    //     case PlayerState.Playing:
+    //       // console.log("playing -> pause");
+    //       heartInstance.stop();
+    //       break;
+    //     case PlayerState.Stopped:
+    //       // console.log("stopped -> playing");
+    //       heartInstance.play();
+    //       break;
+    //     case "frozen":
+    //     case PlayerState.Loading:
+    //       // console.log("loading -> playing");
+    //       heartInstance.play();
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }
   };
   const onClickActionHandler = (event: MouseEvent) => {
     event.preventDefault();

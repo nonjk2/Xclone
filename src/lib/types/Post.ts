@@ -13,6 +13,7 @@ interface Post {
   OriginalPost: boolean | null; // 오리지날이야 ?
   Parent?: string; // 부모 포스트
   ParentPost?: boolean; // 부모 포스트가있어 ?
+  Heart: [];
 }
 
 interface PostImage {
