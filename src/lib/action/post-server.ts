@@ -27,14 +27,64 @@ interface PostPathInterface {
  * postlist 가져오기 home
  *
  */
-const getPostList = async (): Promise<Post[]> => {
+const updateHeartPost = async ({
+  user_id,
+  post_id,
+  type,
+  heart_id,
+}: {
+  user_id: string;
+  post_id: string;
+  type: "unlike" | "like";
+  heart_id?: number;
+}) => {
   try {
-    const { data: newPost, error } = await supabase.from("posts").select(
-      `* ,
+    if (type === "like") {
+      const { data, error } = await supabase
+        .from("post_likes")
+        .insert({ user_id, post_id })
+        .select();
+      if (error) throw new Error(error.message);
+      return data;
+    } else {
+      const { data, error } = await supabase
+        .from("post_likes")
+        .delete()
+        .eq("id", heart_id)
+        .select();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    }
+  } catch (error) {
+    throw new Error("좋아요 실패");
+  }
+};
+
+const getPostList = async ({
+  pageParam = undefined,
+}: {
+  pageParam: string | undefined;
+}): Promise<Post[]> => {
+  try {
+    let query = supabase
+      .from("posts")
+      .select(
+        `* ,
         User:userinfo!public_posts_user_id_fkey(*),
-        Images:post_images(id,link)
+        Images:post_images(id,link),
+        Heart:post_likes(*)
       `
-    );
+      )
+      .order("created_at", { ascending: false })
+      .limit(5);
+
+    if (pageParam) {
+      query = query.lt("created_at", pageParam);
+    }
+
+    const { data: newPost, error } = await query;
     if (error) {
       throw new Error(error.message);
     }
@@ -46,6 +96,7 @@ const getPostList = async (): Promise<Post[]> => {
         content: e.content,
         createdAt: e.created_at,
         Images: e.Images,
+        Heart: e.Heart,
         _count: { Hearts: 0, Reposts: 0, Comments: 0 },
         OriginalPost: e.is_original,
         // Parent: e.parent_post_id ?? "",
@@ -60,13 +111,14 @@ const getPostList = async (): Promise<Post[]> => {
 };
 
 // 새로운 Post를 생성하는 비동기 함수
-const createPost = async (
-  userId: string,
-  content: string,
-  isOriginal: boolean,
-  images?: FileList | null,
-  parentPostId?: string
-): Promise<Post> => {
+const createPost = async (formdata: {
+  userId: string;
+  content: string;
+  isOriginal: boolean;
+  images?: FileList | null;
+  parentPostId?: string;
+}): Promise<Post> => {
+  const { content, isOriginal, userId, images, parentPostId } = formdata;
   try {
     const { data, error } = await supabase
       .from("posts")
@@ -90,7 +142,7 @@ const createPost = async (
       throw new Error("Failed to create post");
     }
     let imageUrl = {} as PostImage;
-    if (images) {
+    if (images && images.length > 0) {
       imageUrl = await insertImage(images[0], userId, data.id);
     }
 
@@ -100,11 +152,12 @@ const createPost = async (
       User: newPost.User,
       content: newPost.content,
       createdAt: newPost.created_at,
-      Images: [imageUrl],
+      Images: imageUrl.id ? [imageUrl] : [],
       _count: { Hearts: 0, Reposts: 0, Comments: 0 },
       OriginalPost: newPost.is_original,
       Parent: newPost.parent_post_id ?? "",
       ParentPost: !!newPost.parent_post_id,
+      Heart: [],
     };
 
     return post;
@@ -153,4 +206,4 @@ const insertImage = async (
   }
 };
 
-export { createPost, getPostList };
+export { createPost, getPostList, updateHeartPost };

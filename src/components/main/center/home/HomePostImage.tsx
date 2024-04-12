@@ -30,6 +30,7 @@ const HomePostImage = ({
           onClick={(e) => onClickImageRouteHandler(e, 1)}
         >
           <Image
+            priority
             src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[0].link}`}
             alt="Image description"
             className="w-full h-full"
@@ -48,6 +49,7 @@ const HomePostImage = ({
               onClick={(e) => onClickImageRouteHandler(e, idx + 1)}
             >
               <Image
+                priority
                 src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[idx].link}`}
                 alt="Image description"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -66,6 +68,7 @@ const HomePostImage = ({
             onClick={(e) => onClickImageRouteHandler(e, 1)}
           >
             <Image
+              priority
               src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[0].link}`}
               alt="Image description"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -82,6 +85,7 @@ const HomePostImage = ({
                   onClick={(e) => onClickImageRouteHandler(e, idx + 2)}
                 >
                   <Image
+                    priority
                     src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${
                       Images[idx + 1].link
                     }`}
@@ -106,6 +110,7 @@ const HomePostImage = ({
               onClick={(e) => onClickImageRouteHandler(e, idx + 1)}
             >
               <Image
+                priority
                 src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[idx].link}`}
                 alt="Image description"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
