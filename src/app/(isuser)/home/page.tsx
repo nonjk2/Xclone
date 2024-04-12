@@ -4,6 +4,7 @@ import Loading from "../explore/loading";
 
 import {
   HydrationBoundary,
+  InfiniteData,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
@@ -12,9 +13,16 @@ import { getPostList } from "@/lib/action/post-server";
 
 const Page = async () => {
   const client = new QueryClient();
-  await client.prefetchQuery({
+  await client.prefetchInfiniteQuery<
+    Post[],
+    Object,
+    InfiniteData<Post[]>,
+    [_1: string, _2: string],
+    string | undefined
+  >({
     queryKey: ["post", "recommend"],
     queryFn: getPostList,
+    initialPageParam: undefined,
   });
   const dehydratedState = dehydrate(client);
   return (
