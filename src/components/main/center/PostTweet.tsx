@@ -9,7 +9,11 @@ import { createPost } from "@/lib/action/post-server";
 import { useSession } from "next-auth/react";
 import useImageSelect from "@/lib/hooks/useImageSelect";
 import PostTweetPostContent from "./PostTweetPostContent";
-import { useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 interface PostTweetProps {
   comment: string;
@@ -37,6 +41,38 @@ const PostTweet: React.FC<PostTweetProps> = ({
   } = useImageSelect();
   const session = useSession();
   const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutation({
+    mutationFn: (e) => {
+      return createPost({
+        content: value["content"],
+        isOriginal: true,
+        userId: session.data?.user.id as string,
+        images: inputRef.current?.files,
+      });
+    },
+    onSuccess(data, variables, context) {
+      resetImages();
+      setForm({ content: "" });
+
+      queryClient.setQueryData(
+        ["post", "recommend"],
+        (current: InfiniteData<Post[]>) => {
+          // const newPost = {
+          //   ...current,
+          //   pageParams: [...current.pages],
+          // };
+          // newPost.pages[0] = [...newPost.pages[0]];
+          // newPost.pages[0].unshift(data);
+          // return newPost;
+          const updatedFirstPage = [data, ...current.pages[0]];
+          return {
+            ...current,
+            pages: [updatedFirstPage, ...current.pages.slice(1)],
+          };
+        }
+      );
+    },
+  });
   const TextFocusRender = () => {
     if (photo) {
       return (
@@ -51,7 +87,6 @@ const PostTweet: React.FC<PostTweetProps> = ({
                 color="white"
                 size="tweet2"
                 disabled={loading}
-                // onClick={onUploadToServerButtonClick}
                 title={<span>Tweet</span>}
               />
             </div>
@@ -66,36 +101,31 @@ const PostTweet: React.FC<PostTweetProps> = ({
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      if (session.data) {
-        const res = await createPost(
-          session.data.user.id,
-          value["content"],
-          true,
-          inputRef.current?.files
-        );
-        if (res) {
-          queryClient.setQueryData(["post", "recommend"], (prev: Post[]) => {
-            const newData = [res, ...prev];
-            return newData;
-          });
-        }
-        console.log(res);
-      }
-    } catch (error) {
-    } finally {
-      setLoading(false);
-      resetImages();
-      setForm({ content: "" });
-    }
+    mutate();
+    // try {
+    //   setLoading(true);
+    //   if (session.data) {
+    //     const res = await createPost(
+    //       session.data.user.id,
+    //       value["content"],
+    //       true,
+    //       inputRef.current?.files
+    //     );
+    //     if (res) {
+    //     }
+    //     console.log(res);
+    //   }
+    // } catch (error) {
+    // } finally {
+
+    // }
   };
   return (
     <form
       className="w-full relative bg-white z-10 border-b border-b-hoverProfile h-full"
       onSubmit={onSubmit}
     >
-      {loading && (
+      {isPending && (
         <div className="absolute w-full h-1 top-0 overflow-hidden">
           <div className="w-1/5 bg-blue h-full progress-bar" />
         </div>
@@ -110,7 +140,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
           comment={comment}
           photo={photo}
           reply={reply}
-          disabled={loading}
+          disabled={isPending}
           settextFocus={onChangeTextFocused}
           textFocus={textFocus}
           value={value}
@@ -119,7 +149,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
           <PostTweetPostContent
             inputRef={inputRef}
             onUploadImage={onUploadImage}
-            disabled={loading}
+            disabled={isPending}
             previewImage={previewImage}
             onImageRemove={onImageRemove}
           />
