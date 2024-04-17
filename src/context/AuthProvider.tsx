@@ -1,21 +1,30 @@
-"use client";
-
-import { SessionProvider, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { authOption } from "@/auth";
+import { getUsers } from "@/lib/action/server";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { getServerSession } from "next-auth";
 import { ReactNode } from "react";
-import { RecoilRoot } from "recoil";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-const AuthProvider = ({ children }: AuthProviderProps) => {
-  const session = useSession();
-  // if (session.status === "unauthenticated") {
-  //   return redirect("/");
-  // }
-
-  return <>{children};</>;
+const AuthProvider = async ({ children }: AuthProviderProps) => {
+  const session = await getServerSession(authOption);
+  const client = new QueryClient();
+  if (session?.supabaseAccessToken) {
+    await client.prefetchQuery({
+      queryKey: ["users", session.supabaseAccessToken],
+      queryFn: getUsers,
+    });
+    const state = dehydrate(client);
+    return <HydrationBoundary state={state}>{children}</HydrationBoundary>;
+  }
+  return <>{children}</>;
 };
 
 export default AuthProvider;
