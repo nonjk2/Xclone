@@ -10,8 +10,12 @@ import {
 } from "@tanstack/react-query";
 import HomeTabPostList from "@/components/main/center/home/HomeTabPostList";
 import { getPostList } from "@/lib/action/post-server";
+import { getServerSession } from "next-auth";
+import { authOption } from "@/auth";
 
 const Page = async () => {
+  const session = await getServerSession(authOption);
+  const supabaseAccessToken = session?.supabaseAccessToken ?? "";
   const client = new QueryClient();
   await client.prefetchInfiniteQuery<
     Post[],
@@ -21,7 +25,8 @@ const Page = async () => {
     string | undefined
   >({
     queryKey: ["post", "recommend"],
-    queryFn: getPostList,
+    queryFn: (queryKey) =>
+      getPostList({ pageParam: queryKey.pageParam, supabaseAccessToken }),
     initialPageParam: undefined,
   });
   const dehydratedState = dehydrate(client);
