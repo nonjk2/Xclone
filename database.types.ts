@@ -108,20 +108,20 @@ export type Database = {
         Row: {
           created_at: string | null;
           id: number;
-          post_id: string | null;
-          user_id: string | null;
+          post_id: string;
+          user_id: string;
         };
         Insert: {
           created_at?: string | null;
           id?: number;
-          post_id?: string | null;
-          user_id?: string | null;
+          post_id: string;
+          user_id: string;
         };
         Update: {
           created_at?: string | null;
           id?: number;
-          post_id?: string | null;
-          user_id?: string | null;
+          post_id?: string;
+          user_id?: string;
         };
         Relationships: [
           {
@@ -132,10 +132,10 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "post_likes_user_id_fkey";
+            foreignKeyName: "public_post_likes_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: false;
-            referencedRelation: "users";
+            referencedRelation: "userinfo";
             referencedColumns: ["id"];
           }
         ];
@@ -210,17 +210,10 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "posts_user_id_fkey";
+            foreignKeyName: "public_posts_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "posts_user_id_fkey1";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
+            referencedRelation: "userinfo";
             referencedColumns: ["id"];
           }
         ];
@@ -264,7 +257,18 @@ export type Database = {
         ];
       };
       userinfo: {
-        Row: authUser;
+        Row: {
+          address_id: string;
+          bio: string | null;
+          createdat: string;
+          email: string | null;
+          id: string;
+          image: string | null;
+          name: string;
+          nickname: string;
+          phone: string | null;
+          user_id: string | null;
+        };
         Insert: {
           address_id?: string;
           bio?: string | null;
@@ -293,7 +297,7 @@ export type Database = {
           {
             foreignKeyName: "public_userinfo_user_id_fkey";
             columns: ["user_id"];
-            isOneToOne: false;
+            isOneToOne: true;
             referencedRelation: "users";
             referencedColumns: ["id"];
           }
