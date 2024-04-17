@@ -42,25 +42,10 @@ const Main = () => {
           {/* 로그인 폼 섹션 */}
           <div className="w-full h-[344px]">
             <div className="w-[300px] mb-2 max-w-[380px]">
-              <SignInButton />
+              <SignInButton type="google" />
             </div>
             <div className="w-[300px] max-w-[380px]">
-              <Button
-                // onClick={() => socialhandler(googleLinkOptions)}
-                hoverColor="hoverLightBlack"
-                size="login1"
-                color="blue"
-                backgroundColor="white"
-                borderColor="gray"
-                title={
-                  <div className="flex w-full h-full items-center justify-center gap-1 py-[1px] px-4">
-                    <AppleIcon />
-                    <span className="twitterSpan text-[15px] font-semibold">
-                      Apple에서 가입하기
-                    </span>
-                  </div>
-                }
-              />
+              <SignInButton type="kakao" />
             </div>
 
             <div className="max-w-[380px] my-1 w-[300px] h-7">
