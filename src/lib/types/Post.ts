@@ -13,9 +13,15 @@ interface Post {
   OriginalPost: boolean | null; // 오리지날이야 ?
   Parent?: string; // 부모 포스트
   ParentPost?: boolean; // 부모 포스트가있어 ?
-  Heart: [];
+  Heart: Heart[];
+  HeartLiked?: boolean;
 }
 
+interface Heart {
+  user_id: string | null;
+  id?: string;
+  post_id?: string | null;
+}
 interface PostImage {
   link: string;
   id: string;
