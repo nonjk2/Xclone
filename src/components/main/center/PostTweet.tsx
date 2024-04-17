@@ -40,13 +40,14 @@ const PostTweet: React.FC<PostTweetProps> = ({
     resetImages,
   } = useImageSelect();
   const session = useSession();
+  const supabaseAccessToken = session.data?.supabaseAccessToken ?? "";
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: (e) => {
       return createPost({
         content: value["content"],
         isOriginal: true,
-        userId: session.data?.user.id as string,
+        supabaseAccessToken,
         images: inputRef.current?.files,
       });
     },
