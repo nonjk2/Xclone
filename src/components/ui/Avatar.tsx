@@ -9,17 +9,15 @@ interface AvatarProps {
 
 const Avatar = ({ imgUrl, profile = false }: AvatarProps) => {
   const { data: me } = useSession();
-  const AvatarImage = me?.user?.image ?? "/normal.png";
+  let image = me?.user.image ?? "/normal.png";
+  const AvatarImage = me?.user?.image;
   if (profile) {
     return (
       <div className="relative w-full h-full overflow-hidden select-none">
-        <Image
+        <img
           className="absolute top-0 left-0 w-full h-full object-cover"
-          src={imgUrl ?? `${AvatarImage}`}
+          src={image}
           alt="Background Image"
-          width={100}
-          height={100}
-          priority
         />
         <div className="bg-[rgba(0,0,0,0)] absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-no-repeat bg-center transition-all bg-cover cursor-pointer hover:bg-[rgba(26,26,26,0.15)] duration-200" />
       </div>
@@ -30,8 +28,8 @@ const Avatar = ({ imgUrl, profile = false }: AvatarProps) => {
       <div className="avartar"></div>
 
       <img
-        src={AvatarImage}
-        alt={AvatarImage}
+        src={imgUrl ?? "/normal.png"}
+        alt={imgUrl ?? "/normal.png"}
         className="absolute top-0 left-0 right-0 bottom-0 w-full h-full"
       />
     </div>
