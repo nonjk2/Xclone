@@ -3,7 +3,8 @@ import { DefaultJWT } from "next-auth/jwt";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    user: authUser;
+    user: authUser & DefaultSession["user"];
+    supabaseAccessToken?: string;
   }
 
   interface DefaultJWT {
