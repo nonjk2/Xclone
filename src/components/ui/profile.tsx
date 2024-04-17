@@ -4,7 +4,7 @@ import Button from "./button";
 import { Icon } from "./icon/GoogleIcon";
 import normal from "../../../public/normal.png";
 import { signOut, useSession } from "next-auth/react";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/(isuser)/explore/loading";
 
@@ -17,11 +17,12 @@ interface MainHeaderProfileProps {
 const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
   const { type } = props;
   const { data: session, status } = useSession();
+
   const router = useRouter();
   if (!session && status === "unauthenticated") {
     return null;
   }
-
+  console.log(session?.user);
   const sideClickItem = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":
