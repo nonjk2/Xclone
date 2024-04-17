@@ -4,41 +4,38 @@ import {
   PhotoActionBarIconSvg,
 } from "@/components/ui/icon/GoogleIcon";
 
-import {
-  MouseEvent,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { MouseEvent, useRef } from "react";
 import { Player, PlayerState } from "@lottiefiles/react-lottie-player";
 import Counter from "@/components/ui/Counter";
 import { PostActionType } from "./HomeListItemActionBar";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { updateHeartPost } from "@/lib/action/post-server";
+import { useHeartMutation } from "@/lib/hooks/useHeartMutation";
 
 const Actions = ({
-  count = 140,
   type,
   icon,
+  post,
   short = false,
   photo = false,
-  postId,
+  count,
 }: {
-  count?: number;
   type: PostActionType;
+  post: Post;
   icon: string;
   short?: boolean;
   photo?: boolean;
-  postId?: string;
+  count: number;
 }) => {
-  const [heartIcon, setHeartIcon] = useState<boolean>(false);
-  const [heartCount, setHeartCount] = useState<number>(count);
-  const [liked, setLiked] = useState<boolean>(false);
+  const { Heart, id } = post;
+  const { data, status } = useSession();
+  // const liked = !!Heart.find((v) => v.user_id === data?.user.id);
+  const liked = post.HeartLiked;
+
   const playerRef = useRef<Player>(null);
   const photos = usePathname().includes("photo");
-  const session = useSession();
+  const { heart, unheart } = useHeartMutation(data, id);
+
   const switchColor = (type: PostActionType) => {
     switch (type) {
       case "RePost":
@@ -62,52 +59,42 @@ const Actions = ({
         };
     }
   };
-  useEffect(() => {
-    if (liked) {
-      setHeartCount((prev) => prev + 1);
-    } else if (!liked) {
-      setHeartCount(count);
-    }
-  }, [liked, count]);
 
   const onClickActionHeart = async () => {
+    if (heart.isPending || unheart.isPending) return;
     const heartInstance = playerRef.current;
-    setHeartIcon((prev) => !prev);
-    setLiked((prev) => !prev);
-    if (session.data && postId) {
-      console.log("postId : ", postId);
-      console.log("session.data.user.id : ", session.data.user.id);
-      const res = await updateHeartPost({
-        post_id: postId,
-        type: "like",
-        user_id: session.data?.user.id,
-      });
+
+    if (liked) {
+      unheart.mutate();
+    } else {
+      heart.mutate();
     }
-    // if (heartInstance) {
-    //   const currentState = heartInstance.state.playerState;
-    //   // const { play, pause ,stop} = heartInstance;
-    //   switch (currentState) {
-    //     case PlayerState.Paused:
-    //       // console.log("paused -> ");
-    //       heartInstance.stop();
-    //       break;
-    //     case PlayerState.Playing:
-    //       // console.log("playing -> pause");
-    //       heartInstance.stop();
-    //       break;
-    //     case PlayerState.Stopped:
-    //       // console.log("stopped -> playing");
-    //       heartInstance.play();
-    //       break;
-    //     case "frozen":
-    //     case PlayerState.Loading:
-    //       // console.log("loading -> playing");
-    //       heartInstance.play();
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // }
+
+    if (heartInstance) {
+      const currentState = heartInstance.state.playerState;
+      // const { play, pause ,stop} = heartInstance;
+      switch (currentState) {
+        case PlayerState.Paused:
+          // console.log("paused -> ");
+          heartInstance.stop();
+          break;
+        case PlayerState.Playing:
+          // console.log("playing -> pause");
+          heartInstance.stop();
+          break;
+        case PlayerState.Stopped:
+          // console.log("stopped -> playing");
+          heartInstance.play();
+          break;
+        case "frozen":
+        case PlayerState.Loading:
+          // console.log("loading -> playing");
+          heartInstance.play();
+          break;
+        default:
+          break;
+      }
+    }
   };
   const onClickActionHandler = (event: MouseEvent) => {
     event.preventDefault();
@@ -180,17 +167,20 @@ const Actions = ({
           >
             {type === "Heart" ? (
               <>
-                <Player
-                  ref={playerRef}
-                  src={"/clickheart.json"}
-                  autoplay={false}
-                  loop={false}
-                  controls={true}
-                  keepLastFrame
-                  className="absolute w-[40px] h-[40px] -top-1/2 -left-1/2"
-                  background="none"
-                />
-                {!heartIcon && <WhiteSvg photo={photo} />}
+                {!liked ? (
+                  <WhiteSvg photo={photo} />
+                ) : (
+                  <Player
+                    ref={playerRef}
+                    src={"/clickheart.json"}
+                    autoplay={true}
+                    loop={false}
+                    controls={true}
+                    keepLastFrame
+                    className="absolute w-[40px] h-[40px] -top-1/2 -left-1/2"
+                    background="none"
+                  />
+                )}
               </>
             ) : (
               <WhiteSvg photo={photo} />
@@ -203,7 +193,7 @@ const Actions = ({
                 switchColor(type).hoverText
               } px-1 flex justify-center items-center min-w-[calc(1em + 24px)] duration-200 transition-colors text-[13px] overflow-hidden`}
             >
-              <Counter value={heartCount} />
+              <Counter value={count} />
             </div>
           ) : (
             <></>
