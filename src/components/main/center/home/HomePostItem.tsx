@@ -9,17 +9,7 @@ import Link from "next/link";
 import IdPath from "./homepostaction/IdPath";
 import HomePostImage from "./HomePostImage";
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
-  const {
-    content,
-    Images,
-    User,
-    _count: count,
-    createdAt,
-    OriginalPost,
-    Parent,
-    id: postId,
-    Heart: heart,
-  } = props;
+  const { content, Images, User, createdAt, id: postId } = props;
   const { image, nickname, id, name } = User;
   const ItemContents = (
     <article className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer transition-all hover:bg-[rgba(0,0,0,0.03)] duration-200 flex-row border-b bg-[rgba(0,0,0,0)] border-b-gubunsun">
@@ -63,20 +53,14 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
           {Images && Images[0] && (
             <div className="relative rounded-2xl mt-3 min-h-[290px] w-full h-full overflow-hidden border border-gubunsun">
               <div className="flex basis-auto flex-col bottom-0 left-0 right-0 top-0 absolute "></div>
-              <HomePostImage Images={Images} postId={postId} id={id} />
+              <HomePostImage Images={Images} postId={postId} id={nickname} />
             </div>
           )}
         </div>
         <div className="w-full">
           <div className="flex justify-between">
-            <HomeListItemActionBar
-              count={count}
-              heart={heart}
-              postId={postId}
-              type="post"
-            />
+            <HomeListItemActionBar type="post" post={props} />
           </div>
-          b
         </div>
       </div>
     </article>
