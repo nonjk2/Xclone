@@ -6,12 +6,12 @@ export { default } from "next-auth/middleware";
 const secret = process.env.NEXTAUTH_SECRET;
 // export { auth as middleware } from "./auth";
 export async function middleware(req: NextRequest) {
-  const session = await getToken({ req, secret });
-  if (!session) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
-  }
+  // const session = await getToken({ req, secret });
+  // if (!session) {
+  //   const url = req.nextUrl.clone();
+  //   url.pathname = "/";
+  //   return NextResponse.redirect(url);
+  // }
 }
 
 // See "Matching Paths" below to learn more
