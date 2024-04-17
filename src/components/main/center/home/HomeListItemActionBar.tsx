@@ -44,20 +44,14 @@ export type PhotoActionType = Exclude<PostActionType, "BookMark">;
 export type PhotoBoardActionType = Exclude<PostActionType, "View">;
 
 const HomeListItemActionBar = ({
-  count,
   type,
   photo = false,
-  heart = [],
-  postId,
+  post,
 }: {
   type: "post" | "photo" | "photoboard";
-  count: ActionCount;
   photo?: boolean;
-  heart: [];
-  postId: string;
+  post: Post;
 }) => {
-  const { Comments, Hearts, Reposts } = count;
-
   const IconContainer = (type: PostActionType | PhotoActionType) => {
     switch (type) {
       case "Message":
@@ -65,8 +59,9 @@ const HomeListItemActionBar = ({
           <Actions
             type="Message"
             icon={ActionBarMessage}
-            count={count.Comments}
             photo={photo}
+            post={post}
+            count={post._count.Comments}
           />
         );
 
@@ -76,7 +71,8 @@ const HomeListItemActionBar = ({
             photo={photo}
             type="RePost"
             icon={ActionBarReTweet}
-            count={Reposts}
+            post={post}
+            count={post._count.Reposts}
           />
         );
 
@@ -86,8 +82,8 @@ const HomeListItemActionBar = ({
             photo={photo}
             type="Heart"
             icon={ActionBarHeart}
-            count={Hearts}
-            postId={postId}
+            post={post}
+            count={post._count.Hearts}
           />
         );
 
@@ -97,7 +93,8 @@ const HomeListItemActionBar = ({
             type="View"
             photo={photo}
             icon={ActionBarView}
-            count={Comments}
+            post={post}
+            count={0}
           />
         );
 
@@ -108,12 +105,21 @@ const HomeListItemActionBar = ({
             photo={photo}
             icon={ActionBarBookmark}
             short
+            post={post}
+            count={0}
           />
         );
 
       case "Share":
         return (
-          <Actions type="Share" photo={photo} icon={ActionBarShare} short />
+          <Actions
+            type="Share"
+            photo={photo}
+            icon={ActionBarShare}
+            short
+            post={post}
+            count={0}
+          />
         );
 
       default:
