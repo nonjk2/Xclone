@@ -3,21 +3,24 @@ import { Suspense } from "react";
 import PhotoImage from "../ui/Image";
 import MultiCaruocel from "./MultiCaruocel";
 
-const PhotoCaroucel = ({ images }: { images: PostImage[] }) => {
+const PhotoCaroucel = ({ post }: { post: Post }) => {
+  const { Images } = post;
+  if (!Images) {
+    return null;
+  }
   return (
     <div className="grow w-full max-h-[calc(100%-48px)]">
       <MultiCaruocel>
-        {images.map((item) => (
+        {Images.map((item) => (
           <div
-            key={item.imageId}
+            key={item.id}
             className="w-full h-full relative overflow-hidden flex items-center justify-center"
           >
             <Suspense>
               <PhotoImage
-                src={`${item.link}`}
+                src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${item.link}`}
                 alt="asdf"
                 className="object-cover"
-                loading="lazy"
               />
             </Suspense>
           </div>

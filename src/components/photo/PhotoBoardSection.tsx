@@ -10,7 +10,7 @@ import PostTweet from "../main/center/PostTweet";
 import { Suspense } from "react";
 
 const PhotoBoardSection = ({ Post }: { Post: Post }) => {
-  const { id, nickname, image } = Post.User;
+  const { id, nickname, image, name } = Post.User;
   const { createdAt, _count } = Post;
 
   function formatDate(date: Date) {
@@ -41,10 +41,10 @@ const PhotoBoardSection = ({ Post }: { Post: Post }) => {
             <Avatar imgUrl={image} />
           </div>
           <div className="flex flex-col leading-5 grow">
-            <IdPath id={id} nickname>
-              {nickname}
+            <IdPath id={nickname} nickname={name}>
+              {name}
             </IdPath>
-            <IdPath id={id} />
+            <IdPath id={nickname} />
           </div>
           <div className="relative group cursor-pointer">
             <div
@@ -71,12 +71,14 @@ const PhotoBoardSection = ({ Post }: { Post: Post }) => {
           </span>
         </div>
         <div className="flex my-4 items-center text-sm leading-5">
-          <time className="text-inputColor">{formatDate(createdAt)}</time>
+          <time className="text-inputColor">
+            {formatDate(new Date(createdAt as string))}
+          </time>
           <span className="font-bold mx-1">12</span> {" Views"}
         </div>
 
         <div className="flex w-full h-12 border-y border-y-gubunsun">
-          <HomeListItemActionBar count={_count} type="photoboard" />
+          <HomeListItemActionBar post={Post} type="photoboard" />
         </div>
       </article>
       {/* Reply */}
