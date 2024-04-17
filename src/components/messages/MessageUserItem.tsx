@@ -27,7 +27,7 @@ const MessageUserItem = ({ User }: { User: User }) => {
 
         <div className="leading-5 flex flex-col grow first:font-bold font-twitterFontFamily">
           <div>
-            <IdPath id={id} nickname message>
+            <IdPath id={id} nickname={nickname} message>
               {nickname}
             </IdPath>
 
