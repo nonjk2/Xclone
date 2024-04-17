@@ -9,11 +9,12 @@ import MainCenterListItem from "./HomePostItem";
 import { getPostList } from "@/lib/action/post-server";
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { useSession } from "next-auth/react";
+import Loading from "@/app/(isuser)/explore/loading";
 // import { getPostList } from "@/lib/action/server";
 
 // const DATA = mockPosts;
-
-const HomePostList = () => {
+const HomePostLists = ({ supabaseToken }: { supabaseToken: string }) => {
   const {
     data: res,
     fetchNextPage,
@@ -26,11 +27,14 @@ const HomePostList = () => {
     string | undefined
   >({
     queryKey: ["post", "recommend"],
-    queryFn: getPostList,
+    queryFn: (queryKey) =>
+      getPostList({
+        pageParam: queryKey.pageParam,
+        supabaseAccessToken: supabaseToken,
+      }),
     getNextPageParam: (lastPage) => lastPage.at(-1)?.createdAt,
     initialPageParam: undefined,
   });
-
   const { ref, inView } = useInView({
     threshold: 0,
     delay: 0,
@@ -55,5 +59,14 @@ const HomePostList = () => {
       })}
     </Fragment>
   ));
+};
+
+const HomePostList = () => {
+  const { data, status } = useSession();
+  if (!data?.supabaseAccessToken) {
+    return <Loading />;
+  }
+  const supabaseAccessToken = data.supabaseAccessToken;
+  return <HomePostLists supabaseToken={supabaseAccessToken} />;
 };
 export default HomePostList;
