@@ -1,21 +1,17 @@
-"use client";
 import AuthProvider from "@/context/AuthProvider";
 import QueryProvider from "@/context/QueryProvider";
 import RecoilProvider from "@/context/RecoilProvider";
 import StyleProvider from "@/context/StyleProvider";
-import { SessionProvider } from "next-auth/react";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <SessionProvider>
+    <QueryProvider>
       <AuthProvider>
-        <QueryProvider>
-          <RecoilProvider>
-            <StyleProvider>{children}</StyleProvider>
-          </RecoilProvider>
-        </QueryProvider>
+        <RecoilProvider>
+          <StyleProvider>{children}</StyleProvider>
+        </RecoilProvider>
       </AuthProvider>
-    </SessionProvider>
+    </QueryProvider>
   );
 };
 export default Providers;
