@@ -3,6 +3,8 @@ import PhotoComponents from "@/components/photo/PhotoComponents";
 import Modal from "@/components/ui/modal";
 import KeyDownProvider from "@/context/KeyDownProvider";
 import { getSinglePost } from "@/lib/action/post-server";
+import usePost from "@/lib/hooks/usePost";
+import { serverClient } from "@/lib/util/serverSBClient";
 import {
   HydrationBoundary,
   QueryClient,
@@ -17,22 +19,16 @@ const Page = async ({
 }) => {
   const session = await getServerSession(authOption);
   const token = session?.supabaseAccessToken ?? "";
-  const { photoid, username, id } = params;
+  const client = serverClient(token);
+  const { id: PostId } = params;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ["post", id],
-    queryFn: (key) =>
-      getSinglePost({
-        queryKey: key.queryKey as [string, string],
-        supabaseAccessToken: token,
-      }),
-  });
-  const state = dehydrate(queryClient);
+  await queryClient.prefetchQuery(usePost({ client, PostId }));
+
   return (
-    <HydrationBoundary state={state}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <KeyDownProvider>
         <Modal screen>
-          <PhotoComponents id={id} />
+          <PhotoComponents id={PostId} />
         </Modal>
       </KeyDownProvider>
     </HydrationBoundary>

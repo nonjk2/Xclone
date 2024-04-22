@@ -9,27 +9,28 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import HomeTabPostList from "@/components/main/center/home/HomeTabPostList";
-import { getPostList } from "@/lib/action/post-server";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/auth";
+import { serverClient } from "@/lib/util/serverSBClient";
+import usePostList from "@/lib/hooks/usePostList";
 
 const Page = async () => {
   const session = await getServerSession(authOption);
-  const supabaseAccessToken = session?.supabaseAccessToken ?? "";
-  const client = new QueryClient();
-  await client.prefetchInfiniteQuery<
+  const queryClient = new QueryClient();
+  if (!session?.supabaseAccessToken) {
+    return <>loding...</>;
+  }
+  const client = serverClient(session?.supabaseAccessToken);
+  await queryClient.prefetchInfiniteQuery<
     Post[],
     Object,
     InfiniteData<Post[]>,
     [_1: string, _2: string],
     string | undefined
-  >({
-    queryKey: ["post", "recommend"],
-    queryFn: (queryKey) =>
-      getPostList({ pageParam: queryKey.pageParam, supabaseAccessToken }),
-    initialPageParam: undefined,
-  });
-  const dehydratedState = dehydrate(client);
+  >(usePostList({ client }));
+
+  const dehydratedState = dehydrate(queryClient);
+
   return (
     <main className="flex flex-col w-full">
       <HydrationBoundary state={dehydratedState}>

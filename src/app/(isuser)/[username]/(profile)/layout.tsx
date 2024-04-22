@@ -1,12 +1,18 @@
 import Loading from "@/app/(notuser)/@modal/(.)i/flow/signup/loading";
+import { authOption } from "@/auth";
 import ProfileLayout from "@/components/main/center/profile/ProfileLayout";
 import Tab from "@/components/main/center/profile/Tab";
-import { getUsers, getUsersPosts } from "@/lib/action/server";
+import { getUsersPosts } from "@/lib/action/post-server";
+import { getUsers } from "@/lib/action/server";
+import useUsers from "@/lib/hooks/useUsers";
+import useUsersPosts from "@/lib/hooks/useUsersPosts";
+import { serverClient } from "@/lib/util/serverSBClient";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
+import { getServerSession } from "next-auth";
 import { ReactNode, Suspense } from "react";
 
 const Layout = async ({
@@ -17,16 +23,12 @@ const Layout = async ({
   params: { username: string; tab: Tabs };
 }) => {
   const { username } = params;
-  const client = new QueryClient();
-  await client.prefetchQuery({
-    queryKey: ["users", username],
-    queryFn: getUsers,
-  });
-  await client.prefetchQuery({
-    queryKey: ["users", "posts", username],
-    queryFn: getUsersPosts,
-  });
-  const dehydratedState = dehydrate(client);
+  const session = await getServerSession(authOption);
+  const queryClient = new QueryClient();
+  const client = serverClient(session?.supabaseAccessToken ?? "");
+  await queryClient.prefetchQuery(useUsers({ client, username }));
+  await queryClient.prefetchQuery(useUsersPosts({ client, username }));
+  const dehydratedState = dehydrate(queryClient);
   return (
     <main className="relative w-full">
       <HydrationBoundary state={dehydratedState}>

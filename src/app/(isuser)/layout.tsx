@@ -39,7 +39,6 @@ const Layout = ({
           <div className="items-stretch flex fixed top-0 h-full w-[275px] max-xl:items-end max-xl:w-[88px]">
             <div className="items-stretch flex relative h-full justify-between flex-col overflow-y-auto gap-2 w-[275px] px-2 max-xl:w-[88px]">
               <NavMenu />
-
               <MainHeaderProfile type="profile" />
             </div>
           </div>

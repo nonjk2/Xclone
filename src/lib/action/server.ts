@@ -1,35 +1,34 @@
 import { QueryFunction } from "@tanstack/react-query";
-import { supabaseClient } from "./\bsupabase";
+import { supabaseClient } from "../util/supabase";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "../../../database.types";
 
-const getPostList = async (): Promise<Post[]> => {
-  const res = await fetch("http://localhost:9090/api/postRecommends", {
-    method: "GET",
-    next: { tags: ["post", "recommend"] },
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("failed");
-  }
-  return res.json();
+// const getPostFollowList = async (): Promise<Post[]> => {
+//   const res = await fetch("http://localhost:9090/api/followingPosts", {
+//     method: "GET",
+//     next: { tags: ["post", "follow"] },
+//     cache: "no-store",
+//   });
+//   if (!res.ok) {
+//     throw new Error("failed");
+//   }
+//   return res.json();
+// };
+type getUserProps = {
+  queryKey: [_1: string, string];
+  client: SupabaseClient<Database>;
 };
-const getPostFollowList = async (): Promise<Post[]> => {
-  const res = await fetch("http://localhost:9090/api/followingPosts", {
-    method: "GET",
-    next: { tags: ["post", "follow"] },
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("failed");
-  }
-  return res.json();
-};
-const getUsers = async (user_id: string) => {
+
+const getUsers = async ({ queryKey }: getUserProps) => {
+  const [_1, username] = queryKey;
   try {
     const supabase = supabaseClient();
+    // const userid = await checkUserId(supabase);
+
     const { data, error } = await supabase
       .from("userinfo")
       .select("*")
-      .eq("user_id", user_id)
+      .eq("nickname", username)
       .single();
 
     console.log(data);
@@ -42,61 +41,52 @@ const getUsers = async (user_id: string) => {
     throw new Error("failed");
   }
 };
-const getUser = async (token: string) => {
+
+const checkUserId = async (client: SupabaseClient<Database>) => {
+  try {
+    const { data: user, error } = await client
+      .from("users")
+      .select("id")
+      .single();
+    if (error) {
+      throw new Error("CheckUser error");
+    }
+    return user.id;
+  } catch (error) {
+    throw new Error("CheckUser error");
+  }
+};
+
+const getUser = async (token: string, id: string) => {
   try {
     const supabase = supabaseClient(token);
-    const { data, error } = await supabase.from("users").select("*").single();
+    const userId = await checkUserId(supabase);
+    const { data, error } = await supabase
+      .from("userinfo")
+      .select("*")
+      .eq("user_id", userId)
+      .single();
+
     if (error) {
-      console.log(error);
+      console.log("getuser Error: " + error.message);
     }
-    console.log("user : ", data);
+    // console.log("getUser : ", data);
     if (!data) {
       throw new Error("failed");
     }
-    const user = await getUsers(data.id);
-    console.log("getUserdataWithdata : ", user);
+    // const user = await getUsers(data.id);
+    // console.log("getUserdataWithdata : ", user);
     // console.log("getUserdata : ", data);
-    return user;
+    return data;
   } catch (error) {
     throw new Error("failed");
   }
 };
-const getUsersPosts: QueryFunction<
-  Post[],
-  [_1: string, _2: string, string]
-> = async ({ queryKey }) => {
-  const [_1, _2, username] = queryKey;
-  const res = await fetch(`http://localhost:9090/api/users/${username}/posts`, {
-    method: "GET",
-    next: { tags: ["users", "posts", username] },
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("failed");
-  }
-  return res.json();
-};
-const getSinglePost: QueryFunction<Post, [_1: string, _2: number]> = async ({
-  queryKey,
-}) => {
-  const [_1, id] = queryKey;
-
-  const res = await fetch(`http://localhost:9090/api/posts/${id}`, {
-    method: "GET",
-    next: { tags: ["users", String(id)] },
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("failed");
-  }
-  return res.json();
-};
 
 export {
-  getPostList,
-  getPostFollowList,
+  // getPostList,
+  // getPostFollowList,
   getUsers,
   getUser,
-  getUsersPosts,
-  getSinglePost,
+  checkUserId,
 };
