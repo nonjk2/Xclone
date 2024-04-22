@@ -8,10 +8,17 @@ import { ActionBarIconSvg } from "../ui/icon/GoogleIcon";
 import HomeListItemActionBar from "../main/center/home/HomeListItemActionBar";
 import PostTweet from "../main/center/PostTweet";
 import { Suspense } from "react";
+import HomePostImage from "../main/center/home/HomePostImage";
 
-const PhotoBoardSection = ({ Post }: { Post: Post }) => {
+const PhotoBoardSection = ({
+  Post,
+  photo = false,
+}: {
+  Post: Post;
+  photo: boolean;
+}) => {
   const { id, nickname, image, name } = Post.User;
-  const { createdAt, _count } = Post;
+  const { createdAt, _count, Images, id: postId } = Post;
 
   function formatDate(date: Date) {
     const formattedDate = new Intl.DateTimeFormat("en-US", {
@@ -31,7 +38,9 @@ const PhotoBoardSection = ({ Post }: { Post: Post }) => {
   return (
     <section
       id="photo-section-2"
-      className="flex flex-col w-[350px] bg-white overflow-y-scroll"
+      className={`flex flex-col bg-white  ${
+        photo ? "w-[350px] overflow-y-scroll" : "w-full"
+      }`}
       onClick={(e) => e.stopPropagation()}
     >
       <article className="flex w-full px-4 pt-3 flex-col">
@@ -70,6 +79,14 @@ const PhotoBoardSection = ({ Post }: { Post: Post }) => {
             Translate bio
           </span>
         </div>
+
+        {!photo && Images && Images[0] && (
+          <div className="relative rounded-2xl mt-3 min-h-[290px] w-full h-full overflow-hidden border border-gubunsun">
+            <div className="flex basis-auto flex-col bottom-0 left-0 right-0 top-0 absolute "></div>
+            <HomePostImage Images={Images} postId={postId} id={nickname} />
+          </div>
+        )}
+
         <div className="flex my-4 items-center text-sm leading-5">
           <time className="text-inputColor">
             {formatDate(new Date(createdAt as string))}
@@ -85,7 +102,7 @@ const PhotoBoardSection = ({ Post }: { Post: Post }) => {
       <PostTweet type="tweet" comment="Post Reply" photo />
       {/* 게시물 */}
       <Suspense></Suspense>
-      <div className="min-h-[1200px] h-[1200px] bg-blue"></div>
+      <div className="min-h-[1200px] h-[1200px]"></div>
     </section>
   );
 };

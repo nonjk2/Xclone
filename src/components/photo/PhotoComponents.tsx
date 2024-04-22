@@ -45,7 +45,7 @@ const PhotoComponents = ({ id }: { id: string }) => {
           <ShortButton />
         </section>
 
-        <PhotoBoardSection Post={post} />
+        <PhotoBoardSection Post={post} photo />
       </main>
     </StyleProvider>
   );

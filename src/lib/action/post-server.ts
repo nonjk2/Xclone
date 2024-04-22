@@ -1,9 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { supabaseClient } from "../util/supabase";
 import { checkUserId } from "./server";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../../../database.types";
-import { QueryFunction } from "@tanstack/react-query";
 
 interface FetchPostInterface {
   content: string;
@@ -28,7 +26,7 @@ interface PostPathInterface {
 
 interface SinglePostPropsType {
   queryKey: [string, string];
-  client: SupabaseClient;
+  client: SupabaseClient<Database>;
 }
 interface getPostListType {
   pageParam: string | undefined;
@@ -50,14 +48,13 @@ const getUsersPosts = async ({ queryKey, client }: getUsersPostsProps) => {
   const { data: userpost, error } = await client
     .from("posts")
     .select(
-      `
-      * , 
-      User:userinfo(*) , 
-      Heart:post_likes(user_id) , 
-      Images:post_images(id,link)
-      `
+      `* ,
+      Images:post_images(id,link),
+      Heart:post_likes(user_id),
+      userinfo!inner(*)
+    `
     )
-    .eq("nickname", username);
+    .eq("userinfo.nickname", username);
 
   if (error) {
     console.log(error);
@@ -69,7 +66,7 @@ const getUsersPosts = async ({ queryKey, client }: getUsersPostsProps) => {
     return {
       HeartLiked: !!heartLikedByUser?.user_id,
       id: e.id,
-      User: e.User as authUser,
+      User: e.userinfo as authUser,
       content: e.content,
       createdAt: e.created_at,
       Images: e.Images,
@@ -102,7 +99,6 @@ const getSinglePost = async ({
       )
       .eq("id", id)
       .single();
-    console.log(newPost);
     if (error) {
       throw new Error("singlepost error");
     }
