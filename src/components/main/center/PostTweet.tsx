@@ -9,11 +9,9 @@ import { createPost } from "@/lib/action/post-server";
 import { useSession } from "next-auth/react";
 import useImageSelect from "@/lib/hooks/useImageSelect";
 import PostTweetPostContent from "./PostTweetPostContent";
-import {
-  InfiniteData,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { supabaseClient } from "@/lib/util/supabase";
+import useCreatePost from "@/lib/hooks/useCreatePost";
 
 interface PostTweetProps {
   comment: string;
@@ -39,41 +37,28 @@ const PostTweet: React.FC<PostTweetProps> = ({
     onImageRemove,
     resetImages,
   } = useImageSelect();
+
   const session = useSession();
   const supabaseAccessToken = session.data?.supabaseAccessToken ?? "";
-  const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationFn: (e) => {
-      return createPost({
+  const client = supabaseClient(supabaseAccessToken);
+
+  const callbackFn = () => {
+    resetImages();
+    setForm({ content: "" });
+  };
+  const { mutate, isPending } = useMutation(
+    useCreatePost({
+      callbackFn,
+      formData: {
         content: value["content"],
         isOriginal: true,
-        supabaseAccessToken,
+        client,
         images: inputRef.current?.files,
-      });
-    },
-    onSuccess(data, variables, context) {
-      resetImages();
-      setForm({ content: "" });
+      },
+      queryKeyType: "recommend",
+    })
+  );
 
-      queryClient.setQueryData(
-        ["post", "recommend"],
-        (current: InfiniteData<Post[]>) => {
-          // const newPost = {
-          //   ...current,
-          //   pageParams: [...current.pages],
-          // };
-          // newPost.pages[0] = [...newPost.pages[0]];
-          // newPost.pages[0].unshift(data);
-          // return newPost;
-          const updatedFirstPage = [data, ...current.pages[0]];
-          return {
-            ...current,
-            pages: [updatedFirstPage, ...current.pages.slice(1)],
-          };
-        }
-      );
-    },
-  });
   const TextFocusRender = () => {
     if (photo) {
       return (
@@ -134,7 +119,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
 
       <div className="w-full px-4 flex pt-1 h-full">
         <div className="flex flex-col relative mr-3 basis-10 pt-2 w-full">
-          <Avatar />
+          <Avatar imgUrl={session.data?.user.image} />
         </div>
         <PostTweetTextArea
           onChange={onChange}
