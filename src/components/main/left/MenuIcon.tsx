@@ -51,7 +51,10 @@ const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
       color={color}
       className="flex w-[236.78px] max-xl:w-full h-[50.25px] text-black group first:pt-[2px] max-xl:items-center max-xl:justify-center"
     >
-      <div className="group-hover:bg-lightblack flex p-3 rounded-full cursor-pointer transition-all duration-200 ease-in">
+      <div
+        title={title}
+        className="group-hover:bg-lightblack flex p-3 rounded-full cursor-pointer transition-all duration-200 ease-in"
+      >
         {boldIcon}
       </div>
     </Link>

@@ -1,17 +1,21 @@
+import { authOption } from "@/auth";
 import AuthProvider from "@/context/AuthProvider";
 import QueryProvider from "@/context/QueryProvider";
 import RecoilProvider from "@/context/RecoilProvider";
 import StyleProvider from "@/context/StyleProvider";
+import { getServerSession } from "next-auth";
 
-const Providers = ({ children }: { children: React.ReactNode }) => {
+const Providers = async ({ children }: { children: React.ReactNode }) => {
+  const session = await getServerSession(authOption);
+
   return (
-    <QueryProvider>
-      <AuthProvider>
+    <AuthProvider session={session}>
+      <QueryProvider>
         <RecoilProvider>
           <StyleProvider>{children}</StyleProvider>
         </RecoilProvider>
-      </AuthProvider>
-    </QueryProvider>
+      </QueryProvider>
+    </AuthProvider>
   );
 };
 export default Providers;
