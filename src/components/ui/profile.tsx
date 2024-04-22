@@ -22,7 +22,6 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
   if (!session && status === "unauthenticated") {
     return null;
   }
-  console.log(session?.user);
   const sideClickItem = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":

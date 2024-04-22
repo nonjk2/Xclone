@@ -4,19 +4,24 @@ import Button from "@/components/ui/button";
 import { SmallIconSvg } from "@/components/ui/icon/GoogleIcon";
 import { calender } from "@/lib/Icon";
 import { getUsers } from "@/lib/action/server";
+import useUsers from "@/lib/hooks/useUsers";
+import { supabaseClient } from "@/lib/util/supabase";
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 const ProfileLayout = ({ username }: { username: string }) => {
+  const { data, status } = useSession();
+  if (status === "loading") {
+    return <>loading...</>;
+  }
+  const client = supabaseClient(data?.supabaseAccessToken);
   const { data: user, error } = useQuery<
-    User,
+    authUser,
     Object,
-    User,
+    authUser,
     [_1: string, string]
-  >({
-    queryKey: ["users", username],
-    queryFn: getUsers,
-  });
+  >(useUsers({ client, username }));
 
   if (error) {
     return (
@@ -60,20 +65,22 @@ const ProfileLayout = ({ username }: { username: string }) => {
         </div>
       </div>
       <div className="flex flex-col mt-1 mb-3">
-        <span className="text-xl font-extrabold">{user?.nickname}</span>
+        <span className="text-xl font-extrabold">{user?.name}</span>
         <span className="flex items-center text-inputColor text-[15px]">
-          @{user?.id}
+          @{user?.nickname}
         </span>
       </div>
 
       {/* 번역 */}
 
-      <div className="flex mb-3 flex-col">
-        <span className="text-[15px] text-black">{user?.nickname}</span>
-        <span className="text-blue text-[13px] hover:underline">
-          Translate bio
-        </span>
-      </div>
+      {user?.bio && (
+        <div className="flex mb-3 flex-col">
+          <span className="text-[15px] text-black">{user?.bio}</span>
+          <span className="text-blue text-[13px] hover:underline">
+            Translate bio
+          </span>
+        </div>
+      )}
 
       {/* 날짜 */}
 
@@ -89,13 +96,13 @@ const ProfileLayout = ({ username }: { username: string }) => {
       <div className="flex gap-5 text-inputColor text-[14px] leading-3 font-normal">
         <Link href={"/following"} className="flex hover:underline">
           <span className="text-black text-[14px] font-bold">
-            {user?._count.Followings}
+            {/* {user?._count.Followings} */}0
           </span>
           {"Following"}
         </Link>
         <Link href={"/followers"} className="flex hover:underline">
           <span className="text-black text-[14px] font-bold">
-            {user?._count.Followers}
+            {/* {user?._count.Followers} */}0
           </span>
           {"Followers"}
         </Link>

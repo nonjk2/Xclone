@@ -17,7 +17,7 @@ const IdPath = ({ id, nickname, children, message = false }: IdPathProps) => {
       return;
     }
     e.stopPropagation();
-    router.push(`/${nickname}`);
+    router.push(`/${id}`);
   };
   if (nickname) {
     return (
