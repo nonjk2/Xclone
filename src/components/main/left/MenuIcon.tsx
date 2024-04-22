@@ -16,7 +16,8 @@ interface MainHeaderListItemProps {
 const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
   const { title, path, boldPath, color, pathname } = props;
   const seg = useSelectedLayoutSegment();
-  const sameTitle = title && title.toLowerCase() === seg;
+
+  const sameTitle = (title && title.toLowerCase() === seg) || seg === pathname;
   const boldIcon = sameTitle ? (
     <>
       {!!boldPath && (
@@ -34,7 +35,6 @@ const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
   ) : (
     <>
       <div className="relative">
-        {/* {title === "Notifications" && notice > 0 && <Notice />} */}
         <MenuIconSvg path={path} width={6} height={6} color={color} />
       </div>
       {title && (

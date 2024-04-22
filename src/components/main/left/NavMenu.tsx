@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { useRouter } from "next/navigation";
 import MenuIcon from "./MenuIcon";
 import { PostBtnSvg, boldSvgArray, svgArray } from "@/lib/Icon";
 import Button from "@/components/ui/button";
@@ -30,14 +30,14 @@ const NavMenu = () => {
   return (
     <header className="flex flex-col items-start max-xl:w-full first:pt-[2px] max-xl:items-center gap-2 short:gap-0">
       {svgArray.map((svg, idx) => {
-        if (idx === 9) {
+        if (NavMenuTitle[idx] === "Profile") {
           return (
             <MenuIcon
               path={svg}
               boldPath={boldSvgArray[idx]}
               key={svg}
               title={NavMenuTitle[idx]}
-              pathname={session.data?.user?.name}
+              pathname={session.data?.user.nickname}
             />
           );
         }
