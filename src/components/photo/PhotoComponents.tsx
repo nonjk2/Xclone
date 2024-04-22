@@ -1,31 +1,33 @@
 "use client";
 import HomeListItemActionBar from "../main/center/home/HomeListItemActionBar";
-import { mockPosts } from "@/__test__/MockPostData";
 import CloseButton from "./CloseButton";
 import ShortButton from "./ShortButton";
 import PhotoCaroucel from "./PhotoCaroucel";
 import StyleProvider from "@/context/StyleProvider";
 import PhotoBoardSection from "./PhotoBoardSection";
 import { useQuery } from "@tanstack/react-query";
-import { getSinglePost } from "@/lib/action/post-server";
 import { useSession } from "next-auth/react";
+import { supabaseClient } from "@/lib/util/supabase";
+import usePost from "@/lib/hooks/usePost";
+import Loading from "@/app/(isuser)/explore/loading";
 
 const PhotoComponents = ({ id }: { id: string }) => {
-  const session = useSession();
-  const supabaseAccessToken = session.data?.supabaseAccessToken ?? "";
-  const { data: post } = useQuery<Post, Object, Post, [_1: string, _2: string]>(
-    {
-      queryKey: ["post", id],
-      queryFn: (key) =>
-        getSinglePost({
-          queryKey: key.queryKey as [string, string],
-          supabaseAccessToken: supabaseAccessToken,
-        }),
-    }
-  );
+  const { data, status } = useSession();
 
-  if (!post) {
-    return <>londing</>;
+  if (status === "loading" && !data) {
+    return <>loding...</>;
+  }
+  const supabaseAccessToken = data?.supabaseAccessToken ?? "";
+  const client = supabaseClient(supabaseAccessToken);
+  const { data: post, isPending } = useQuery<
+    Post,
+    Object,
+    Post,
+    [_1: string, _2: string]
+  >(usePost({ client, PostId: id }));
+
+  if (!post || isPending) {
+    return <Loading />;
   }
 
   return (
