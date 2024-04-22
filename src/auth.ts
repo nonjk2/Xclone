@@ -45,19 +45,19 @@ export const authOption: NextAuthOptions = {
       return true;
     },
 
-    async jwt({ token, user, account, trigger, profile }) {
-      if (user) {
-        token.uid = user.id;
-        // token.role = user.role;
-        // token.email = user.email;
-        // token.name = user.name;
-        // token.picture = user.image;
-      }
-      // console.log(token);
-      return token;
-    },
+    // async jwt({ token, user, account, trigger, profile }) {
+    //   if (user) {
+    //     token.uid = user.id;
+    //     // token.role = user.role;
+    //     // token.email = user.email;
+    //     // token.name = user.name;
+    //     // token.picture = user.image;
+    //   }
+    //   // console.log(token);
+    //   return token;
+    // },
 
-    async session({ session, token, user }) {
+    async session({ session, user, newSession }) {
       const signingSecret = process.env.SUPABASE_JWT_SECRET;
       if (signingSecret) {
         const payload = {
@@ -67,23 +67,22 @@ export const authOption: NextAuthOptions = {
           email: user.email,
           role: "authenticated",
         };
-        // console.log("userid : ", user.id, "user", user.user_id);
         const newToken = jwt.sign(payload, signingSecret);
-        const userInfo = await getUser(newToken);
+        const userInfo = await getUser(newToken, user.id);
+        session.user = user;
         session.supabaseAccessToken = newToken;
+        // console.log("userSession by database : ", user);
         session.user.email = userInfo.email;
         session.user.image = userInfo.image;
         session.user.name = userInfo.name;
         session.user.nickname = userInfo.nickname;
       }
 
-      // console.log(session);
       return session;
     },
   },
   session: {
     strategy: "database",
-
     maxAge: 30 * 24 * 60 * 60,
   },
   events: {
@@ -111,14 +110,6 @@ export const authOption: NextAuthOptions = {
     KakaoProvider({
       clientId: process.env.KAKAO_CLIENT_ID || "",
       clientSecret: process.env.KAKAO_CLIENT_SECRET || "",
-      // profile(profile, tokens) {
-      //   return {
-      //     id: String(profile.id),
-      //     name: profile.kakao_account?.profile?.nickname,
-      //     email: profile.kakao_account?.email,
-      //     image: profile.kakao_account?.profile?.profile_image_url,
-      //   } as User;
-      // },
     }),
     GoogleProvider({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "",
