@@ -1,30 +1,15 @@
-import { authOption } from "@/auth";
-import { getUsers } from "@/lib/action/server";
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-  useQueryClient,
-} from "@tanstack/react-query";
-import { getServerSession } from "next-auth";
+"use client";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
 interface AuthProviderProps {
   children: ReactNode;
+  session: Session | null;
 }
 
-const AuthProvider = async ({ children }: AuthProviderProps) => {
-  const session = await getServerSession(authOption);
-  const client = new QueryClient();
-  if (session?.supabaseAccessToken) {
-    await client.prefetchQuery({
-      queryKey: ["users", session.supabaseAccessToken],
-      queryFn: getUsers,
-    });
-    const state = dehydrate(client);
-    return <HydrationBoundary state={state}>{children}</HydrationBoundary>;
-  }
-  return <>{children}</>;
+const AuthProvider = async ({ children, session }: AuthProviderProps) => {
+  return <SessionProvider session={session}>{children}</SessionProvider>;
 };
 
 export default AuthProvider;

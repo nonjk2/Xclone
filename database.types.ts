@@ -115,7 +115,7 @@ export type Database = {
           created_at?: string | null;
           id?: number;
           post_id: string;
-          user_id: string;
+          user_id?: string;
         };
         Update: {
           created_at?: string | null;
@@ -134,9 +134,9 @@ export type Database = {
           {
             foreignKeyName: "public_post_likes_user_id_fkey";
             columns: ["user_id"];
-            isOneToOne: false;
+            isOneToOne: true;
             referencedRelation: "userinfo";
-            referencedColumns: ["id"];
+            referencedColumns: ["user_id"];
           }
         ];
       };
@@ -183,7 +183,7 @@ export type Database = {
           id: string;
           is_original: boolean | null;
           parent_post_id: string | null;
-          user_id: string | null;
+          user_id: string;
         };
         Insert: {
           content?: string | null;
@@ -191,7 +191,7 @@ export type Database = {
           id?: string;
           is_original?: boolean | null;
           parent_post_id?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Update: {
           content?: string | null;
@@ -199,7 +199,7 @@ export type Database = {
           id?: string;
           is_original?: boolean | null;
           parent_post_id?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Relationships: [
           {
@@ -214,7 +214,7 @@ export type Database = {
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "userinfo";
-            referencedColumns: ["id"];
+            referencedColumns: ["user_id"];
           }
         ];
       };
@@ -297,6 +297,35 @@ export type Database = {
           {
             foreignKeyName: "public_userinfo_user_id_fkey";
             columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      users: {
+        Row: {
+          email: string | null;
+          id: string;
+          image: string | null;
+          name: string | null;
+        };
+        Insert: {
+          email?: string | null;
+          id: string;
+          image?: string | null;
+          name?: string | null;
+        };
+        Update: {
+          email?: string | null;
+          id?: string;
+          image?: string | null;
+          name?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey";
+            columns: ["id"];
             isOneToOne: true;
             referencedRelation: "users";
             referencedColumns: ["id"];

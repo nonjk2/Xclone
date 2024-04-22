@@ -22,13 +22,11 @@ const QueryProvider = ({ children }: QueryProviderProps) => {
   );
 
   return (
-    <SessionProvider>
-      <QueryClientProvider client={client}>
-        {children}
+    <QueryClientProvider client={client}>
+      {children}
 
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-    </SessionProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 };
 
