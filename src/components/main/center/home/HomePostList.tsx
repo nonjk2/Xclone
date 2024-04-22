@@ -11,10 +11,17 @@ import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSession } from "next-auth/react";
 import Loading from "@/app/(isuser)/explore/loading";
+import usePostList from "@/lib/hooks/usePostList";
+import { supabaseClient } from "@/lib/util/supabase";
 // import { getPostList } from "@/lib/action/server";
 
 // const DATA = mockPosts;
-const HomePostLists = ({ supabaseToken }: { supabaseToken: string }) => {
+const HomePostLists = ({
+  supabaseAccessToken,
+}: {
+  supabaseAccessToken: string;
+}) => {
+  const client = supabaseClient(supabaseAccessToken);
   const {
     data: res,
     fetchNextPage,
@@ -25,16 +32,8 @@ const HomePostLists = ({ supabaseToken }: { supabaseToken: string }) => {
     InfiniteData<Post[]>,
     [_1: string, _2: string],
     string | undefined
-  >({
-    queryKey: ["post", "recommend"],
-    queryFn: (queryKey) =>
-      getPostList({
-        pageParam: queryKey.pageParam,
-        supabaseAccessToken: supabaseToken,
-      }),
-    getNextPageParam: (lastPage) => lastPage.at(-1)?.createdAt,
-    initialPageParam: undefined,
-  });
+  >(usePostList({ client, typequery: "recommend" }));
+
   const { ref, inView } = useInView({
     threshold: 0,
     delay: 0,
@@ -67,6 +66,6 @@ const HomePostList = () => {
     return <Loading />;
   }
   const supabaseAccessToken = data.supabaseAccessToken;
-  return <HomePostLists supabaseToken={supabaseAccessToken} />;
+  return <HomePostLists supabaseAccessToken={supabaseAccessToken} />;
 };
 export default HomePostList;
