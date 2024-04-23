@@ -32,6 +32,11 @@ interface getPostListType {
   pageParam: string | undefined;
   client: SupabaseClient<Database>;
 }
+interface getCommentPostListType {
+  pageParam?: string | undefined;
+  client: SupabaseClient<Database>;
+  postId: string;
+}
 
 // : QueryFunction<
 //   Post[],
@@ -116,6 +121,8 @@ const getSinglePost = async ({
       Heart: newPost.Heart,
       _count: { Hearts: newPost.Heart.length, Reposts: 0, Comments: 0 },
       OriginalPost: newPost.is_original,
+      Parent: newPost.parent_post_id ?? undefined,
+      ParentPost: !!newPost.parent_post_id,
     };
 
     if (error) {
@@ -205,8 +212,8 @@ const getPostList = async ({
         Heart: e.Heart,
         _count: { Hearts: e.Heart.length, Reposts: 0, Comments: 0 },
         OriginalPost: e.is_original,
-        // Parent: e.parent_post_id ?? "",
-        // ParentPost: !!e.parent_post_id,
+        Parent: e.parent_post_id ?? "",
+        ParentPost: !!e.parent_post_id,
       };
     });
 
@@ -216,6 +223,77 @@ const getPostList = async ({
   }
 };
 
+const getCommentPostList = async ({
+  pageParam = undefined,
+  client,
+  postId,
+}: getCommentPostListType): Promise<Post[]> => {
+  const userId = await checkUserId(client);
+  try {
+    // const { data: newPost, error } = await client
+    //   .from("posts")
+    //   .select(
+    //     `* ,
+    //       User:userinfo!public_posts_user_id_fkey(*),
+    //       Images:post_images(id,link),
+    //       Heart:post_likes(user_id)
+    //   `
+    //   )
+    //   .eq("parent_post_id", postId);
+    // if (error) {
+    //   console.log(error);
+    //   throw new Error("getCommentPostList fail");
+    // }
+    // console.log(newPost);
+    // return newPost;
+
+    let query = client
+      .from("posts")
+      .select(
+        `* ,
+        User:userinfo!public_posts_user_id_fkey(*),
+        Images:post_images(id,link),
+        Heart:post_likes(user_id)
+      `
+      )
+      .eq("parent_post_id", postId)
+      .order("created_at", { ascending: false })
+      .limit(5);
+    if (pageParam) {
+      query = query.lt("created_at", pageParam);
+    }
+
+    const { data: newPost, error } = await query;
+    // console.log("newPost : ", newPost);
+    if (error) {
+      console.log(error);
+      throw new Error(error.message);
+    }
+
+    const post: Post[] = newPost.map((e) => {
+      const heartLikedByUser =
+        (e.Heart as Heart[]) &&
+        e.Heart.find((e: Heart) => e.user_id === userId);
+      return {
+        HeartLiked: !!heartLikedByUser?.user_id,
+        id: e.id,
+        User: e.User as authUser,
+        content: e.content,
+        createdAt: e.created_at,
+        Images: e.Images,
+        Heart: e.Heart,
+        _count: { Hearts: e.Heart.length, Reposts: 0, Comments: 0 },
+        OriginalPost: e.is_original,
+        Parent: e.parent_post_id ?? "",
+        ParentPost: !!e.parent_post_id,
+      };
+    });
+
+    return post;
+  } catch (error) {
+    throw new Error("getPostList fail");
+  }
+};
 // 새로운 Post를 생성하는 비동기 함수
 const createPost = async (formdata: {
   content: string;
@@ -321,4 +399,5 @@ export {
   updateHeartPost,
   getSinglePost,
   getUsersPosts,
+  getCommentPostList,
 };

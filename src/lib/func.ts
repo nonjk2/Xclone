@@ -67,10 +67,23 @@ const switchColor = (type: PostActionType | "Close") => {
       };
   }
 };
+const formatDate = (date: Date) => {
+  const formattedDate = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour12: true,
+    timeZone: "Asia/Seoul",
+  }).format(date);
+  const [day, year, time] = formattedDate.split(",");
 
+  return `${time} · ${day}, ${year} · `;
+};
 const replaceString = (str: string, replacer: any) =>
   isString(str) ? str.replace(replacer, "") : "";
 
 const numberFilter = (str: string) => replaceString(str, /[^0-9]/g);
 
-export { convertToJSDate, getTimeAgo, switchColor, numberFilter };
+export { convertToJSDate, getTimeAgo, switchColor, numberFilter, formatDate };

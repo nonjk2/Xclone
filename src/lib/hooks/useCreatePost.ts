@@ -14,7 +14,7 @@ export type FormDataType = {
 type useCreatePostProps = {
   formData: FormDataType;
   callbackFn: () => void;
-  queryKeyType: string;
+  queryKeyType: string[];
 };
 
 const useCreatePost = ({
@@ -29,16 +29,13 @@ const useCreatePost = ({
 
   const onSuccess = (data: unknown) => {
     callbackFn();
-    queryClient.setQueryData(
-      ["post", queryKeyType],
-      (current: InfiniteData<Post[]>) => {
-        const updatedFirstPage = [data, ...current.pages[0]];
-        return {
-          ...current,
-          pages: [updatedFirstPage, ...current.pages.slice(1)],
-        };
-      }
-    );
+    queryClient.setQueryData(queryKeyType, (current: InfiniteData<Post[]>) => {
+      const updatedFirstPage = [data, ...current.pages[0]];
+      return {
+        ...current,
+        pages: [updatedFirstPage, ...current.pages.slice(1)],
+      };
+    });
   };
   return {
     mutationFn,
