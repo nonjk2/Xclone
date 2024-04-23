@@ -7,7 +7,7 @@
 3. supabase 연동하기 [x]
 4. next-auth 와 supabase 연동하기 [x]
 5. auth 구역 나누고 게시글 CR 완성하기 [x]
-6. ActionBar 완성하기
+6. ActionBar 완성하기 [ ]
 7. openAI 로 게시물쓰기 [ ]
 8. realtimeDB openAI로 완성하기 [ ]
 9. next-auth -> supabaseAuth로 전환하기 []
