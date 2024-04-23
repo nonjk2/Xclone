@@ -1,6 +1,6 @@
 "use client";
 import { threedot } from "@/lib/Icon";
-import { switchColor } from "@/lib/func";
+import { formatDate, switchColor } from "@/lib/func";
 import image from "next/image";
 import IdPath from "../main/center/home/homepostaction/IdPath";
 import Avatar from "../ui/Avatar";
@@ -9,6 +9,12 @@ import HomeListItemActionBar from "../main/center/home/HomeListItemActionBar";
 import PostTweet from "../main/center/PostTweet";
 import { Suspense } from "react";
 import HomePostImage from "../main/center/home/HomePostImage";
+import { supabaseClient } from "@/lib/util/supabase";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import { getCommentPostList } from "@/lib/action/post-server";
+import PostComments from "./PostComments";
+import Loading from "@/app/(isuser)/explore/loading";
 
 const PhotoBoardSection = ({
   Post,
@@ -18,22 +24,7 @@ const PhotoBoardSection = ({
   photo: boolean;
 }) => {
   const { id, nickname, image, name } = Post.User;
-  const { createdAt, _count, Images, id: postId } = Post;
-
-  function formatDate(date: Date) {
-    const formattedDate = new Intl.DateTimeFormat("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour12: true,
-      timeZone: "Asia/Seoul",
-    }).format(date);
-    const [day, year, time] = formattedDate.split(",");
-
-    return `${time} · ${day}, ${year} · `;
-  }
+  const { createdAt, _count, Images, id: postId, ParentPost, Parent } = Post;
 
   return (
     <section
@@ -99,10 +90,14 @@ const PhotoBoardSection = ({
         </div>
       </article>
       {/* Reply */}
-      <PostTweet type="tweet" comment="Post Reply" photo />
+      <PostTweet type="tweet" comment="Post Reply" photo postId={postId} />
       {/* 게시물 */}
-      <Suspense></Suspense>
-      <div className="min-h-[1200px] h-[1200px]"></div>
+      <Suspense fallback={<Loading />}>
+        <PostComments postId={postId} />
+      </Suspense>
+      <div className="min-h-[1200px] h-[1200px]">
+        {/* {comments && comments.map(() => {})} */}
+      </div>
     </section>
   );
 };

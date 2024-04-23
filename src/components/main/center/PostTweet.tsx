@@ -18,6 +18,7 @@ interface PostTweetProps {
   type: "tweet" | "retweet";
   reply?: boolean;
   photo?: boolean;
+  postId?: string;
 }
 
 const PostTweet: React.FC<PostTweetProps> = ({
@@ -25,6 +26,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
   type,
   reply,
   photo,
+  postId,
 }) => {
   const [textFocus, settextFocus] = useState<boolean>(false);
   const [value, onChange, setForm] = useInput({ content: "" });
@@ -46,16 +48,18 @@ const PostTweet: React.FC<PostTweetProps> = ({
     resetImages();
     setForm({ content: "" });
   };
+
   const { mutate, isPending } = useMutation(
     useCreatePost({
       callbackFn,
       formData: {
         content: value["content"],
-        isOriginal: true,
+        isOriginal: !postId,
+        parentPostId: !!postId ? postId : undefined,
         client,
         images: inputRef.current?.files,
       },
-      queryKeyType: "recommend",
+      queryKeyType: !!postId ? ["post", postId] : ["post", "recommend"],
     })
   );
 
