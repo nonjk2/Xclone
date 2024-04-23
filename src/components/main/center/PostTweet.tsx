@@ -59,7 +59,9 @@ const PostTweet: React.FC<PostTweetProps> = ({
         client,
         images: inputRef.current?.files,
       },
-      queryKeyType: !!postId ? ["post", postId] : ["post", "recommend"],
+      queryKeyType: !!postId
+        ? ["post", "comment", postId]
+        : ["post", "recommend"],
     })
   );
 

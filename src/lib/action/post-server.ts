@@ -185,6 +185,7 @@ const getPostList = async ({
         Heart:post_likes(user_id)
       `
       )
+      .eq("is_original", true)
       .order("created_at", { ascending: false })
       .limit(5);
     if (pageParam) {
