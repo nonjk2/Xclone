@@ -43,18 +43,21 @@ export type Database = {
         Row: {
           created_at: string | null;
           id: number;
+          parent_post_id: string;
           post_id: string | null;
           user_id: string | null;
         };
         Insert: {
           created_at?: string | null;
           id?: number;
+          parent_post_id: string;
           post_id?: string | null;
           user_id?: string | null;
         };
         Update: {
           created_at?: string | null;
           id?: number;
+          parent_post_id?: string;
           post_id?: string | null;
           user_id?: string | null;
         };
@@ -71,6 +74,13 @@ export type Database = {
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "public_post_comments_parent_post_id_fkey";
+            columns: ["parent_post_id"];
+            isOneToOne: false;
+            referencedRelation: "posts";
             referencedColumns: ["id"];
           }
         ];
@@ -134,7 +144,7 @@ export type Database = {
           {
             foreignKeyName: "public_post_likes_user_id_fkey";
             columns: ["user_id"];
-            isOneToOne: true;
+            isOneToOne: false;
             referencedRelation: "userinfo";
             referencedColumns: ["user_id"];
           }
@@ -203,7 +213,7 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "posts_parent_post_id_fkey";
+            foreignKeyName: "public_posts_parent_post_id_fkey";
             columns: ["parent_post_id"];
             isOneToOne: false;
             referencedRelation: "posts";
@@ -267,7 +277,7 @@ export type Database = {
           name: string;
           nickname: string;
           phone: string | null;
-          user_id: string | null;
+          user_id: string;
         };
         Insert: {
           address_id?: string;
@@ -279,7 +289,7 @@ export type Database = {
           name?: string;
           nickname?: string;
           phone?: string | null;
-          user_id?: string | null;
+          user_id: string;
         };
         Update: {
           address_id?: string;
@@ -291,7 +301,7 @@ export type Database = {
           name?: string;
           nickname?: string;
           phone?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Relationships: [
           {
