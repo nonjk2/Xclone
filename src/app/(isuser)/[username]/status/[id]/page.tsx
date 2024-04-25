@@ -1,32 +1,29 @@
-import Loading from "@/app/(isuser)/explore/loading";
-import { authOption } from "@/auth";
 import SinglePostComponent from "@/components/main/center/singlepost/SinglePostComponent";
-import PhotoBoardSection from "@/components/photo/PhotoBoardSection";
-
 import usePost from "@/lib/hooks/usePost";
 import { serverClient } from "@/lib/util/serverSBClient";
-import { supabaseClient } from "@/lib/util/supabase";
 
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
-  useQuery,
 } from "@tanstack/react-query";
-import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 interface SinglePostPageProps {
   params: { id: string };
 }
 const SiglePostPage = async ({ params }: SinglePostPageProps) => {
   const { id: PostId } = params;
-  const session = await getServerSession(authOption);
-  const queryClient = new QueryClient();
-  if (!session?.supabaseAccessToken) {
-    return <>loding...</>;
+  const client = serverClient();
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+
+  if (!user) {
+    return redirect("/login");
   }
 
-  const client = serverClient(session?.supabaseAccessToken);
+  const queryClient = new QueryClient();
+
   await queryClient.prefetchQuery<Post, Object, Post, [_1: string, string]>(
     usePost({ client, PostId })
   );

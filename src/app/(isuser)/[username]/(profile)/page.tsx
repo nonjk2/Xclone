@@ -1,14 +1,14 @@
-import { authOption } from "@/auth";
 import ProfilePost from "@/components/main/center/profile/ProfilePost";
 import { getUsersPosts } from "@/lib/action/post-server";
 import useUsersPosts from "@/lib/hooks/useUsersPosts";
+import { serverClient } from "@/lib/util/serverSBClient";
 import { supabaseClient } from "@/lib/util/supabase";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 interface ProfilePageProps {
   params: { username: string };
@@ -16,8 +16,14 @@ interface ProfilePageProps {
 
 const page = async ({ params }: ProfilePageProps) => {
   const { username } = params;
-  const session = await getServerSession(authOption);
-  const client = supabaseClient(session?.supabaseAccessToken);
+  const client = serverClient();
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+
+  if (!user) {
+    return redirect("/login");
+  }
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(useUsersPosts({ client, username }));
   const dehydratedState = dehydrate(queryClient);

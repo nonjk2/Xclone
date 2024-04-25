@@ -21,7 +21,7 @@ const NavMenuTitle = [
   "More",
 ];
 const NavMenu = () => {
-  const session = useSession();
+  // const session = useSession();
 
   const { push } = useRouter();
   // if (!session.data) {
@@ -37,7 +37,7 @@ const NavMenu = () => {
               boldPath={boldSvgArray[idx]}
               key={svg}
               title={NavMenuTitle[idx]}
-              pathname={session.data?.user.nickname}
+              pathname={"session.data?.user.nickname"}
             />
           );
         }

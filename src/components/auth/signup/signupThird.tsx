@@ -4,6 +4,8 @@ import DynamicInput from "../../ui/dynamicInput";
 import { stepState, textState } from "@/context/store/signState";
 import Button from "../../ui/button";
 import { useFormState, useFormStatus } from "react-dom";
+import { FormEvent } from "react";
+import { supabaseClient } from "@/lib/util/supabase";
 
 const SignThird = () => {
   const [step, setStep] = useRecoilState(stepState);
@@ -12,17 +14,33 @@ const SignThird = () => {
   const { pending } = useFormStatus();
   // const [state, formAction] = useFormState(loginOnSubmit, { message: null });
   // const nextStep = () => setStep((step) => step + 1);
-
+  const clinet = supabaseClient();
   const onFocus = (id: string, step: number) => {
     if (step === 3) {
       setStep(1);
     }
     document.getElementById(id)?.focus();
   };
-
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const { data, error } = await clinet.auth.signUp({
+      // email: formdataState.formData["email"],
+      email: "trgf345@naver.com",
+      password: "123456!!",
+      phone: "01096378406",
+      options: {
+        emailRedirectTo: "http://localhost:3000/home",
+      },
+    });
+    if (error) {
+      console.log(error);
+    }
+    console.log(data);
+    console.log("formevent", formdataState);
+  };
   return (
     <div className="flex flex-col relative px-20 max-w-[600px] grow">
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="flex relative my-5">
           <h1 className="font-bold text-[31px] leading-9 text-black">
             <span className="inherit-span">계정을 생성하세요</span>

@@ -21,7 +21,7 @@ const HomePostLists = ({
 }: {
   supabaseAccessToken: string;
 }) => {
-  const client = supabaseClient(supabaseAccessToken);
+  const client = supabaseClient();
   const {
     data: res,
     fetchNextPage,
@@ -61,11 +61,6 @@ const HomePostLists = ({
 };
 
 const HomePostList = () => {
-  const { data, status } = useSession();
-  if (!data?.supabaseAccessToken) {
-    return <Loading />;
-  }
-  const supabaseAccessToken = data.supabaseAccessToken;
-  return <HomePostLists supabaseAccessToken={supabaseAccessToken} />;
+  return <HomePostLists supabaseAccessToken={"supabaseAccessToken"} />;
 };
 export default HomePostList;

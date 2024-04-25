@@ -59,7 +59,7 @@ const checkUserId = async (client: SupabaseClient<Database>) => {
 
 const getUser = async (token: string, id: string) => {
   try {
-    const supabase = supabaseClient(token);
+    const supabase = supabaseClient();
     const userId = await checkUserId(supabase);
     const { data, error } = await supabase
       .from("userinfo")

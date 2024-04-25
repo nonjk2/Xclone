@@ -1,20 +1,22 @@
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOption } from "./auth";
-import { getToken } from "next-auth/jwt";
+
+import { updateSession } from "./lib/util/middleware";
 export { default } from "next-auth/middleware";
-const secret = process.env.NEXTAUTH_SECRET;
-// export { auth as middleware } from "./auth";
 export async function middleware(req: NextRequest) {
-  // const session = await getToken({ req, secret });
-  // if (!session) {
-  //   const url = req.nextUrl.clone();
-  //   url.pathname = "/";
-  //   return NextResponse.redirect(url);
-  // }
+  return await updateSession(req);
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/compose/tweet", "/home", "/explore", "/messages", "/search"],
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
+     * Feel free to modify this pattern to include more paths.
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };

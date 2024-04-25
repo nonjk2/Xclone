@@ -9,18 +9,23 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import HomeTabPostList from "@/components/main/center/home/HomeTabPostList";
-import { getServerSession } from "next-auth";
-import { authOption } from "@/auth";
+
 import { serverClient } from "@/lib/util/serverSBClient";
 import usePostList from "@/lib/hooks/usePostList";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const session = await getServerSession(authOption);
-  const queryClient = new QueryClient();
-  if (!session?.supabaseAccessToken) {
-    return <>loding...</>;
+  const client = serverClient();
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+
+  if (!user) {
+    return redirect("/login");
   }
-  const client = serverClient(session?.supabaseAccessToken);
+
+  const queryClient = new QueryClient();
+
   await queryClient.prefetchInfiniteQuery<
     Post[],
     Object,

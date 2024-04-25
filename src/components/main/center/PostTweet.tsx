@@ -1,17 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import useInput from "@/lib/hooks/useInput";
 import Button from "@/components/ui/button";
 import Avatar from "@/components/ui/Avatar";
 import PostTweetTextArea from "./PostTweetTextArea";
-import { createPost } from "@/lib/action/post-server";
-import { useSession } from "next-auth/react";
 import useImageSelect from "@/lib/hooks/useImageSelect";
 import PostTweetPostContent from "./PostTweetPostContent";
 import { useMutation } from "@tanstack/react-query";
 import { supabaseClient } from "@/lib/util/supabase";
 import useCreatePost from "@/lib/hooks/useCreatePost";
+import { SessionContext } from "@/context/AuthProvider";
 
 interface PostTweetProps {
   comment: string;
@@ -39,11 +38,11 @@ const PostTweet: React.FC<PostTweetProps> = ({
     onImageRemove,
     resetImages,
   } = useImageSelect();
-
-  const session = useSession();
-  const supabaseAccessToken = session.data?.supabaseAccessToken ?? "";
-  const client = supabaseClient(supabaseAccessToken);
-
+  const { session } = useContext(SessionContext);
+  const client = supabaseClient();
+  if (!session) {
+    return <>Loading...</>;
+  }
   const callbackFn = () => {
     resetImages();
     setForm({ content: "" });
@@ -94,23 +93,6 @@ const PostTweet: React.FC<PostTweetProps> = ({
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     mutate();
-    // try {
-    //   setLoading(true);
-    //   if (session.data) {
-    //     const res = await createPost(
-    //       session.data.user.id,
-    //       value["content"],
-    //       true,
-    //       inputRef.current?.files
-    //     );
-    //     if (res) {
-    //     }
-    //     console.log(res);
-    //   }
-    // } catch (error) {
-    // } finally {
-
-    // }
   };
   return (
     <form
@@ -125,7 +107,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
 
       <div className="w-full px-4 flex pt-1 h-full">
         <div className="flex flex-col relative mr-3 basis-10 pt-2 w-full">
-          <Avatar imgUrl={session.data?.user.image} />
+          <Avatar imgUrl={session.user.user_metadata.avatar_url} />
         </div>
         <PostTweetTextArea
           onChange={onChange}

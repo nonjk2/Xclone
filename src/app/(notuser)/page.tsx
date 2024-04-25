@@ -1,12 +1,14 @@
-import { authOption } from "@/auth";
 import Main from "@/components/auth/main";
-import Footer from "@/components/flow/footer";
-import { getServerSession } from "next-auth";
+import { serverClient } from "@/lib/util/serverSBClient";
 import { redirect } from "next/navigation";
 
 const LoginPage = async () => {
-  const session = await getServerSession(authOption);
-  if (session?.user) {
+  const client = serverClient();
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+
+  if (user) {
     return redirect("/home");
   }
   return (
