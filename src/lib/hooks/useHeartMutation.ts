@@ -4,15 +4,13 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { updateHeartPost } from "../action/post-server";
-import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
+
 import { supabaseClient } from "../util/supabase";
+import { Session } from "@supabase/supabase-js";
 
 export const useHeartMutation = (data: Session | null, id: string) => {
   const queryClient = useQueryClient();
-  const session = useSession();
-  const supabaseAccessToken = session.data?.supabaseAccessToken ?? "";
-  const client = supabaseClient(supabaseAccessToken);
+  const client = supabaseClient();
   /** optimistic update */
   const heart = useMutation({
     mutationFn: () => {

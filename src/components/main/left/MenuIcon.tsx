@@ -1,6 +1,6 @@
 "use client";
 import { Icon, MenuIconSvg } from "@/components/ui/icon/GoogleIcon";
-import { useSession } from "next-auth/react";
+
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 

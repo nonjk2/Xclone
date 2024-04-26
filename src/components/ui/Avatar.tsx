@@ -1,6 +1,3 @@
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-
 /* eslint-disable @next/next/no-img-element */
 interface AvatarProps {
   imgUrl?: string | null;
@@ -8,8 +5,6 @@ interface AvatarProps {
 }
 
 const Avatar = ({ imgUrl, profile = false }: AvatarProps) => {
-  // const { data: me } = useSession();
-  // let image = me?.user.image ?? "/normal.png";
   if (profile) {
     return (
       <div className="relative w-full h-full overflow-hidden select-none">

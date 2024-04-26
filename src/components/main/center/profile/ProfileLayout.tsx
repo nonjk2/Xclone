@@ -7,15 +7,11 @@ import { getUsers } from "@/lib/action/server";
 import useUsers from "@/lib/hooks/useUsers";
 import { supabaseClient } from "@/lib/util/supabase";
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+
 import Link from "next/link";
 
 const ProfileLayout = ({ username }: { username: string }) => {
-  const { data, status } = useSession();
-  if (status === "loading") {
-    return <>loading...</>;
-  }
-  const client = supabaseClient(data?.supabaseAccessToken);
+  const client = supabaseClient();
   const { data: user, error } = useQuery<
     authUser,
     Object,

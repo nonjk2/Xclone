@@ -9,7 +9,6 @@ import MainCenterListItem from "./HomePostItem";
 import { getPostList } from "@/lib/action/post-server";
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { useSession } from "next-auth/react";
 import Loading from "@/app/(isuser)/explore/loading";
 import usePostList from "@/lib/hooks/usePostList";
 import { supabaseClient } from "@/lib/util/supabase";

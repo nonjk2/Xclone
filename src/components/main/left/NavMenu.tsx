@@ -5,8 +5,7 @@ import MenuIcon from "./MenuIcon";
 import { PostBtnSvg, boldSvgArray, svgArray } from "@/lib/Icon";
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon/GoogleIcon";
-import { useSession } from "next-auth/react";
-import { useState } from "react";
+
 const NavMenuTitle = [
   "",
   "Home",

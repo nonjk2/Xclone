@@ -7,7 +7,6 @@ import {
   useSuspenseInfiniteQuery,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 import MainCenterListItem from "../main/center/home/HomePostItem";
 import usePostList from "@/lib/hooks/usePostList";
 import { useInView } from "react-intersection-observer";
@@ -15,8 +14,7 @@ import { Fragment, useEffect } from "react";
 import useCommentList from "@/lib/hooks/useCommentList";
 
 const PostComments = ({ postId }: { postId: string }) => {
-  const { data, status } = useSession();
-  const client = supabaseClient(data?.supabaseAccessToken);
+  const client = supabaseClient();
   const {
     data: comments,
     fetchNextPage,

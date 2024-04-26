@@ -9,10 +9,6 @@ import HomeListItemActionBar from "../main/center/home/HomeListItemActionBar";
 import PostTweet from "../main/center/PostTweet";
 import { Suspense } from "react";
 import HomePostImage from "../main/center/home/HomePostImage";
-import { supabaseClient } from "@/lib/util/supabase";
-import { useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
-import { getCommentPostList } from "@/lib/action/post-server";
 import PostComments from "./PostComments";
 import Loading from "@/app/(isuser)/explore/loading";
 

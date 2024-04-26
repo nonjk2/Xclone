@@ -2,16 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import MainCenterListItem from "../home/HomePostItem";
-import { useSession } from "next-auth/react";
 import { supabaseClient } from "@/lib/util/supabase";
 import useUsersPosts from "@/lib/hooks/useUsersPosts";
 
 const ProfilePost = ({ username }: { username: string }) => {
-  const { data: user, status } = useSession();
-  if (status === "loading") {
-    return <>loading...</>;
-  }
-  const client = supabaseClient(user?.supabaseAccessToken);
+  const client = supabaseClient();
   const { data } = useQuery<
     Post[],
     Object,

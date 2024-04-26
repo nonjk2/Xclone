@@ -48,21 +48,21 @@ const PostTweet: React.FC<PostTweetProps> = ({
     setForm({ content: "" });
   };
 
-  const { mutate, isPending } = useMutation(
-    useCreatePost({
-      callbackFn,
-      formData: {
-        content: value["content"],
-        isOriginal: !postId,
-        parentPostId: !!postId ? postId : undefined,
-        client,
-        images: inputRef.current?.files,
-      },
-      queryKeyType: !!postId
-        ? ["post", "comment", postId]
-        : ["post", "recommend"],
-    })
-  );
+  // const { mutate, isPending } = useMutation(
+  //   useCreatePost({
+  //     callbackFn,
+  //     formData: {
+  //       content: value["content"],
+  //       isOriginal: !postId,
+  //       parentPostId: !!postId ? postId : undefined,
+  //       client,
+  //       images: inputRef.current?.files,
+  //     },
+  //     queryKeyType: !!postId
+  //       ? ["post", "comment", postId]
+  //       : ["post", "recommend"],
+  //   })
+  // );
 
   const TextFocusRender = () => {
     if (photo) {
@@ -92,14 +92,14 @@ const PostTweet: React.FC<PostTweetProps> = ({
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    mutate();
+    // mutate();
   };
   return (
     <form
       className="w-full relative bg-white z-10 border-b border-b-hoverProfile h-full"
       onSubmit={onSubmit}
     >
-      {isPending && (
+      {/* {isPending && (
         <div className="absolute w-full h-1 top-0 overflow-hidden">
           <div className="w-1/5 bg-blue h-full progress-bar" />
         </div>
@@ -129,7 +129,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
           />
         </PostTweetTextArea>
         <TextFocusRender />
-      </div>
+      </div> */}
     </form>
   );
 };

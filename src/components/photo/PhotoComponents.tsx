@@ -6,19 +6,13 @@ import PhotoCaroucel from "./PhotoCaroucel";
 import StyleProvider from "@/context/StyleProvider";
 import PhotoBoardSection from "./PhotoBoardSection";
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+
 import { supabaseClient } from "@/lib/util/supabase";
 import usePost from "@/lib/hooks/usePost";
 import Loading from "@/app/(isuser)/explore/loading";
 
 const PhotoComponents = ({ id }: { id: string }) => {
-  const { data, status } = useSession();
-
-  if (status === "loading" && !data) {
-    return <>loding...</>;
-  }
-  const supabaseAccessToken = data?.supabaseAccessToken ?? "";
-  const client = supabaseClient(supabaseAccessToken);
+  const client = supabaseClient();
   const { data: post, isPending } = useQuery<
     Post,
     Object,

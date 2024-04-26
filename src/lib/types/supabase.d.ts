@@ -13,7 +13,6 @@ declare module "@supabase/supabase-js" {
     provider_id: string;
     sub: string;
   }
-  interface User
 }
 
 // interface User extends UserMetadata

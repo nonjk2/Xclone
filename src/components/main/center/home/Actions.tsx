@@ -4,13 +4,14 @@ import {
   PhotoActionBarIconSvg,
 } from "@/components/ui/icon/GoogleIcon";
 
-import { MouseEvent, useRef } from "react";
+import { MouseEvent, useContext, useRef } from "react";
 import { Player, PlayerState } from "@lottiefiles/react-lottie-player";
 import Counter from "@/components/ui/Counter";
 import { PostActionType } from "./HomeListItemActionBar";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+
 import { useHeartMutation } from "@/lib/hooks/useHeartMutation";
+import { SessionContext } from "@/context/AuthProvider";
 
 const Actions = ({
   type,
@@ -28,13 +29,17 @@ const Actions = ({
   count: number;
 }) => {
   const { Heart, id } = post;
-  const { data, status } = useSession();
+  const { session } = useContext(SessionContext);
+
+  if (!session) {
+    return <>Loading...</>;
+  }
   // const liked = !!Heart.find((v) => v.user_id === data?.user.id);
   const liked = post.HeartLiked;
 
   const playerRef = useRef<Player>(null);
   const photos = usePathname().includes("photo");
-  const { heart, unheart } = useHeartMutation(data, id);
+  const { heart, unheart } = useHeartMutation(session, id);
 
   const switchColor = (type: PostActionType) => {
     switch (type) {

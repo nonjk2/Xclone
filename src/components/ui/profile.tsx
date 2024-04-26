@@ -3,11 +3,12 @@ import { cancel, threedot } from "@/lib/Icon";
 import Button from "./button";
 import { Icon } from "./icon/GoogleIcon";
 import normal from "../../../public/normal.png";
-import { signOut, useSession } from "next-auth/react";
-import { MouseEventHandler, useEffect } from "react";
+
+import { MouseEventHandler, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/(isuser)/explore/loading";
 import { supabaseClient } from "@/lib/util/supabase";
+import { SessionContext } from "@/context/AuthProvider";
 
 interface MainHeaderProfileProps {
   type: "follow" | "profile" | "search";
@@ -17,12 +18,13 @@ interface MainHeaderProfileProps {
 
 const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
   const { type } = props;
-  // const { data: session, status } = useSession();
-
+  const { session } = useContext(SessionContext);
+  if (!session) {
+    return <>loading...</>;
+  }
+  const { avatar_url, name } = session.user.user_metadata;
   const router = useRouter();
-  // if (!session && status === "unauthenticated") {
-  //   return null;
-  // }
+
   const sideClickItem = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":
@@ -93,12 +95,12 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
             <div className="flex flex-row w-10 h-10 relative overflow-hidden rounded-full z-20">
               <img
                 alt="미리보기"
-                // src={`${session?.user?.image}`}
+                src={`${avatar_url}`}
                 className="inset-0 h-full absolute w-full -z-10"
               />
             </div>
             <div className="mx-3 max-xl:hidden grow">
-              <div className="font-semibold">{"session?.user?.name"}</div>
+              <div className="font-semibold">{name}</div>
               <div className="text-inputColor text-sm">
                 @{"session?.user?.nickname"}
               </div>
