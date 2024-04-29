@@ -22,7 +22,7 @@ const Page = async ({
   } = await client.auth.getUser();
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
   const { id: PostId } = params;
   const queryClient = new QueryClient();

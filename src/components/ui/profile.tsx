@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 import { cancel, threedot } from "@/lib/Icon";
 import Button from "./button";
@@ -6,9 +7,9 @@ import normal from "../../../public/normal.png";
 
 import { MouseEventHandler, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@/app/(isuser)/explore/loading";
 import { supabaseClient } from "@/lib/util/supabase";
-import { SessionContext } from "@/context/AuthProvider";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import useUser from "@/lib/hooks/useUser";
 
 interface MainHeaderProfileProps {
   type: "follow" | "profile" | "search";
@@ -18,13 +19,10 @@ interface MainHeaderProfileProps {
 
 const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
   const { type } = props;
-  const { session } = useContext(SessionContext);
-  if (!session) {
-    return <>loading...</>;
-  }
-  const { avatar_url, name } = session.user.user_metadata;
+  const client = supabaseClient();
+  const { data } = useSuspenseQuery(useUser({ client }));
   const router = useRouter();
-
+  const { nickname, image, name } = data;
   const sideClickItem = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":
@@ -82,31 +80,27 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
         return "";
     }
   };
+
   return (
     <div className="flex my-3 max-xl:w-[64px] w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 hover:rounded-full items-center">
       <div
         className="flex justify-between p-3 w-full items-center"
         onClick={onClickLogoutHandelr}
       >
-        {status === "loading" ? (
-          <Loading />
-        ) : (
-          <>
-            <div className="flex flex-row w-10 h-10 relative overflow-hidden rounded-full z-20">
-              <img
-                alt="미리보기"
-                src={`${avatar_url}`}
-                className="inset-0 h-full absolute w-full -z-10"
-              />
-            </div>
-            <div className="mx-3 max-xl:hidden grow">
-              <div className="font-semibold">{name}</div>
-              <div className="text-inputColor text-sm">
-                @{"session?.user?.nickname"}
-              </div>
-            </div>
-          </>
-        )}
+        <>
+          <div className="flex flex-row w-10 h-10 relative overflow-hidden rounded-full z-20">
+            <img
+              alt="미리보기"
+              src={`${image}`}
+              className="inset-0 h-full absolute w-full -z-10"
+            />
+          </div>
+          <div className="mx-3 max-xl:hidden grow">
+            <div className="font-semibold">{name}</div>
+            <div className="text-inputColor text-sm">@{nickname}</div>
+          </div>
+        </>
+
         <div className={typeStyle(type)}>
           <div className="flex w-[63px] items-center">
             {sideClickItem(type)}

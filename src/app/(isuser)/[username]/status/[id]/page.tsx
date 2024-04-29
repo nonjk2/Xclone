@@ -19,7 +19,7 @@ const SiglePostPage = async ({ params }: SinglePostPageProps) => {
   } = await client.auth.getUser();
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
 
   const queryClient = new QueryClient();

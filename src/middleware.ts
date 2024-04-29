@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { updateSession } from "./lib/util/middleware";
 export { default } from "next-auth/middleware";
 export async function middleware(req: NextRequest) {
+  // console.log("middleware");
   return await updateSession(req);
 }
 

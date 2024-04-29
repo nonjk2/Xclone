@@ -31,14 +31,12 @@ const Actions = ({
   const { Heart, id } = post;
   const { session } = useContext(SessionContext);
 
-  if (!session) {
-    return <>Loading...</>;
-  }
   // const liked = !!Heart.find((v) => v.user_id === data?.user.id);
   const liked = post.HeartLiked;
 
   const playerRef = useRef<Player>(null);
   const photos = usePathname().includes("photo");
+
   const { heart, unheart } = useHeartMutation(session, id);
 
   const switchColor = (type: PostActionType) => {

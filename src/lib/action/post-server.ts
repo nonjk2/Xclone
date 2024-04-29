@@ -97,7 +97,7 @@ const getSinglePost = async ({
       .from("posts")
       .select(
         `* ,
-        User:userinfo!public_posts_user_id_fkey(*),
+        User:userinfo(*),
         Images:post_images(id,link),
         Heart:post_likes(user_id)
       `
@@ -180,7 +180,7 @@ const getPostList = async ({
       .from("posts")
       .select(
         `* ,
-        User:userinfo!public_posts_user_id_fkey(*),
+        User:userinfo(*),
         Images:post_images(id,link),
         Heart:post_likes(user_id)
       `
@@ -252,7 +252,7 @@ const getCommentPostList = async ({
       .from("posts")
       .select(
         `* ,
-        User:userinfo!public_posts_user_id_fkey(*),
+        User:userinfo(*),
         Images:post_images(id,link),
         Heart:post_likes(user_id)
       `
@@ -318,7 +318,7 @@ const createPost = async (formdata: {
       ])
       .select(
         `* ,
-        User:userinfo!public_posts_user_id_fkey(*)
+        User:userinfo(*)
       `
       )
       .single();

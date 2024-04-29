@@ -1,5 +1,5 @@
 import Footer from "@/components/flow/footer";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
 const LoginLayout = ({
   children,
@@ -10,7 +10,7 @@ const LoginLayout = ({
 }) => {
   return (
     <section className="flex flex-col relative h-screen w-full">
-      {children}
+      <Suspense fallback={<>loading1</>}>{children}</Suspense>
       <Footer />
       {modal}
     </section>

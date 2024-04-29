@@ -15,11 +15,7 @@ import { supabaseClient } from "@/lib/util/supabase";
 // import { getPostList } from "@/lib/action/server";
 
 // const DATA = mockPosts;
-const HomePostLists = ({
-  supabaseAccessToken,
-}: {
-  supabaseAccessToken: string;
-}) => {
+const HomePostLists = () => {
   const client = supabaseClient();
   const {
     data: res,
@@ -44,6 +40,10 @@ const HomePostLists = ({
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
+  if (!res) {
+    return <>게시물이 없음</>;
+  }
+
   return res?.pages?.map((pages, pageIndex) => (
     <Fragment key={pageIndex}>
       {pages.map((e, itemIndex) => {
@@ -60,6 +60,6 @@ const HomePostLists = ({
 };
 
 const HomePostList = () => {
-  return <HomePostLists supabaseAccessToken={"supabaseAccessToken"} />;
+  return <HomePostLists />;
 };
 export default HomePostList;

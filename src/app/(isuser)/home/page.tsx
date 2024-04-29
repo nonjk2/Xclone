@@ -12,17 +12,24 @@ import HomeTabPostList from "@/components/main/center/home/HomeTabPostList";
 
 import { serverClient } from "@/lib/util/serverSBClient";
 import usePostList from "@/lib/hooks/usePostList";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const Page = async () => {
+  // const cookie = cookies();
   const client = serverClient();
   const {
     data: { user },
+    error,
   } = await client.auth.getUser();
 
-  if (!user) {
-    return redirect("/login");
+  if (error || !user) {
+    redirect("/");
   }
+  // if (!user) {
+  //   console.log("User not found");
+  //   return redirect("/");
+  // }
 
   const queryClient = new QueryClient();
 

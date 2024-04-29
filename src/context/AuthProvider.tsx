@@ -8,12 +8,15 @@ interface AuthProviderProps {
 }
 export const SessionContext = createContext<{
   session: Session | null;
-}>({ session: null });
+  loading: boolean;
+}>({ session: null, loading: false });
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const client = supabaseClient();
   useEffect(() => {
     const subscription = client.auth.onAuthStateChange((event, session) => {
+      setLoading(true);
       switch (event) {
         case "INITIAL_SESSION":
           console.log(event, session);
@@ -22,7 +25,34 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         case "PASSWORD_RECOVERY":
           console.log(event, session);
         case "SIGNED_IN":
-          console.log(event, session);
+          setTimeout(async () => {
+            if (session) {
+              const userId = session.user.id as string;
+              const { data: user, error } = await client
+                .from("userinfo")
+                .select("*")
+                .eq("id", userId)
+                .maybeSingle();
+
+              if (error) {
+                console.error("Error fetching user info:", error.message);
+                return;
+              }
+
+              if (user) {
+                setSession((prevSession: any) => ({
+                  ...prevSession,
+                  user: {
+                    ...prevSession?.user,
+                    user_metadata: {
+                      ...prevSession?.user?.user_metadata,
+                      nickname: user.nickname,
+                    },
+                  },
+                }));
+              }
+            }
+          }, 50);
         case "SIGNED_OUT":
           console.log(event, session);
         case "USER_UPDATED":
@@ -35,6 +65,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       } else if (session) {
         setSession(session as Session);
       }
+      setLoading(false);
     });
 
     return () => {
@@ -43,7 +74,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   return (
-    <SessionContext.Provider value={{ session }}>
+    <SessionContext.Provider value={{ session, loading }}>
       {children}
     </SessionContext.Provider>
   );

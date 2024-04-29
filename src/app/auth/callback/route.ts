@@ -8,12 +8,13 @@ export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
   const origin = requestUrl.origin;
-
+  console.log("user session callbaack");
   if (code) {
     const supabase = serverClient();
+    // const {data } = await supabase.auth.getSession()
     await supabase.auth.exchangeCodeForSession(code);
   }
 
   // URL to redirect to after sign up process completes
-  return NextResponse.redirect(`${origin}/protected`);
+  return NextResponse.redirect(`${origin}/`);
 }

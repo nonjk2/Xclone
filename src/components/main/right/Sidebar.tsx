@@ -1,3 +1,4 @@
+"use client";
 import { useSelectedLayoutSegment } from "next/navigation";
 import HomeSidebar from "./HomeSidebar";
 

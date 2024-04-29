@@ -2,32 +2,27 @@
 import Button from "@/components/ui/button";
 import { AppleIcon, GoogleIcon } from "@/components/ui/icon/GoogleIcon";
 import { supabaseClient } from "@/lib/util/supabase";
-import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const SignInButton = ({ type }: { type: "google" | "kakao" }) => {
+  const { push } = useRouter();
   const handleLogin = async () => {
     // await signIn(type);
     const client = supabaseClient();
     const { data, error } = await client.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:3000/home",
+        redirectTo: "http://localhost:3000/auth/callback",
         // skipBrowserRedirect: true,
       },
     });
 
     if (error) {
-      console.log(error);
       throw new Error("failed to sign in");
     }
-
-    console.log(type, data);
-    console.log();
-    // if (type === "kakao") {
-    //   return await signIn("kakao", { callbackUrl: "/", redirect: false });
-    // } else if (type === "google") {
-    //   return await signIn("google", { callbackUrl: "/home", redirect: false });
-    // }
+    if (data) {
+      console.log(data);
+    }
   };
   if (type === "kakao") {
     return (

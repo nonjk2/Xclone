@@ -12,6 +12,7 @@ declare module "@supabase/supabase-js" {
     picture: string;
     provider_id: string;
     sub: string;
+    nickname: string;
   }
 }
 

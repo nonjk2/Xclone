@@ -1,18 +1,14 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 
-export function serverClient(token?: string) {
-  const cookieStore = cookies();
+export function serverClient(cookie?: ReadonlyRequestCookies) {
+  const cookieStore = cookie ?? cookies();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
     {
-      global: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
       cookies: {
         get(name: string) {
           return cookieStore.get(name)?.value;

@@ -25,7 +25,7 @@ const Layout = async ({
   } = await client.auth.getUser();
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(useUsers({ client, username }));

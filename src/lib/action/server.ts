@@ -19,6 +19,34 @@ type getUserProps = {
   client: SupabaseClient<Database>;
 };
 
+const getUserInServerSide = async ({
+  client,
+}: {
+  client: SupabaseClient<Database>;
+}) => {
+  try {
+    const {
+      data: { user },
+      error: userError,
+    } = await client.auth.getUser();
+
+    if (!user || userError) {
+      throw new Error("failed");
+    }
+    const { data, error } = await client
+      .from("userinfo")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
+    if (!data || error) {
+      throw new Error("failed");
+    }
+    return data;
+  } catch (error) {
+    throw new Error("failed");
+  }
+};
+
 const getUsers = async ({ queryKey }: getUserProps) => {
   const [_1, username] = queryKey;
   try {
@@ -44,13 +72,14 @@ const getUsers = async ({ queryKey }: getUserProps) => {
 
 const checkUserId = async (client: SupabaseClient<Database>) => {
   try {
-    const { data: user, error } = await client
-      .from("users")
-      .select("id")
-      .single();
-    if (error) {
+    const {
+      data: { user },
+      error,
+    } = await client.auth.getUser();
+    if (error || !user) {
       throw new Error("CheckUser error");
     }
+
     return user.id;
   } catch (error) {
     throw new Error("CheckUser error");
@@ -86,6 +115,7 @@ const getUser = async (token: string, id: string) => {
 export {
   // getPostList,
   // getPostFollowList,
+  getUserInServerSide,
   getUsers,
   getUser,
   checkUserId,

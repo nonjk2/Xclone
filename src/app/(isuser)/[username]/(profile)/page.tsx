@@ -22,7 +22,7 @@ const page = async ({ params }: ProfilePageProps) => {
   } = await client.auth.getUser();
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(useUsersPosts({ client, username }));
