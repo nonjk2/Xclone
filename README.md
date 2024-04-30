@@ -23,3 +23,9 @@
 7. 사진 다운로드하기
 8. 북마크 완성하기
 9. Trends foryou 완성하기
+
+## 주요 기능
+
+- auth 로직 쿠키활용
+- react-query
+- supabase client -> 인스턴스 싱글톤 패턴

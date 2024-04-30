@@ -17,53 +17,13 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const subscription = client.auth.onAuthStateChange((event, session) => {
       setLoading(true);
-      switch (event) {
-        case "INITIAL_SESSION":
-          console.log(event, session);
-        case "MFA_CHALLENGE_VERIFIED":
-          console.log(event, session);
-        case "PASSWORD_RECOVERY":
-          console.log(event, session);
-        case "SIGNED_IN":
-          setTimeout(async () => {
-            if (session) {
-              const userId = session.user.id as string;
-              const { data: user, error } = await client
-                .from("userinfo")
-                .select("*")
-                .eq("id", userId)
-                .maybeSingle();
 
-              if (error) {
-                console.error("Error fetching user info:", error.message);
-                return;
-              }
-
-              if (user) {
-                setSession((prevSession: any) => ({
-                  ...prevSession,
-                  user: {
-                    ...prevSession?.user,
-                    user_metadata: {
-                      ...prevSession?.user?.user_metadata,
-                      nickname: user.nickname,
-                    },
-                  },
-                }));
-              }
-            }
-          }, 50);
-        case "SIGNED_OUT":
-          console.log(event, session);
-        case "USER_UPDATED":
-          console.log(event, session);
-
-        default:
-      }
       if (event === "SIGNED_OUT") {
         setSession(null);
+        // console.log(event);
       } else if (session) {
         setSession(session as Session);
+        // console.log(event);
       }
       setLoading(false);
     });

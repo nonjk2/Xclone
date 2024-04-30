@@ -5,6 +5,9 @@ import MenuIcon from "./MenuIcon";
 import { PostBtnSvg, boldSvgArray, svgArray } from "@/lib/Icon";
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon/GoogleIcon";
+import { supabaseClient } from "@/lib/util/supabase";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import useUser from "@/lib/hooks/useUser";
 
 const NavMenuTitle = [
   "",
@@ -20,12 +23,9 @@ const NavMenuTitle = [
   "More",
 ];
 const NavMenu = () => {
-  // const session = useSession();
-
   const { push } = useRouter();
-  // if (!session.data) {
-  //   return null;
-  // }
+  const client = supabaseClient();
+  const { data } = useSuspenseQuery(useUser({ client }));
   return (
     <header className="flex flex-col items-start max-xl:w-full first:pt-[2px] max-xl:items-center gap-2 short:gap-0">
       {svgArray.map((svg, idx) => {
@@ -36,7 +36,7 @@ const NavMenu = () => {
               boldPath={boldSvgArray[idx]}
               key={svg}
               title={NavMenuTitle[idx]}
-              pathname={"session.data?.user.nickname"}
+              pathname={data.nickname}
             />
           );
         }

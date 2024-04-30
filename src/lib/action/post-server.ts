@@ -134,6 +134,41 @@ const getSinglePost = async ({
   }
 };
 
+const updateFollowPost = async ({
+  client,
+  following_id,
+  type,
+}: {
+  client: SupabaseClient<Database>;
+  type: "unfollow" | "follow";
+  following_id: string;
+}) => {
+  try {
+    if (type === "follow") {
+      const { data, error } = await client
+        .from("followers")
+        .insert({ following_id })
+        .select();
+      if (error) {
+        console.log(error);
+        throw new Error(error.message);
+      }
+      return data;
+    } else if (type === "unfollow") {
+      const { data, error } = await client
+        .from("followers")
+        .delete()
+        .match({ following_id })
+        .select();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    }
+  } catch (error) {
+    throw new Error("좋아요 실패");
+  }
+};
 const updateHeartPost = async ({
   client,
   post_id,
@@ -231,23 +266,6 @@ const getCommentPostList = async ({
 }: getCommentPostListType): Promise<Post[]> => {
   const userId = await checkUserId(client);
   try {
-    // const { data: newPost, error } = await client
-    //   .from("posts")
-    //   .select(
-    //     `* ,
-    //       User:userinfo!public_posts_user_id_fkey(*),
-    //       Images:post_images(id,link),
-    //       Heart:post_likes(user_id)
-    //   `
-    //   )
-    //   .eq("parent_post_id", postId);
-    // if (error) {
-    //   console.log(error);
-    //   throw new Error("getCommentPostList fail");
-    // }
-    // console.log(newPost);
-    // return newPost;
-
     let query = client
       .from("posts")
       .select(
@@ -395,6 +413,7 @@ const insertImage = async (
 };
 
 export {
+  updateFollowPost,
   createPost,
   getPostList,
   updateHeartPost,

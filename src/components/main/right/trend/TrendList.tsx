@@ -8,15 +8,6 @@ interface SidebarTrendProps {
   sidebar?: boolean;
 }
 const SidebarTrendList = ({ sidebar }: SidebarTrendProps) => {
-  //   const [trendData, setTrendData] = useState<Trend[]>();
-
-  //   useEffect(() => {
-  //     const fetch = async () => {
-  //       const response = await getTrands();
-  //       setTrendData(response.result);
-  //     };
-  //     fetch();
-  //   }, []);
   return (
     <>
       <article

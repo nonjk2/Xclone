@@ -15,7 +15,7 @@ export type Database = {
           following_id: string;
         };
         Insert: {
-          follower_id: string;
+          follower_id?: string;
           following_id: string;
         };
         Update: {
@@ -63,6 +63,13 @@ export type Database = {
         };
         Relationships: [
           {
+            foreignKeyName: "post_comments_parent_post_id_fkey";
+            columns: ["parent_post_id"];
+            isOneToOne: false;
+            referencedRelation: "posts";
+            referencedColumns: ["id"];
+          },
+          {
             foreignKeyName: "post_comments_post_id_fkey";
             columns: ["post_id"];
             isOneToOne: false;
@@ -74,13 +81,6 @@ export type Database = {
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "userinfo";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "public_post_comments_parent_post_id_fkey";
-            columns: ["parent_post_id"];
-            isOneToOne: false;
-            referencedRelation: "posts";
             referencedColumns: ["id"];
           }
         ];
@@ -125,7 +125,7 @@ export type Database = {
           created_at?: string | null;
           id?: number;
           post_id: string;
-          user_id: string;
+          user_id?: string;
         };
         Update: {
           created_at?: string | null;
@@ -200,7 +200,8 @@ export type Database = {
           id: string;
           is_original: boolean | null;
           parent_post_id: string | null;
-          user_id: string;
+          user_id: string | null;
+          views: number;
         };
         Insert: {
           content?: string | null;
@@ -208,7 +209,8 @@ export type Database = {
           id?: string;
           is_original?: boolean | null;
           parent_post_id?: string | null;
-          user_id: string;
+          user_id?: string | null;
+          views?: number;
         };
         Update: {
           content?: string | null;
@@ -216,7 +218,8 @@ export type Database = {
           id?: string;
           is_original?: boolean | null;
           parent_post_id?: string | null;
-          user_id?: string;
+          user_id?: string | null;
+          views?: number;
         };
         Relationships: [
           {

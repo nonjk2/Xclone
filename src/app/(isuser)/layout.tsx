@@ -14,6 +14,7 @@ import {
 } from "@tanstack/react-query";
 import { serverClient } from "@/lib/util/serverSBClient";
 import useUser from "@/lib/hooks/useUser";
+import useFollowRecommendUser from "@/lib/hooks/useFollowUser";
 
 const Layout = async ({
   children,
@@ -33,6 +34,7 @@ const Layout = async ({
     return <>loading...</>;
   }
   await queryClient.prefetchQuery(useUser({ client }));
+  await queryClient.prefetchQuery(useFollowRecommendUser({ client }));
 
   const Content = (
     <div className="flex flex-row grow min-h-full w-full justify-between items-stretch bg-backgroundOpacity">

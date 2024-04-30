@@ -62,7 +62,7 @@ const sizeStyles = {
   tweet3: "w-full h-full",
   draft: "h-9 px-4 border-none",
   getVerify: "h-9 px-4 w-[120px] text-[15px]",
-  follow: "w-78 h-32 px-16 w-full",
+  follow: "w-[78px] h-8 px-4 w-full",
   logout: "w-256 h-44 px-24 w-full",
   login1: "w-300 h-10 w-full",
   login2: "w-[300px] h-9 px-4 w-full",

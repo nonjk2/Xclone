@@ -10,19 +10,23 @@ import { useRouter } from "next/navigation";
 import { supabaseClient } from "@/lib/util/supabase";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import useUser from "@/lib/hooks/useUser";
+import ProfileComponent from "../auth/profileComponent";
 
 interface MainHeaderProfileProps {
   type: "follow" | "profile" | "search";
   onClick?: () => void;
   img?: string;
+  data?: authUser;
 }
 
-const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
-  const { type } = props;
-  const client = supabaseClient();
-  const { data } = useSuspenseQuery(useUser({ client }));
+const MainHeaderProfile: React.FC<MainHeaderProfileProps> = ({
+  type,
+  data: Userdata,
+}) => {
   const router = useRouter();
-  const { nickname, image, name } = data;
+  const followButtonClick = () => {
+    console.log("hi");
+  };
   const sideClickItem = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":
@@ -32,7 +36,7 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
             backgroundColor="black"
             color="white"
             size="follow"
-            title={<span>Follow</span>}
+            title={<span className="text-[14px]">Follow</span>}
           />
         );
       case "profile":
@@ -52,9 +56,7 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
         );
     }
   };
-
-  const onClickLogoutHandelr: MouseEventHandler<HTMLDivElement> = async (e) => {
-    e.preventDefault();
+  const logOutHandler = async () => {
     const client = supabaseClient();
     const { error } = await client.auth.signOut();
 
@@ -63,51 +65,66 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = (props) => {
       return;
     }
     router.push("/");
-
-    // signOut({ redirect: false }).then(() => router.push("/"));
+  };
+  const onClickLogoutHandelr: MouseEventHandler<HTMLDivElement> = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (type === "follow") {
+      followButtonClick();
+    } else if (type === "profile") await logOutHandler();
   };
 
   const typeStyle = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":
-        return "flex items-center";
+        return {
+          nicknameType: "mx-3 grow",
+          buttonType: "flex items-center w-[78px]",
+          followContainer:
+            "flex my-3 w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 items-center",
+        };
       case "profile":
-        return "flex-end flex rounded-full transition-all duration-300 max-xl:hidden";
+        return {
+          nicknameType: "mx-3 max-xl:hidden grow",
+          buttonType:
+            "flex-end flex rounded-full transition-all duration-300 max-xl:hidden",
+          followContainer:
+            "flex my-3 max-xl:w-[64px] w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 hover:rounded-full items-center",
+        };
       case "search":
-        return "flex items-center";
+        return {
+          nicknameType: "mx-3 max-xl:hidden grow",
+          buttonType: "flex items-center",
+          followContainer: "",
+        };
 
       default:
-        return "";
+        return {
+          nicknameType: "mx-3 max-xl:hidden grow",
+          buttonType: "",
+          followContainer: "",
+        };
     }
   };
-
+  if (Userdata && type === "follow") {
+    return (
+      <ProfileComponent
+        authUser={Userdata}
+        onClickLogoutHandelr={onClickLogoutHandelr}
+        sideClickItem={() => sideClickItem(type)}
+        typeStyle={typeStyle(type)}
+      />
+    );
+  }
+  const client = supabaseClient();
+  const { data } = useSuspenseQuery(useUser({ client }));
   return (
-    <div className="flex my-3 max-xl:w-[64px] w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 hover:rounded-full items-center">
-      <div
-        className="flex justify-between p-3 w-full items-center"
-        onClick={onClickLogoutHandelr}
-      >
-        <>
-          <div className="flex flex-row w-10 h-10 relative overflow-hidden rounded-full z-20">
-            <img
-              alt="미리보기"
-              src={`${image}`}
-              className="inset-0 h-full absolute w-full -z-10"
-            />
-          </div>
-          <div className="mx-3 max-xl:hidden grow">
-            <div className="font-semibold">{name}</div>
-            <div className="text-inputColor text-sm">@{nickname}</div>
-          </div>
-        </>
-
-        <div className={typeStyle(type)}>
-          <div className="flex w-[63px] items-center">
-            {sideClickItem(type)}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ProfileComponent
+      authUser={data}
+      onClickLogoutHandelr={onClickLogoutHandelr}
+      sideClickItem={() => sideClickItem(type)}
+      typeStyle={typeStyle(type)}
+    />
   );
 };
 

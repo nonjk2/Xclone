@@ -7,10 +7,11 @@ import Avatar from "@/components/ui/Avatar";
 import PostTweetTextArea from "./PostTweetTextArea";
 import useImageSelect from "@/lib/hooks/useImageSelect";
 import PostTweetPostContent from "./PostTweetPostContent";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { supabaseClient } from "@/lib/util/supabase";
 import useCreatePost from "@/lib/hooks/useCreatePost";
 import { SessionContext } from "@/context/AuthProvider";
+import useUser from "@/lib/hooks/useUser";
 
 interface PostTweetProps {
   comment: string;
@@ -38,8 +39,8 @@ const PostTweet: React.FC<PostTweetProps> = ({
     onImageRemove,
     resetImages,
   } = useImageSelect();
-  const { session } = useContext(SessionContext);
   const client = supabaseClient();
+  const { data } = useSuspenseQuery(useUser({ client }));
   const callbackFn = () => {
     resetImages();
     setForm({ content: "" });
@@ -58,10 +59,6 @@ const PostTweet: React.FC<PostTweetProps> = ({
       : ["post", "recommend"],
   });
   const { mutate, isPending } = useMutation(mutateQuery);
-
-  if (!session) {
-    return <>Loading...</>;
-  }
 
   const TextFocusRender = () => {
     if (photo) {
@@ -106,7 +103,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
 
       <div className="w-full px-4 flex pt-1 h-full">
         <div className="flex flex-col relative mr-3 basis-10 pt-2 w-full">
-          <Avatar imgUrl={session.user.user_metadata.avatar_url} />
+          <Avatar imgUrl={data.image} />
         </div>
         <PostTweetTextArea
           onChange={onChange}

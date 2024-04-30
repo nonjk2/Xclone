@@ -10,7 +10,7 @@ const SignInButton = ({ type }: { type: "google" | "kakao" }) => {
     // await signIn(type);
     const client = supabaseClient();
     const { data, error } = await client.auth.signInWithOAuth({
-      provider: "google",
+      provider: type,
       options: {
         redirectTo: "http://localhost:3000/auth/callback",
         // skipBrowserRedirect: true,
