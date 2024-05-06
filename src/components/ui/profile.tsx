@@ -11,6 +11,7 @@ import { supabaseClient } from "@/lib/util/supabase";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import useUser from "@/lib/hooks/useUser";
 import ProfileComponent from "../auth/profileComponent";
+import { useFollowMutation } from "@/lib/hooks/useFollowMutation";
 
 interface MainHeaderProfileProps {
   type: "follow" | "profile" | "search";
@@ -19,14 +20,48 @@ interface MainHeaderProfileProps {
   data?: authUser;
 }
 
+export const typeStyle = (type: MainHeaderProfileProps["type"]) => {
+  switch (type) {
+    case "follow":
+      return {
+        nicknameType: "mx-3 grow",
+        buttonType: "flex items-center w-[78px]",
+        followContainer:
+          "flex my-3 w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 items-center",
+      };
+    case "profile":
+      return {
+        nicknameType: "mx-3 max-xl:hidden grow",
+        buttonType:
+          "flex-end flex rounded-full transition-all duration-300 max-xl:hidden",
+        followContainer:
+          "flex my-3 max-xl:w-[64px] w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 hover:rounded-full items-center",
+      };
+    case "search":
+      return {
+        nicknameType: "mx-3 max-xl:hidden grow",
+        buttonType: "flex items-center",
+        followContainer: "",
+      };
+
+    default:
+      return {
+        nicknameType: "mx-3 max-xl:hidden grow",
+        buttonType: "",
+        followContainer: "",
+      };
+  }
+};
+
 const MainHeaderProfile: React.FC<MainHeaderProfileProps> = ({
   type,
   data: Userdata,
 }) => {
   const router = useRouter();
-  const followButtonClick = () => {
-    console.log("hi");
-  };
+
+  const client = supabaseClient();
+  const { data } = useSuspenseQuery(useUser({ client }));
+
   const sideClickItem = (type: MainHeaderProfileProps["type"]) => {
     switch (type) {
       case "follow":
@@ -56,6 +91,7 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = ({
         );
     }
   };
+
   const logOutHandler = async () => {
     const client = supabaseClient();
     const { error } = await client.auth.signOut();
@@ -70,42 +106,10 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = ({
     e.preventDefault();
     e.stopPropagation();
     if (type === "follow") {
-      followButtonClick();
+      // followButtonClick();
     } else if (type === "profile") await logOutHandler();
   };
 
-  const typeStyle = (type: MainHeaderProfileProps["type"]) => {
-    switch (type) {
-      case "follow":
-        return {
-          nicknameType: "mx-3 grow",
-          buttonType: "flex items-center w-[78px]",
-          followContainer:
-            "flex my-3 w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 items-center",
-        };
-      case "profile":
-        return {
-          nicknameType: "mx-3 max-xl:hidden grow",
-          buttonType:
-            "flex-end flex rounded-full transition-all duration-300 max-xl:hidden",
-          followContainer:
-            "flex my-3 max-xl:w-[64px] w-full h-[65.06px] cursor-pointer hover:bg-hoverLightBlack transition-all duration-300 hover:rounded-full items-center",
-        };
-      case "search":
-        return {
-          nicknameType: "mx-3 max-xl:hidden grow",
-          buttonType: "flex items-center",
-          followContainer: "",
-        };
-
-      default:
-        return {
-          nicknameType: "mx-3 max-xl:hidden grow",
-          buttonType: "",
-          followContainer: "",
-        };
-    }
-  };
   if (Userdata && type === "follow") {
     return (
       <ProfileComponent
@@ -116,8 +120,7 @@ const MainHeaderProfile: React.FC<MainHeaderProfileProps> = ({
       />
     );
   }
-  const client = supabaseClient();
-  const { data } = useSuspenseQuery(useUser({ client }));
+
   return (
     <ProfileComponent
       authUser={data}

@@ -24,10 +24,12 @@ const getUserInServerSide = async ({
     }
     const { data, error } = await client
       .from("userinfo")
-      .select("*")
+      .select("* , followers(following_id)")
       .eq("id", user.id)
       .maybeSingle();
+
     if (!data || error) {
+      console.log(error);
       throw new Error("failed");
     }
     return data;
@@ -80,7 +82,7 @@ const getUser = async () => {
     const userId = await checkUserId(supabase);
     const { data, error } = await supabase
       .from("userinfo")
-      .select("*")
+      .select("* , followers(following_id)")
       .eq("id", userId)
       .single();
 
@@ -90,6 +92,7 @@ const getUser = async () => {
     if (!data) {
       throw new Error("failed");
     }
+    console.log("getUser :", data);
     return data;
   } catch (error) {
     throw new Error("failed");

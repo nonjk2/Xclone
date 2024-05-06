@@ -2,12 +2,17 @@ import MainHeaderProfile from "../ui/profile";
 import { supabaseClient } from "@/lib/util/supabase";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import useFollowRecommendUser from "@/lib/hooks/useFollowUser";
+import { Suspense } from "react";
+import FollowProfile from "../ui/FollowProfile";
 
 const FollowComponent = () => {
   const sidebar = true;
   const client = supabaseClient();
 
-  const { data } = useSuspenseQuery(useFollowRecommendUser({ client }));
+  const { data, isPending } = useSuspenseQuery(
+    useFollowRecommendUser({ client })
+  );
+
   return (
     <>
       <article
@@ -18,13 +23,15 @@ const FollowComponent = () => {
         <div className="h-12 py-3 px-4 text-[21.5px] font-bold">
           Who To Follow
         </div>
-        {data.map((data, idx) => (
-          <MainHeaderProfile
-            key={`${idx}+ ${data.id}`}
-            type="follow"
-            data={data}
-          />
-        ))}
+        <Suspense fallback={<>loading...</>}>
+          {data.map((data, idx) => (
+            <FollowProfile
+              key={`${idx}+ ${data.id}`}
+              type="follow"
+              data={data}
+            />
+          ))}
+        </Suspense>
       </article>
     </>
   );

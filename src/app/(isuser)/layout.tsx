@@ -27,10 +27,10 @@ const Layout = async ({
 
   const client = serverClient();
   const {
-    data: { session },
+    data: { user },
     error,
-  } = await client.auth.getSession();
-  if (!session || error) {
+  } = await client.auth.getUser();
+  if (!user || error) {
     return <>loading...</>;
   }
   await queryClient.prefetchQuery(useUser({ client }));
