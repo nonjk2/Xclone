@@ -46,7 +46,7 @@ const getUsers = async ({ queryKey }: getUserProps) => {
 
     const { data, error } = await supabase
       .from("userinfo")
-      .select("*")
+      .select("* , followers(following_id)")
       .eq("nickname", username)
       .single();
 

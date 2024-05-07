@@ -33,12 +33,9 @@ const FollowProfile: React.FC<MainHeaderProfileProps> = ({
     (followers) => followers.following_id === Userdata.id
   );
   const followButtonClick = () => {
-    console.log(isFollow);
     if (!isFollow) {
-      console.log("isNoFollow");
       follow.mutate();
     } else if (isFollow) {
-      console.log("isFollow");
       unfollow.mutate();
     }
   };
