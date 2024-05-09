@@ -11,7 +11,6 @@ interface ProfileTempleteProps {
 }
 
 const ProfileTemplete = ({ user, Button }: ProfileTempleteProps) => {
-  console.log(user);
   return (
     <div className="mb-4 px-4 flex flex-col pt-3">
       <div className="flex flex-row flex-wrap items-start text-[15px] justify-between">

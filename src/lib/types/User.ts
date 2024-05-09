@@ -25,6 +25,7 @@ interface authUser {
   phone: string | null;
   user_id: string | null;
   followers: { following_id: string }[];
+  count?: { count: number }[];
 }
 interface UserAddress {
   user_id: string;

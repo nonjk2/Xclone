@@ -37,7 +37,7 @@ const Layout = async ({
         <div className="w-full h-[200px] bg-inputColor"></div>
         <ProfileLayout username={username} />
         <Tab tab="profile" />
-        {children}
+        <Suspense>{children}</Suspense>
       </HydrationBoundary>
     </main>
   );

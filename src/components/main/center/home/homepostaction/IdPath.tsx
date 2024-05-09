@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MouseEventHandler, ReactNode } from "react";
 
@@ -21,12 +22,12 @@ const IdPath = ({ id, nickname, children, message = false }: IdPathProps) => {
   };
   if (nickname) {
     return (
-      <span
-        onClick={onClickHandler}
+      <Link
+        href={`/${id}`}
         className={`text-[15px] ${message ? "" : "hover:underline"}`}
       >
-        {children}
-      </span>
+        {nickname}
+      </Link>
     );
   }
   return (

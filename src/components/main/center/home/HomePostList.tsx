@@ -4,6 +4,7 @@ import {
   InfiniteData,
   useInfiniteQuery,
   useQuery,
+  useQueryClient,
 } from "@tanstack/react-query";
 import MainCenterListItem from "./HomePostItem";
 import { getPostList } from "@/lib/action/post-server";
@@ -17,6 +18,7 @@ import { supabaseClient } from "@/lib/util/supabase";
 // const DATA = mockPosts;
 const HomePostLists = () => {
   const client = supabaseClient();
+  const queryClient = useQueryClient();
   const {
     data: res,
     fetchNextPage,
@@ -27,7 +29,7 @@ const HomePostLists = () => {
     InfiniteData<Post[]>,
     [_1: string, _2: string],
     string | undefined
-  >(usePostList({ client, typequery: "recommend" }));
+  >(usePostList({ client, typequery: "recommend", queryClient }));
 
   const { ref, inView } = useInView({
     threshold: 0,

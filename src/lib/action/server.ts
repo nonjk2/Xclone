@@ -46,11 +46,10 @@ const getUsers = async ({ queryKey }: getUserProps) => {
 
     const { data, error } = await supabase
       .from("userinfo")
-      .select("* , followers(following_id)")
+      .select("* , followers(following_id) , count:posts(count)")
       .eq("nickname", username)
       .single();
 
-    console.log(data);
     if (!data) {
       throw new Error("failed");
     }

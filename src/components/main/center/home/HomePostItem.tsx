@@ -8,7 +8,9 @@ import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
 import IdPath from "./homepostaction/IdPath";
 import HomePostImage from "./HomePostImage";
+import { useRouter } from "next/navigation";
 const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
+  const router = useRouter();
   const { content, Images, User, createdAt, id: postId } = props;
   const { image, nickname, id, name } = User;
   const ItemContents = (
@@ -19,9 +21,17 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
       <div className="cursor-pointer w-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
-            <IdPath id={nickname} nickname={name}>
+            <Link
+              href={`/${nickname}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log("asdf");
+              }}
+              className="text-[15px] hover:underline"
+              prefetch={true}
+            >
               {name}
-            </IdPath>
+            </Link>
 
             <IdPath id={nickname} />
             <span className="text-[15px] text-inputColor font-normal">
@@ -71,7 +81,15 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
     <div>{ItemContents}</div>
   );
 
-  return <Link href={`/${nickname}/status/${postId}`}>{isLastItem}</Link>;
+  return (
+    <div
+      onClick={(e) => {
+        router.push(`/${nickname}/status/${postId}`);
+      }}
+    >
+      {isLastItem}
+    </div>
+  );
 });
 
 MainCenterListItem.displayName = "listitem";

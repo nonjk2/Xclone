@@ -16,12 +16,10 @@ const Header = () => {
     //   return <NotificationsHeader />;
     case "messages":
       return <MessagesHeader />;
-    case "profile":
-      return <ProfileHeader />;
     case "home":
       return <HomeHeader />;
     default:
-      return <HomeHeader />;
+      return <ProfileHeader pathname={pathname as string} />;
   }
 };
 ``;

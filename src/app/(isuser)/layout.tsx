@@ -42,7 +42,7 @@ const Layout = async ({
         <HomeTabProvider>
           <div className="hometimeline-container relative">
             <Header />
-            <Suspense fallback={<Loading />}>{children}</Suspense>
+            {children}
           </div>
         </HomeTabProvider>
       </div>

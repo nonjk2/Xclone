@@ -2,6 +2,8 @@ import { v4 as uuidv4 } from "uuid";
 import { checkUserId } from "./server";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../../../database.types";
+import { QueryClient } from "@tanstack/react-query";
+import useUsers from "../hooks/useUsers";
 
 interface FetchPostInterface {
   content: string;
@@ -31,6 +33,7 @@ interface SinglePostPropsType {
 interface getPostListType {
   pageParam: string | undefined;
   client: SupabaseClient<Database>;
+  queryClient?: QueryClient;
 }
 interface getCommentPostListType {
   pageParam?: string | undefined;
@@ -208,6 +211,7 @@ const updateHeartPost = async ({
 const getPostList = async ({
   pageParam = undefined,
   client,
+  queryClient,
 }: getPostListType): Promise<Post[]> => {
   const userId = await checkUserId(client);
   try {
@@ -233,7 +237,19 @@ const getPostList = async ({
       console.log(error);
       throw new Error(error.message);
     }
+    if (queryClient) {
+      const prefetchedUserIds = new Set();
 
+      newPost.forEach((post) => {
+        const { User } = post;
+        if (!prefetchedUserIds.has(User?.nickname)) {
+          queryClient.prefetchQuery(
+            useUsers({ client, username: User?.nickname as string })
+          );
+          prefetchedUserIds.add(User?.nickname);
+        }
+      });
+    }
     const post: Post[] = newPost.map((e) => {
       const heartLikedByUser =
         (e.Heart as Heart[]) &&
