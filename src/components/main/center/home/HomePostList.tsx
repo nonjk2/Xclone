@@ -5,17 +5,16 @@ import {
   useInfiniteQuery,
   useQuery,
   useQueryClient,
+  useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
 import MainCenterListItem from "./HomePostItem";
-import { getPostList } from "@/lib/action/post-server";
+
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import Loading from "@/app/(isuser)/explore/loading";
+
 import usePostList from "@/lib/hooks/usePostList";
 import { supabaseClient } from "@/lib/util/supabase";
-// import { getPostList } from "@/lib/action/server";
 
-// const DATA = mockPosts;
 const HomePostLists = () => {
   const client = supabaseClient();
   const queryClient = useQueryClient();
@@ -23,7 +22,7 @@ const HomePostLists = () => {
     data: res,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery<
+  } = useSuspenseInfiniteQuery<
     Post[],
     Object,
     InfiniteData<Post[]>,

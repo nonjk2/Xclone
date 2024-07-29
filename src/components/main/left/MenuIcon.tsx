@@ -47,7 +47,8 @@ const MenuIcon: React.FC<MainHeaderListItemProps> = (props) => {
 
   return (
     <Link
-      href={`/${pathname}`}
+      href={pathname === "" ? "/home" : `/${pathname}`}
+      prefetch
       color={color}
       className="flex w-[236.78px] max-xl:w-full h-[50.25px] text-black group first:pt-[2px] max-xl:items-center max-xl:justify-center"
     >

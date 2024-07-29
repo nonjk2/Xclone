@@ -39,9 +39,7 @@ const useFollowRecommendUser = ({
 > => {
   const queryKey: [_1: string, _2: string] = ["user", "follow"];
 
-  const queryFn: QueryFunction<authUser[], [_1: string, _2: string]> = async ({
-    queryKey,
-  }) => {
+  const queryFn: QueryFunction<any, [_1: string, _2: string]> = async ({}) => {
     return getUserFollowRecommend({ client });
   };
 

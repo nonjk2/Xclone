@@ -10,6 +10,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 const Page = async ({
   params,
@@ -25,17 +26,17 @@ const Page = async ({
     return redirect("/");
   }
   const { id: PostId } = params;
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(usePost({ client, PostId }));
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <KeyDownProvider>
-        <Modal screen>
+    // <HydrationBoundary state={dehydrate(queryClient)}>
+    <KeyDownProvider>
+      <Modal screen>
+        <Suspense>
           <PhotoComponents id={PostId} />
-        </Modal>
-      </KeyDownProvider>
-    </HydrationBoundary>
+        </Suspense>
+      </Modal>
+      {/* </HydrationBoundary> */}
+    </KeyDownProvider>
   );
 };
 export default Page;

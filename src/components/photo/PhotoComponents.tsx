@@ -5,7 +5,7 @@ import ShortButton from "./ShortButton";
 import PhotoCaroucel from "./PhotoCaroucel";
 import StyleProvider from "@/context/StyleProvider";
 import PhotoBoardSection from "./PhotoBoardSection";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { supabaseClient } from "@/lib/util/supabase";
 import usePost from "@/lib/hooks/usePost";
@@ -13,7 +13,7 @@ import Loading from "@/app/(isuser)/explore/loading";
 
 const PhotoComponents = ({ id }: { id: string }) => {
   const client = supabaseClient();
-  const { data: post, isPending } = useQuery<
+  const { data: post, isPending } = useSuspenseQuery<
     Post,
     Object,
     Post,

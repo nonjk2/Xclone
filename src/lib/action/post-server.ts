@@ -4,6 +4,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../../../database.types";
 import { QueryClient } from "@tanstack/react-query";
 import useUsers from "../hooks/useUsers";
+import usePost from "../hooks/usePost";
 
 interface FetchPostInterface {
   content: string;
@@ -241,7 +242,13 @@ const getPostList = async ({
       const prefetchedUserIds = new Set();
 
       newPost.forEach((post) => {
-        const { User } = post;
+        const { User, id: PostId } = post;
+        const getQuery = queryClient.getQueryData(["post", PostId]);
+        if (!getQuery) {
+          queryClient.prefetchQuery<Post, Object, Post, [_1: string, string]>(
+            usePost({ client, PostId })
+          );
+        }
         if (!prefetchedUserIds.has(User?.nickname)) {
           queryClient.prefetchQuery(
             useUsers({ client, username: User?.nickname as string })

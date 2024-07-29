@@ -29,6 +29,17 @@ const NavMenu = () => {
   return (
     <header className="flex flex-col items-start max-xl:w-full first:pt-[2px] max-xl:items-center gap-2 short:gap-0">
       {svgArray.map((svg, idx) => {
+        if (NavMenuTitle[idx] === "") {
+          return (
+            <MenuIcon
+              path={svg}
+              boldPath={boldSvgArray[idx]}
+              key={svg}
+              title={NavMenuTitle[idx]}
+              pathname={""}
+            />
+          );
+        }
         if (NavMenuTitle[idx] === "Profile") {
           return (
             <MenuIcon
