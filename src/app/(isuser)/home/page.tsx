@@ -28,7 +28,7 @@ const Page = async () => {
 
   return (
     <main className="flex flex-col w-full">
-      <PostTweet type="tweet" comment="What is happening?!" />
+      <PostTweet type="tweet" comment="오늘의 기분은???" />
       <Suspense fallback={<Loading />}>
         <HomeTabPostList />
       </Suspense>

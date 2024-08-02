@@ -39,12 +39,14 @@ const PostTweet: React.FC<PostTweetProps> = ({
     onImageRemove,
     resetImages,
   } = useImageSelect();
+
   const client = supabaseClient();
   const { data } = useSuspenseQuery(useUser({ client }));
   const callbackFn = () => {
     resetImages();
     setForm({ content: "" });
   };
+
   const mutateQuery = useCreatePost({
     callbackFn,
     formData: {
@@ -52,7 +54,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
       isOriginal: !postId,
       parentPostId: !!postId ? postId : undefined,
       client,
-      images: inputRef.current?.files,
+      images: undefined,
     },
     queryKeyType: !!postId
       ? ["post", "comment", postId]
@@ -60,6 +62,17 @@ const PostTweet: React.FC<PostTweetProps> = ({
   });
   const { mutate, isPending } = useMutation(mutateQuery);
 
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    // setIsPending(true);
+    await mutate();
+    try {
+    } catch (error) {
+      console.error("Error during submission:", error);
+    } finally {
+      // setIsPending(false);
+    }
+  };
   const TextFocusRender = () => {
     if (photo) {
       return (
@@ -86,10 +99,6 @@ const PostTweet: React.FC<PostTweetProps> = ({
     settextFocus(true);
   };
 
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    mutate();
-  };
   return (
     <form
       className="w-full relative bg-white z-10 border-b border-b-hoverProfile h-full"

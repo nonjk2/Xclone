@@ -6,7 +6,7 @@ import { InfiniteData, useQueryClient } from "@tanstack/react-query";
 export type FormDataType = {
   content: string;
   isOriginal: boolean;
-  images?: FileList | null;
+  images?: Blob | null;
   parentPostId?: string;
   client: SupabaseClient<Database>;
 };
@@ -23,8 +23,34 @@ const useCreatePost = ({
   queryKeyType,
 }: useCreatePostProps) => {
   const queryClient = useQueryClient();
-  const mutationFn = () => {
-    return createPost(formData);
+
+  const downloadImage = async (url: string) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return blob;
+  };
+  const generateImage = async (prompt: string) => {
+    try {
+      const response = await fetch("/api/generateImage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      const data = await response.json();
+      // return data.imageUrl;
+      return downloadImage(data.imageUrl);
+    } catch (error) {
+      throw new Error("asdfsadf");
+    }
+  };
+
+  const mutationFn = async () => {
+    const { content } = formData;
+    const imageBlob = await generateImage(content);
+    return createPost({ ...formData, images: imageBlob });
   };
 
   const onSuccess = (data: unknown) => {

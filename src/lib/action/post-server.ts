@@ -340,7 +340,7 @@ const getCommentPostList = async ({
 const createPost = async (formdata: {
   content: string;
   isOriginal: boolean;
-  images?: FileList | null;
+  images?: Blob | null;
   parentPostId?: string;
   client: SupabaseClient;
 }): Promise<Post> => {
@@ -369,8 +369,9 @@ const createPost = async (formdata: {
       throw new Error("Failed to create post");
     }
     let imageUrl = {} as PostImage;
-    if (images && images.length > 0) {
-      imageUrl = await insertImage(images[0], userId, data.id, client);
+    console.log("이미지있음", images);
+    if (images) {
+      imageUrl = await insertImage(images, userId, data.id, client);
     }
 
     const newPost = { ...data } as unknown as FetchPostInterface;
@@ -395,7 +396,7 @@ const createPost = async (formdata: {
 };
 
 const insertImage = async (
-  file: File,
+  file: File | Buffer | Blob,
   userId: string,
   post_id: string,
   supabaseClient: SupabaseClient<Database>
@@ -405,7 +406,9 @@ const insertImage = async (
     const { data: uploadedFile, error: storageError } =
       await supabaseClient.storage
         .from("posts")
-        .upload(`${userId}/${uuidv4()}`, file);
+        .upload(`${userId}/${uuidv4()}`, file, {
+          contentType: "image/png",
+        });
 
     if (storageError) {
       console.error(storageError);

@@ -2,7 +2,6 @@
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon/GoogleIcon";
 import { earth, location, photoArray, picture, postArray } from "@/lib/Icon";
-import useImageSelect from "@/lib/hooks/useImageSelect";
 import { FormState } from "@/lib/hooks/useInput";
 import { ChangeEvent, ReactNode, useCallback, useRef } from "react";
 
@@ -95,11 +94,11 @@ const PostTweetTextArea = ({
           <Button
             hoverColor="hoverLightBlue"
             backgroundColor="blue"
-            color="white"
+            color="hoverBlue"
             size="tweet2"
             type="submit"
             disabled={disabled}
-            title={<span>Tweet</span>}
+            title={<span>게시하기</span>}
           />
         </div>
       </div>
