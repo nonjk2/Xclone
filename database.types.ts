@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      conversation: {
+        Row: {
+          content: string | null;
+          created_at: string;
+          id: string;
+          role: string;
+          session_id: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          content?: string | null;
+          created_at?: string;
+          id?: string;
+          role: string;
+          session_id?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          content?: string | null;
+          created_at?: string;
+          id?: string;
+          role?: string;
+          session_id?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
       followers: {
         Row: {
           follower_id: string;
@@ -24,17 +51,10 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "followers_follower_id_fkey";
+            foreignKeyName: "followers_follower_id_fkey1";
             columns: ["follower_id"];
             isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "followers_following_id_fkey";
-            columns: ["following_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
+            referencedRelation: "userinfo";
             referencedColumns: ["id"];
           }
         ];
