@@ -6,17 +6,18 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const Chat = () => {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+  const { messages, input, handleInputChange, handleSubmit, isLoading, data } =
     useChat();
   const router = useRouter();
   const [pending, setPending] = useState(false);
   useEffect(() => {
     if (!pending && isLoading) {
       setPending(true);
-    } else if (pending && !isLoading) {
-      // router.replace("/messages/123");
+    } else if (pending && !isLoading && data) {
+      console.log(data[0]);
+      router.replace(`/messages/${data[0]}`);
     }
-  }, [isLoading, router]);
+  }, [data, isLoading, pending, router]);
   return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
       {messages.map((m) => (

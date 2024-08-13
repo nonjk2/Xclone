@@ -1,6 +1,7 @@
 import ProfileLayout from "@/components/main/center/profile/ProfileLayout";
 import Tab from "@/components/main/center/profile/Tab";
 import useUsers from "@/lib/hooks/useUsers";
+import usersPosts from "@/lib/hooks/useUsersPosts";
 import useUsersPosts from "@/lib/hooks/useUsersPosts";
 import { serverClient } from "@/lib/util/serverSBClient";
 import {
@@ -29,7 +30,7 @@ const Layout = async ({
   }
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(useUsers({ client, username }));
-  await queryClient.prefetchQuery(useUsersPosts({ client, username }));
+  await queryClient.prefetchQuery(usersPosts({ client, username }));
   const dehydratedState = dehydrate(queryClient);
   return (
     <main className="relative w-full">

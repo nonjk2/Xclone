@@ -60,6 +60,29 @@ const getUsers = async ({ queryKey }: getUserProps) => {
   }
 };
 
+const getChatByUser = async ({
+  queryKey,
+  client,
+}: {
+  queryKey: [_1: string, _2: string, string];
+  client: SupabaseClient<Database>;
+}) => {
+  const [_1, _2, session_id] = queryKey;
+  try {
+    const { data, error } = await client
+      .from("conversation")
+      .select("*")
+      .eq("session_id", session_id);
+
+    if (error) {
+      throw new Error("챗 가져오기 failed");
+    }
+    return data;
+  } catch (error) {
+    throw new Error("failed");
+  }
+};
+
 const checkUserId = async (client: SupabaseClient<Database>) => {
   try {
     const {
@@ -105,4 +128,5 @@ export {
   getUsers,
   getUser,
   checkUserId,
+  getChatByUser,
 };

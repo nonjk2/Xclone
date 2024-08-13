@@ -16,7 +16,7 @@ type useUsersPostsProps = {
 const usersPosts = ({ client, username }: useUsersPostsProps) => {
   const queryKey: [_1: string, _2: string, string] = [
     "users",
-    "posts",
+    "chat",
     username,
   ];
 
