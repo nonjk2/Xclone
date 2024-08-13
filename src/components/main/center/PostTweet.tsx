@@ -64,14 +64,7 @@ const PostTweet: React.FC<PostTweetProps> = ({
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // setIsPending(true);
-    await mutate();
-    try {
-    } catch (error) {
-      console.error("Error during submission:", error);
-    } finally {
-      // setIsPending(false);
-    }
+    mutate();
   };
   const TextFocusRender = () => {
     if (photo) {

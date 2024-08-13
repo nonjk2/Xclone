@@ -13,7 +13,7 @@ type useUsersPostsProps = {
   username: string;
 };
 
-const useUsersPosts = ({ client, username }: useUsersPostsProps) => {
+const usersPosts = ({ client, username }: useUsersPostsProps) => {
   const queryKey: [_1: string, _2: string, string] = [
     "users",
     "posts",
@@ -35,4 +35,4 @@ const useUsersPosts = ({ client, username }: useUsersPostsProps) => {
     queryFn,
   };
 };
-export default useUsersPosts;
+export default usersPosts;

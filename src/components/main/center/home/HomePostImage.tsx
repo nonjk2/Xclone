@@ -26,14 +26,14 @@ const HomePostImage = ({
     case 1:
       return (
         <div
-          className="w-full h-full absolute inset-0"
+          className="w-full h-full absolute inset-0 bg-black"
           onClick={(e) => onClickImageRouteHandler(e, 1)}
         >
           <Image
             priority
             src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}${Images[0].link}`}
             alt="Image description"
-            className="w-full h-full"
+            className="w-full h-full object-contain"
             width={100}
             height={100}
           />

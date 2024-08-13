@@ -1,8 +1,8 @@
 import ProfilePost from "@/components/main/center/profile/ProfilePost";
-import { getUsersPosts } from "@/lib/action/post-server";
-import useUsersPosts from "@/lib/hooks/useUsersPosts";
+
+import usersPosts from "@/lib/hooks/useUsersPosts";
+
 import { serverClient } from "@/lib/util/serverSBClient";
-import { supabaseClient } from "@/lib/util/supabase";
 import {
   HydrationBoundary,
   QueryClient,
@@ -25,7 +25,7 @@ const page = async ({ params }: ProfilePageProps) => {
     return redirect("/");
   }
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(useUsersPosts({ client, username }));
+  await queryClient.prefetchQuery(usersPosts({ client, username }));
   const dehydratedState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydratedState}>

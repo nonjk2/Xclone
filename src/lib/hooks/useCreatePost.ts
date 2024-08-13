@@ -24,33 +24,22 @@ const useCreatePost = ({
 }: useCreatePostProps) => {
   const queryClient = useQueryClient();
 
-  const downloadImage = async (url: string) => {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return blob;
-  };
-  const generateImage = async (prompt: string) => {
+  const mutationFn = async () => {
+    const { content } = formData;
     try {
+      // Generate image
       const response = await fetch("/api/generateImage", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: content }),
       });
 
       const data = await response.json();
-      // return data.imageUrl;
-      return downloadImage(data.imageUrl);
-    } catch (error) {
-      throw new Error("asdfsadf");
+      const base64Image: string = data.image;
+      return createPost({ ...formData, images: base64Image });
+    } catch (e) {
+      throw new Error("error ");
     }
-  };
-
-  const mutationFn = async () => {
-    const { content } = formData;
-    const imageBlob = await generateImage(content);
-    return createPost({ ...formData, images: imageBlob });
   };
 
   const onSuccess = (data: unknown) => {

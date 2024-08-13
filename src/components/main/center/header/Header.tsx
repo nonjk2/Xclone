@@ -15,7 +15,7 @@ const Header = () => {
     // case "notifications":
     //   return <NotificationsHeader />;
     case "messages":
-      return <MessagesHeader />;
+      return null;
     case "home":
       return <HomeHeader />;
     default:

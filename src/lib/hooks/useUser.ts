@@ -8,7 +8,7 @@ type useUsersProps = {
   client: SupabaseClient<Database>;
 };
 
-const useUser = ({
+const userFn = ({
   client,
 }: useUsersProps): UseSuspenseQueryOptions<
   authUser,
@@ -29,4 +29,4 @@ const useUser = ({
     queryFn,
   };
 };
-export default useUser;
+export default userFn;

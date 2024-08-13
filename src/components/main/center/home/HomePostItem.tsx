@@ -14,11 +14,11 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
   const { content, Images, User, createdAt, id: postId } = props;
   const { image, nickname, id, name } = User;
   const ItemContents = (
-    <article className="px-4 pt-3 pb-3 w-[598px] flex cursor-pointer transition-all hover:bg-[rgba(0,0,0,0.03)] duration-200 flex-row border-b bg-[rgba(0,0,0,0)] border-b-gubunsun">
+    <article className="px-4 pt-3 pb-3 w-[598px] h-full flex cursor-pointer transition-all hover:bg-[rgba(0,0,0,0.03)] duration-200 flex-row border-b bg-[rgba(0,0,0,0)] border-b-gubunsun">
       <div className="mr-3">
         <Avatar imgUrl={image} />
       </div>
-      <div className="cursor-pointer w-full">
+      <div className="cursor-pointer w-full h-full">
         <div className="mb-[2px] flex justify-between">
           <div className="flex gap-[2px] first:font-bold font-twitterFontFamily">
             <Link
@@ -56,7 +56,7 @@ const MainCenterListItem = forwardRef<HTMLDivElement, Post>((props, ref) => {
           </div>
         </div>
 
-        <div className="main-contnet">
+        <div className="main-contnet h-full">
           <div className="main-contnet-comment">
             <span>{content}</span>
           </div>

@@ -1,30 +1,53 @@
+"use client";
 import Button from "@/components/ui/button";
+// import Button from "@/components/ui/button";
+import { useChat } from "ai/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-const page = () => {
+const Chat = () => {
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat();
+  const router = useRouter();
+  const [pending, setPending] = useState(false);
+  useEffect(() => {
+    if (!pending && isLoading) {
+      setPending(true);
+    } else if (pending && !isLoading) {
+      // router.replace("/messages/123");
+    }
+  }, [isLoading, router]);
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <div className="flex flex-col w-[400px] px-9">
-        <span className="text-blackText leading-9 text-[31px] font-bold mb-2">
-          Select a message
-        </span>
-        <span className="text-[15px] mb-9 text-inputColor">
-          Choose from your existing conversations, start a new one, or just keep
-          swimming.
-        </span>
+    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+      {messages.map((m) => (
+        <div key={m.id} className="whitespace-pre-wrap">
+          {m.role === "user" ? "User: " : "AI: "}
+          {m.content}
+        </div>
+      ))}
+      <form onSubmit={handleSubmit}>
+        <div className="fixed flex bottom-0 w-full max-w-md">
+          <input
+            className="flex-1 p-2 mb-8 border border-gray-300 rounded shadow-xl"
+            value={input}
+            placeholder="Say something..."
+            onChange={handleInputChange}
+          />
 
-        <Button
-          type="button"
-          size="message"
-          color="blue"
-          hoverColor="hoverBgblue"
-          backgroundColor="blue"
-          borderColor="blue"
-          title={
-            <span className="text-white font-bold text-lg">new Message</span>
-          }
-        />
-      </div>
+          <Button
+            type="submit"
+            size="message"
+            color="blue"
+            hoverColor="hoverBgblue"
+            backgroundColor="blue"
+            borderColor="blue"
+            title={
+              <span className="text-white font-bold text-lg">new Message</span>
+            }
+          />
+        </div>
+      </form>
     </div>
   );
 };
-export default page;
+export default Chat;

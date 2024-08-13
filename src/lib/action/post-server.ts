@@ -5,6 +5,7 @@ import { Database } from "../../../database.types";
 import { QueryClient } from "@tanstack/react-query";
 import useUsers from "../hooks/useUsers";
 import usePost from "../hooks/usePost";
+import { base64ToBlob } from "../func";
 
 interface FetchPostInterface {
   content: string;
@@ -340,7 +341,7 @@ const getCommentPostList = async ({
 const createPost = async (formdata: {
   content: string;
   isOriginal: boolean;
-  images?: Blob | null;
+  images?: string;
   parentPostId?: string;
   client: SupabaseClient;
 }): Promise<Post> => {
@@ -369,7 +370,6 @@ const createPost = async (formdata: {
       throw new Error("Failed to create post");
     }
     let imageUrl = {} as PostImage;
-    console.log("이미지있음", images);
     if (images) {
       imageUrl = await insertImage(images, userId, data.id, client);
     }
@@ -396,17 +396,18 @@ const createPost = async (formdata: {
 };
 
 const insertImage = async (
-  file: File | Buffer | Blob,
+  file: string,
   userId: string,
   post_id: string,
   supabaseClient: SupabaseClient<Database>
 ): Promise<PostImage> => {
   try {
+    const blobImage = base64ToBlob(file, "image/png");
     // 스토리지 저장 !!
     const { data: uploadedFile, error: storageError } =
       await supabaseClient.storage
         .from("posts")
-        .upload(`${userId}/${uuidv4()}`, file, {
+        .upload(`${userId}/${uuidv4()}`, blobImage, {
           contentType: "image/png",
         });
 

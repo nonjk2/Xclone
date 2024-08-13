@@ -1,12 +1,22 @@
 import { PostActionType } from "@/components/main/center/home/HomeListItemActionBar";
 import isString from "lodash/isString";
 
+/**
+ * 시간 바꾸는 함수 - 9
+ * @param javaDate
+ * @returns
+ */
 const convertToJSDate = (javaDate: Date): Date => {
   const date = new Date(javaDate);
   date.setHours(date.getHours() - 9);
   return date;
 };
 
+/**
+ * 시간 바꾸는 함수
+ * @param javaDate 자바 시간
+ * @returns
+ */
 const getTimeAgo = (javaDate: Date): string => {
   const date = convertToJSDate(javaDate);
   const now = new Date();
@@ -67,6 +77,33 @@ const switchColor = (type: PostActionType | "Close") => {
       };
   }
 };
+
+/**
+ * base64 문자열을 Blob 객체로 변환하는 함수
+ * */
+const base64ToBlob = (
+  base64: string,
+  contentType = "",
+  sliceSize = 512
+): Blob => {
+  const byteCharacters = atob(base64);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  return new Blob(byteArrays, { type: contentType });
+};
+
 const formatDate = (date: Date) => {
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
@@ -86,4 +123,11 @@ const replaceString = (str: string, replacer: any) =>
 
 const numberFilter = (str: string) => replaceString(str, /[^0-9]/g);
 
-export { convertToJSDate, getTimeAgo, switchColor, numberFilter, formatDate };
+export {
+  convertToJSDate,
+  getTimeAgo,
+  switchColor,
+  numberFilter,
+  formatDate,
+  base64ToBlob,
+};

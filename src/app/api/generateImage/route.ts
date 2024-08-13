@@ -5,26 +5,27 @@ const MY_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 const openai = new OpenAI({
   apiKey: MY_API_KEY || "",
 });
-
+function generatePrompt(message: string): string {
+  return `Draw a beautiful Korean woman enjoying water play on a sunny beach.`;
+}
 export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
     const { messages, id } = await req.json();
-
-    let image_url;
+    const prompt = generatePrompt(messages);
     const response = await openai.images.generate({
       model: "dall-e-3",
-      prompt:
-        "A beautiful Korean woman taking pictures in front of Gyeongbokgung Palace",
+      prompt,
+      quality: "hd",
       n: 1,
       size: "1024x1024",
-      style: "vivid",
+      style: "natural",
+      response_format: "b64_json",
     });
-    image_url = response.data[0].url;
+    const base64Image = response.data[0].b64_json;
 
-    console.log(image_url);
-    return new NextResponse(image_url);
+    return NextResponse.json({ image: base64Image });
   } catch (error) {
     console.error("Error generating image:", error);
     return new NextResponse("error", { status: 500, statusText: "error" });

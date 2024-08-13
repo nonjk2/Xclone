@@ -29,7 +29,7 @@ const getUserFollowRecommend = async ({
   }
 };
 
-const useFollowRecommendUser = ({
+const followRecommendUser = ({
   client,
 }: useFollowRecommendUserProps): UseSuspenseQueryOptions<
   authUser[],
@@ -48,4 +48,4 @@ const useFollowRecommendUser = ({
     queryFn,
   };
 };
-export default useFollowRecommendUser;
+export default followRecommendUser;

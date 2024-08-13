@@ -10,8 +10,8 @@ const Sidebar = () => {
     //   return <ExploreSidebar />;
     // case "notifications":
     //   return <NotificationsSidebar />;
-    // case "messages":
-    //   return <MessagesSidebar />;
+    case "messages":
+      return null;
     case "profile":
       return <HomeSidebar />;
     case "home":
