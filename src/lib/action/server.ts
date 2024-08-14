@@ -83,6 +83,23 @@ const getChatByUser = async ({
   }
 };
 
+const getChatSession = async ({
+  client,
+}: {
+  client: SupabaseClient<Database>;
+}) => {
+  try {
+    const { data, error } = await client.from("conversation").select("*");
+
+    if (error) {
+      throw new Error("챗 가져오기 failed");
+    }
+    return data;
+  } catch (error) {
+    throw new Error("failed");
+  }
+};
+
 const checkUserId = async (client: SupabaseClient<Database>) => {
   try {
     const {
@@ -129,4 +146,5 @@ export {
   getUser,
   checkUserId,
   getChatByUser,
+  getChatSession,
 };

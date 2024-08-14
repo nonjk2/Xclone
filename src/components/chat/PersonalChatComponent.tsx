@@ -2,7 +2,7 @@
 
 import { Message, useChat } from "ai/react";
 import Button from "../ui/button";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabaseClient } from "@/lib/util/supabase";
 import { getChatQuery } from "@/lib/hooks/useGetChat";
 import { redirect } from "next/navigation";
@@ -25,8 +25,21 @@ interface ChatDataType {
 }
 
 const PersonalChatComponent = ({ session_id }: { session_id: string }) => {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat();
+  const queryClient = useQueryClient();
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    append,
+  } = useChat({
+    body: { sessionId: session_id },
+    onFinish: () => {
+      queryClient.invalidateQueries({ queryKey: ["users", "chatSession"] });
+    },
+  });
+  // console.log("session_id : " + session_id);
   const client = supabaseClient();
   const { data } = useQuery<
     ChatDataType[],
@@ -38,6 +51,7 @@ const PersonalChatComponent = ({ session_id }: { session_id: string }) => {
     redirect("/messages");
   }
   const { content, created_at, id, role, user_id } = data[0];
+
   const contentWithIds: arrayMessage = JSON.parse(content).map(
     (item: any, index: any) => {
       return { id: uuidv4(), ...item };

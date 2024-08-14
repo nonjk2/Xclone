@@ -7,6 +7,20 @@ import { Database } from "../../../../database.types";
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
+const LoadHistory = async ({
+  session_id,
+  client,
+}: {
+  session_id: string;
+  client: SupabaseClient<Database>;
+}) => {
+  return await client
+    .from("conversation")
+    .select("content")
+    .eq("session_id", session_id)
+    .maybeSingle();
+};
+
 const SaveChat = async ({
   session_id,
   role,
@@ -14,52 +28,42 @@ const SaveChat = async ({
   client,
 }: {
   session_id?: string;
+  client: SupabaseClient<Database>;
   role: "user" | "assistant";
   content: any;
-  client: SupabaseClient<Database>;
 }) => {
   return await client
     .from("conversation")
-    .insert({ role, content, session_id })
+    .upsert({ role, content, session_id }, { onConflict: "session_id" })
     .select("*");
 };
 
 export async function POST(req: Request) {
-  const { messages: content, session_id, userId } = await req.json();
+  const { messages: content, sessionId: session_id, userId } = await req.json();
+
   const client = serverClient();
+  let history: any;
+  if (session_id) {
+    const { data: historyData, error } = await LoadHistory({
+      session_id,
+      client,
+    });
+    if (error && !historyData) {
+      console.log("Error loading history");
+    }
+    history = JSON.parse(historyData?.content as string);
+  }
+
   const data = new StreamData();
   const result = await streamText({
     model: openai("gpt-3.5-turbo"),
     messages: convertToCoreMessages(content),
-    async onFinish({
-      finishReason,
-      text,
-      usage,
-      rawResponse,
-      toolCalls,
-      toolResults,
-      warnings,
-    }) {
-      // console.log(
-      //   "finishReason : ",
-      //   finishReason,
-      //   "text : ",
-      //   text,
-      //   "usage : ",
-      //   usage,
-      //   "rawResponse : ",
-      //   rawResponse,
-      //   "toolCalls : ",
-      //   toolCalls,
-      //   "toolResults : ",
-      //   toolResults,
-      //   "warnings : ",
-      //   warnings
-      // );
-
+    async onFinish({ text }) {
       const { data: saveData, error } = await SaveChat({
         client,
-        content: [...content, { role: "assistant", content: text }],
+        content: history
+          ? [...history, ...content, { role: "assistant", content: text }]
+          : [...content, { role: "assistant", content: text }],
         role: "assistant",
         session_id,
       });

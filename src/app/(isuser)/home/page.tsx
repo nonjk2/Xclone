@@ -1,18 +1,9 @@
 import PostTweet from "@/components/main/center/PostTweet";
 import { Suspense } from "react";
 import Loading from "../explore/loading";
-
-import {
-  HydrationBoundary,
-  InfiniteData,
-  QueryClient,
-  dehydrate,
-} from "@tanstack/react-query";
 import HomeTabPostList from "@/components/main/center/home/HomeTabPostList";
 
 import { serverClient } from "@/lib/util/serverSBClient";
-import usePostList from "@/lib/hooks/usePostList";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const Page = async () => {

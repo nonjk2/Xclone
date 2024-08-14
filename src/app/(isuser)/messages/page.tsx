@@ -10,6 +10,7 @@ const Chat = () => {
     useChat();
   const router = useRouter();
   const [pending, setPending] = useState(false);
+
   useEffect(() => {
     if (!pending && isLoading) {
       setPending(true);
@@ -18,6 +19,7 @@ const Chat = () => {
       router.replace(`/messages/${data[0]}`);
     }
   }, [data, isLoading, pending, router]);
+
   return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
       {messages.map((m) => (
