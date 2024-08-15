@@ -3,8 +3,9 @@
 import { getChatSessionByUser } from "@/lib/hooks/useGetChatSessions";
 import { supabaseClient } from "@/lib/util/supabase";
 import { useQuery } from "@tanstack/react-query";
+import MessageUserItem from "./MessageUserItem";
 
-type getChatSessionType = {
+export type getChatSessionType = {
   content: string;
   created_at: string;
   id: string;
@@ -23,6 +24,10 @@ const ChatSessionPage = () => {
   >(getChatSessionByUser({ client }));
 
   console.log(data);
-  return <div>{data && data[0].content}</div>;
+  return (
+    <div className="flex w-full flex-col">
+      {data && data.map((e) => <MessageUserItem key={e.id} session={e} />)}
+    </div>
+  );
 };
 export default ChatSessionPage;

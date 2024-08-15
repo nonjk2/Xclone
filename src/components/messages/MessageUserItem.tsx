@@ -4,41 +4,40 @@ import IdPath from "../main/center/home/homepostaction/IdPath";
 import Avatar from "../ui/Avatar";
 import { ActionBarIconSvg } from "../ui/icon/GoogleIcon";
 import { threedot } from "@/lib/Icon";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { getChatSessionType } from "./ChatSessionPage";
 
-const MessageUserItem = ({ User }: { User: User }) => {
-  const { image, id, nickname } = User;
+const MessageUserItem = ({ session }: { session: getChatSessionType }) => {
+  const { content, created_at, session_id, user_id } = session;
+  const pathname = usePathname().split("/")[2];
   const router = useRouter();
-  const { messageId } = useParams();
 
   return (
     <div
-      className={`flex p-4 group/item cursor-pointer hover:bg-gubunsun ${
-        messageId && messageId === id
-          ? "bg-gubunsun border-r-2 border-blue"
-          : ""
+      className={`flex w-full p-4 group/item cursor-pointer hover:bg-gubunsun ${
+        session_id === pathname ? "bg-gubunsun border-r-2 border-blue" : ""
       }`}
-      onClick={() => router.push(`/messages/${id}`)}
+      onClick={() => router.replace(`/messages/${session_id}`)}
     >
       <div className="flex justify-between w-full">
-        <div className="mr-2">
-          <Avatar imgUrl={image} />
-        </div>
+        <div className="mr-2">{/* <Avatar imgUrl={image} /> */}</div>
 
         <div className="leading-5 flex flex-col grow first:font-bold font-twitterFontFamily">
           <div>
-            <IdPath id={id} nickname={nickname} message>
+            {/* <IdPath id={id} nickname={nickname} message>
               {nickname}
-            </IdPath>
+            </IdPath> */}
 
-            <IdPath id={id} message />
+            {/* <IdPath id={id} message /> */}
             <span className="text-[15px] text-inputColor font-normal">
-              ·{getTimeAgo(new Date())}
+              ·{getTimeAgo(new Date(created_at))}
               {/* 날짜 */}
             </span>
           </div>
 
-          <span className="text-[15px] text-inputColor font-normal">{`메세지 ㅎㅇ`}</span>
+          <span className="text-[15px] text-inputColor font-normal">
+            {session_id}
+          </span>
         </div>
 
         <div className="relative group cursor-pointer invisible group-hover/item:visible">

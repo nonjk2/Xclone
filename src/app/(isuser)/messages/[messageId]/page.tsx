@@ -29,7 +29,7 @@ const page = async ({
   );
   const dehydratedState = dehydrate(queryClient);
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+    <div className="flex flex-col w-full py-24 mx-4 stretch">
       <HydrationBoundary state={dehydratedState}>
         <PersonalChatComponent session_id={params.messageId} />
       </HydrationBoundary>

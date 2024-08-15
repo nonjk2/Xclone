@@ -40,7 +40,7 @@ const Layout = async ({
 
   const Content = (
     <div className="flex flex-row grow min-h-full w-full justify-between items-stretch bg-backgroundOpacity">
-      <div className="items-stretch flex flex-col relative bg-white grow w-full -top-[1px] border-gubunsun border-l border-r border-t max-w-[600px]">
+      <div className="items-stretch flex flex-col relative bg-white grow w-full -top-[1px] border-gubunsun border-l border-t max-w-[600px]">
         <HomeTabProvider>
           <div className="hometimeline-container relative">
             <Header />

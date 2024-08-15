@@ -4,8 +4,8 @@ import { ReactNode } from "react";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <main className="flex w-[1050px]">
-      <section className="w-[450px] border-x border-gubunsun">
+    <main className="flex w-[1050px] min-h-screen">
+      <section className="w-[400px] border-x border-gubunsun">
         <MessagesHeader />
         <MessageList />
       </section>

@@ -21,7 +21,7 @@ const Chat = () => {
   }, [data, isLoading, pending, router]);
 
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+    <div className="flex flex-col w-full max-w-md py-24 mx-4 stretch">
       {messages.map((m) => (
         <div key={m.id} className="whitespace-pre-wrap">
           {m.role === "user" ? "User: " : "AI: "}
@@ -35,6 +35,11 @@ const Chat = () => {
             value={input}
             placeholder="Say something..."
             onChange={handleInputChange}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                handleSubmit();
+              }
+            }}
           />
 
           <Button

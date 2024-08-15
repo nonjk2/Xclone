@@ -3,7 +3,7 @@ import { MessagePlus, setting } from "@/lib/Icon";
 
 const MessagesHeader = () => {
   return (
-    <div className="flex max-w-[600px] w-full h-[53px] px-4">
+    <div className="flex max-w-[400px] w-full h-[53px] px-4">
       <div className="flex grow items-center">
         <div>
           <span className="text-xl font-bold">Messages</span>

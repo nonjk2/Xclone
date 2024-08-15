@@ -4,9 +4,6 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { convertToCoreMessages, StreamData, streamText } from "ai";
 import { Database } from "../../../../database.types";
 
-// Allow streaming responses up to 30 seconds
-export const maxDuration = 30;
-
 const LoadHistory = async ({
   session_id,
   client,
@@ -57,6 +54,7 @@ export async function POST(req: Request) {
   const data = new StreamData();
   const result = await streamText({
     model: openai("gpt-3.5-turbo"),
+
     messages: convertToCoreMessages(content),
     async onFinish({ text }) {
       const { data: saveData, error } = await SaveChat({
@@ -70,7 +68,7 @@ export async function POST(req: Request) {
       if (error) {
         console.log(error);
       }
-      console.log("saveData", saveData);
+      // console.log("saveData", saveData);
       if (saveData) {
         const { session_id } = saveData[0];
         data.append(session_id);

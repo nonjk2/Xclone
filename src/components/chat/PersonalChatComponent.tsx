@@ -39,6 +39,7 @@ const PersonalChatComponent = ({ session_id }: { session_id: string }) => {
       queryClient.invalidateQueries({ queryKey: ["users", "chatSession"] });
     },
   });
+
   // console.log("session_id : " + session_id);
   const client = supabaseClient();
   const { data } = useQuery<
@@ -85,6 +86,11 @@ const PersonalChatComponent = ({ session_id }: { session_id: string }) => {
             value={input}
             placeholder="Say something..."
             onChange={handleInputChange}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                handleSubmit();
+              }
+            }}
           />
 
           <Button
